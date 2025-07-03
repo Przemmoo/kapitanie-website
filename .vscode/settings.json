@@ -1,0 +1,20 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/ansible-playbook.json": [
+      "ansible/**/*.yml",
+      "ansible/**/*.yaml",
+      "playbooks/**/*.yml",
+      "playbooks/**/*.yaml"
+    ]
+  },
+  "yaml.customTags": [
+    "!ENV scalar",
+    "!ENV sequence"
+  ],
+  "files.associations": {
+    "**/src/content/**/*.yml": "yaml",
+    "**/src/content/**/*.yaml": "yaml"
+  },
+  "yaml.validate": true,
+  "yaml.format.enable": true
+}

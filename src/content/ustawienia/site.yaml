@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=
+# Site configuration for kapitanie website
 company_name: "kapitanie"
 tagline: "Tworzymy niezapomniane wydarzenia"
 description: "Jesteśmy zespołem specjalistów od organizacji wydarzeń, który zamienia Twoje wizje w rzeczywistość. Od konferencji biznesowych po gale firmowe - każdy event realizujemy z pasją i dbałością o najdrobniejsze detale."

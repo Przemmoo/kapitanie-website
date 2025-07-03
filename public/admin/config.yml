@@ -37,7 +37,7 @@ collections:
     files:
       - label: "Informacje o firmie"
         name: "site"
-        file: "src/content/ustawienia/site.yml"
+        file: "src/content/ustawienia/site.yaml"
         fields:
           - { label: "Nazwa firmy", name: "company_name", widget: "string" }
           - { label: "Slogan", name: "tagline", widget: "string" }
