@@ -37,80 +37,70 @@ const ustawienia = defineCollection({
 
 const sekcje = defineCollection({
   type: 'data',
-  schema: z.union([
-    // Hero section
-    z.object({
-      title: z.string(),
-      subtitle: z.string(),
-      cta1_text: z.string(),
-      cta1_link: z.string(),
-      cta2_text: z.string(),
-      cta2_link: z.string(),
-      video_mp4: z.string().optional(),
-      video_webm: z.string().optional(),
-      poster_image: z.string().optional(),
-    }),
-    // About section
-    z.object({
+  schema: z.object({
+    // Możliwe pola ze wszystkich sekcji - Zod zignoruje nieistniejące
+    section_type: z.string().optional(),
+    title: z.string(),
+    subtitle: z.string().optional(),
+    description: z.string().optional(),
+    intro: z.string().optional(),
+    
+    // Hero section fields
+    cta1_text: z.string().optional(),
+    cta1_link: z.string().optional(),
+    cta2_text: z.string().optional(),
+    cta2_link: z.string().optional(),
+    video_mp4: z.string().optional(),
+    video_webm: z.string().optional(),
+    poster_image: z.string().optional(),
+    
+    // About section fields
+    team_image: z.string().optional(),
+    pillars: z.array(z.object({
+      icon: z.string(),
       title: z.string(),
       description: z.string(),
-      team_image: z.string().optional(),
-      pillars: z.array(z.object({
-        icon: z.string(),
-        title: z.string(),
-        description: z.string(),
-      })).optional(),
-      stats: z.array(z.object({
-        number: z.string(),
-        label: z.string(),
-      })).optional(),
-    }),
-    // App section
-    z.object({
+    })).optional(),
+    
+    // App section fields
+    mockup_image: z.string().optional(),
+    features: z.array(z.object({
+      icon: z.string(),
       title: z.string(),
-      intro: z.string(),
-      mockup_image: z.string().optional(),
-      features: z.array(z.object({
-        icon: z.string(),
-        title: z.string(),
-        description: z.string(),
-      })).optional(),
-      cta_text: z.string(),
-      cta_link: z.string(),
-    }),
-    // Clients section
-    z.object({
+      description: z.string(),
+    })).optional(),
+    cta_text: z.string().optional(),
+    cta_link: z.string().optional(),
+    
+    // Clients section fields
+    client_logos: z.array(z.object({
+      name: z.string(),
+      logo: z.string(),
+      website: z.string().optional(),
+    })).optional(),
+    testimonials: z.array(z.object({
+      name: z.string(),
+      position: z.string(),
+      company: z.string(),
+      quote: z.string(),
+      photo: z.string().optional(),
+      rating: z.number().min(1).max(5),
+    })).optional(),
+    
+    // Contact section fields
+    contact_methods: z.array(z.object({
+      icon: z.string(),
       title: z.string(),
-      client_logos: z.array(z.object({
-        name: z.string(),
-        logo: z.string(),
-        website: z.string().optional(),
-      })).optional(),
-      testimonials: z.array(z.object({
-        name: z.string(),
-        position: z.string(),
-        company: z.string(),
-        quote: z.string(),
-        photo: z.string().optional(),
-        rating: z.number().min(1).max(5),
-      })).optional(),
-      stats: z.array(z.object({
-        number: z.string(),
-        label: z.string(),
-      })).optional(),
-    }),
-    // Contact section
-    z.object({
-      title: z.string(),
-      subtitle: z.string(),
-      contact_methods: z.array(z.object({
-        icon: z.string(),
-        title: z.string(),
-        value: z.string(),
-        link: z.string().optional(),
-      })).optional(),
-    }),
-  ]),
+      value: z.string(),
+      link: z.string().optional(),
+    })).optional(),
+    
+    // Shared fields
+    stats: z.array(z.object({
+      number: z.string(),
+      label: z.string(),
+    })).optional(),
+  }),
 });
 
 const podstrony = defineCollection({
