@@ -1,33 +1,21 @@
-title: "Cieszymy się zaufaniem najlepszych"
+title: Cieszymy się zaufaniem najlepszych
 client_logos:
-  - name: "Tech Summit 2024"
-    logo: "/images/clients/tech-summit.png"
-    website: "https://techsummit.pl"
-  - name: "Galeria Sztuki Współczesnej"
-    logo: "/images/clients/galeria-logo.png"
-    website: "https://galeria-sztuki.pl"
-  - name: "Festiwal Muzyczny Kraków"
-    logo: "/images/clients/festiwal-logo.png"
-    website: "https://festiwal-krakow.pl"
-testimonials:
-  - name: "Jan Kowalski"
-    position: "Dyrektor ds. Eventów"
-    company: "Tech Summit"
-    quote: "Kapitanie to zespół prawdziwych profesjonalistów. Dzięki nim nasze konferencje zawsze przebiegają bezproblemowo."
-    photo: "/images/testimonials/jan-kowalski.jpg"
-    rating: 5
-  - name: "Anna Nowak"
-    position: "Organizator Eventów"
-    company: "Galeria Sztuki"
-    quote: "Wysokiej jakości sprzęt i fachowa obsługa. Polecam każdemu organizatorowi wydarzeń kulturalnych."
-    photo: "/images/testimonials/anna-nowak.jpg"
-    rating: 5
+  - name: Tech Summit 2024
+    logo: /images/clients/tech-summit.png
+    website: https://techsummit.pl
+  - name: Galeria Sztuki Współczesnej
+    logo: /images/clients/galeria-logo.png
+    website: https://galeria-sztuki.pl
+  - name: Festiwal Muzyczny Kraków
+    logo: /images/clients/festiwal-logo.png
+    website: https://festiwal-krakow.pl
+testimonials: []
 stats:
   - number: "150"
-    label: "Zadowolonych klientów"
+    label: Zadowolonych klientów
   - number: "300"
-    label: "Zrealizowanych projektów"
-  - number: "98%"
-    label: "satysfakcji"
+    label: Zrealizowanych projektów
+  - number: 98%
+    label: satysfakcji
   - number: "10"
-    label: "Lat na rynku"
+    label: Lat na rynku

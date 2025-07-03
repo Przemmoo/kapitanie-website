@@ -1,21 +1,23 @@
-title: "Porozmawiajmy o Twoim wydarzeniu"
-subtitle: "Masz pomysł, planujesz event lub potrzebujesz wyceny?\nWypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin."
+title: Porozmawiajmy o Twoim wydarzeniu
+subtitle: |-
+  Masz pomysł, planujesz event lub potrzebujesz wyceny? 
+  Wypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin.
 contact_methods:
-  - icon: "phone"
-    title: "Telefon"
-    value: "+48 501 181 703"
-    link: "tel:+48501181703"
-  - icon: "mail"
-    title: "Email"
-    value: "kontakt@kapitanie.pl"
-    link: "mailto:kontakt@kapitanie.pl"
-  - icon: "map-pin"
-    title: "Adres"
-    value: "ul. Różana 54B/1, 32-020 Wieliczka"
-    link: "https://maps.google.com/maps?q=ul.+Różana+54B/1,+32-020+Wieliczka"
-  - icon: "clock"
-    title: "Godziny pracy"
+  - icon: phone
+    title: Telefon
+    value: +48 501 181 703
+    link: tel:+48501181703
+  - icon: mail
+    title: Email
+    value: kontakt@kapitanie.pl
+    link: mailto:kontakt@kapitanie.pl
+  - icon: map-pin
+    title: Adres
+    value: ul. Różana 54B/1, 32-020 Wieliczka
+    link: https://maps.google.com/maps?q=ul.+Różana+54B/1,+32-020+Wieliczka
+  - icon: clock
+    title: Godziny pracy
     value: "Poniedziałek - Piątek: 9:00 - 18:00"
-  - icon: "timer"
-    title: "Czas odpowiedzi"
+  - icon: timer
+    title: Czas odpowiedzi
     value: "Średni czas odpowiedzi: 2 godziny"
