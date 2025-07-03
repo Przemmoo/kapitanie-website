@@ -477,16 +477,35 @@ Po wykonaniu wszystkich kroków będziesz mieć:
 
 ```
 c:\Astro_kapitanie/
-├── kapitanie/          # Projekt Astro
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── astro.config.mjs
+├── src/                # Kod źródłowy Astro
+│   ├── assets/
+│   ├── components/
+│   ├── layouts/
+│   └── pages/
+├── public/             # Pliki statyczne
+├── astro.config.mjs    # Konfiguracja Astro
+├── package.json        # Zależności Node.js
+├── tsconfig.json       # Konfiguracja TypeScript
 ├── kapitanie.md        # Dokumentacja projektu
 ├── Plan.md            # Plan rozwoju
 ├── Setup-Guide.md     # Ten przewodnik
 └── README.md          # Opis repozytorium
 ```
+
+### **Testowanie projektu Astro:**
+
+```bash
+# Uruchomienie serwera deweloperskiego
+npm run dev
+
+# Build produkcyjny
+npm run build
+
+# Podgląd wersji produkcyjnej
+npm run preview
+```
+
+**Serwer deweloperski:** http://localhost:4321/
 
 ---
 
