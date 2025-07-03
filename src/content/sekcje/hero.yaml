@@ -1,10 +1,13 @@
-section_type: hero
-title: "Tworzymy wyjątkowe wydarzenia dźwiękowe"
-subtitle: "Specjalizujemy się w nagłośnieniu i oświetleniu koncertów, konferencji oraz eventów.\nOd pomysłu po realizację - dbamy o każdy detal Twojego wydarzenia."
-cta1_text: "Zobacz nasze realizacje"
+title: Tworzymy wyjątkowe wydarzenia dźwiękowe
+subtitle: |-
+  Specjalizujemy się w kompleksowej organizacje konferencji oraz eventów.
+  Od pomysłu po realizację.
+  Dbamy o każdy detal Twojego wydarzenia.
+cta1_text: Zobacz nasze realizacje
 cta1_link: "#realizacje"
-cta2_text: "Skontaktuj się z nami"
+cta2_text: Skontaktuj się z nami
 cta2_link: "#kontakt"
-video_mp4: "/videos/hero-video.mp4"
-video_webm: "/videos/hero-video.webm"
-poster_image: "/images/hero-poster.jpg"
+video_mp4: /videos/hero-video.mp4
+video_webm: /videos/hero-video.webm
+poster_image: /images/hero-poster.jpg
+section_type: hero
