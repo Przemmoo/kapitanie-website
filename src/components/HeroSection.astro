@@ -241,14 +241,32 @@ const heroData = {
       padding-top: 70px;
     }
 
+    .hero-content {
+      padding: 0 20px;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
     .hero-buttons {
       flex-direction: column;
       align-items: center;
       gap: 1rem;
+      width: 100%;
     }
 
     .hero-buttons .btn {
-      min-width: 250px;
+      width: 100%;
+      max-width: 280px;
+      min-width: auto;
+      text-align: center;
     }
   }
 
@@ -257,8 +275,18 @@ const heroData = {
       padding: 0 16px;
     }
 
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+
     .hero-buttons .btn {
-      min-width: 200px;
+      width: 100%;
+      max-width: 100%;
+      min-width: auto;
       padding: 12px 24px;
       font-size: 1rem;
     }

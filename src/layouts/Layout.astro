@@ -203,10 +203,41 @@ const {
 	@media (max-width: 768px) {
 		.container {
 			padding: 0 16px;
+			max-width: 100%;
+			overflow-x: hidden;
 		}
 		
 		:root {
 			--section-padding: 60px 0;
+		}
+		
+		/* Zapobieganie poziomemu przewijaniu */
+		body {
+			overflow-x: hidden;
+		}
+		
+		/* Responsywne obrazy */
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		
+		/* Responsywne tabele */
+		table {
+			width: 100%;
+			overflow-x: auto;
+			display: block;
+			white-space: nowrap;
+		}
+	}
+	
+	@media (max-width: 480px) {
+		.container {
+			padding: 0 12px;
+		}
+		
+		:root {
+			--section-padding: 40px 0;
 		}
 	}
 
