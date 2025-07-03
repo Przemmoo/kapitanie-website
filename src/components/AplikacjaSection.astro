@@ -75,8 +75,8 @@ const appData = {
                     </div>
                   </div>
                   <div class="app-nav">
-                    <h1 class="app-title">Tech Summit 2024</h1>
-                    <div class="app-subtitle">Kraków Expo Center</div>
+                    <h1 class="app-title">EKMP 24</h1>
+                    <div class="app-subtitle">ICE Kraków</div>
                   </div>
                 </div>
 
@@ -94,7 +94,7 @@ const appData = {
                     </div>
                     <div class="menu-item">
                       <div class="menu-icon">👥</div>
-                      <span>Networking</span>
+                      <span>Warsztaty</span>
                     </div>
                     <div class="menu-item">
                       <div class="menu-icon">📍</div>
@@ -213,7 +213,7 @@ const appData = {
             <div class="tech-icons">
               <span class="tech-icon">📱 iOS</span>
               <span class="tech-icon">🤖 Android</span>
-              <span class="tech-icon">💻 PWA</span>
+              <span class="tech-icon">💻 PC/MAC</span>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ const appData = {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    align-items: center;
+    align-items: start;
     min-height: 500px;
   }
 
@@ -263,11 +263,13 @@ const appData = {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 600px;
   }
 
   .phone-container {
     position: relative;
     filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+    /* Removed will-change and transform properties to ensure stability */
   }
 
   .phone-frame {
@@ -718,10 +720,6 @@ const appData = {
   }
 
   /* Performance optimizations */
-  .phone-container {
-    will-change: transform;
-  }
-
   .floating-element {
     will-change: transform;
   }
@@ -760,9 +758,9 @@ const appData = {
         item.classList.add('active');
         
         // Add subtle animation
-        item.style.transform = 'scale(0.95)';
+        (item as HTMLElement).style.transform = 'scale(0.95)';
         setTimeout(() => {
-          item.style.transform = '';
+          (item as HTMLElement).style.transform = '';
         }, 150);
       });
     });
@@ -775,23 +773,10 @@ const appData = {
       });
     });
 
-    // Parallax effect for phone on desktop
-    if (window.innerWidth > 768) {
-      const handleScroll = () => {
-        const scrolled = window.pageYOffset;
-        const aplikacjaSection = document.querySelector('.aplikacja-section');
-        const phoneContainer = document.querySelector('.phone-container');
-        
-        if (aplikacjaSection && phoneContainer) {
-          const rect = aplikacjaSection.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-            const rate = scrolled * 0.05;
-            phoneContainer.style.transform = `translateY(${rate}px)`;
-          }
-        }
-      };
-
-      window.addEventListener('scroll', handleScroll, { passive: true });
+    // Ensure phone container has stable positioning
+    const phoneContainer = document.querySelector('.phone-container');
+    if (phoneContainer) {
+      (phoneContainer as HTMLElement).style.transform = 'translate3d(0, 0, 0)';
     }
 
     // Auto-rotate menu items demo
