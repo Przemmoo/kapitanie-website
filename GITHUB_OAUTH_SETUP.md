@@ -14,9 +14,9 @@
    - **Application name:** `kapitanie CMS`
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
-   - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/index.html`
+   - **Authorization callback URL:** `https://kapitanie-website.pages.dev/api/callback`
    
-   **WAŻNE:** Callback URL wskazuje bezpośrednio na panel CMS (bez przekierowań)
+   **WAŻNE:** Używamy nasze własne funkcje Cloudflare OAuth
    
    **AKTUALIZACJA:** Przełączono na Static CMS dla lepszej kompatybilności z GitHub OAuth
 4. Zapisz aplikację
