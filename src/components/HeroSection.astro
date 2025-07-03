@@ -42,7 +42,7 @@
       </div>
       
       <!-- Scroll indicator -->
-      <div class="scroll-indicator">
+      <div class="scroll-indicator fade-in-up">
         <span class="scroll-text">Przewiń w dół</span>
         <div class="scroll-arrow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -152,7 +152,7 @@
     gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
     animation-delay: 0.6s;
   }
 
@@ -164,10 +164,6 @@
 
   /* Scroll Indicator */
   .scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -175,6 +171,8 @@
     color: var(--text-secondary);
     cursor: pointer;
     transition: var(--transition-fast);
+    margin-top: 2rem;
+    animation-delay: 0.8s;
   }
 
   .scroll-indicator:hover {
@@ -225,10 +223,6 @@
 
     .hero-buttons .btn {
       min-width: 250px;
-    }
-
-    .scroll-indicator {
-      bottom: 1rem;
     }
   }
 

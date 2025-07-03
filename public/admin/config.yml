@@ -152,3 +152,155 @@ collections:
                 { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
               ]
             }
+
+  - name: "sekcje"
+    label: "Sekcje strony"
+    files:
+      - label: "Sekcja Hero (Główna)"
+        name: "hero"
+        file: "src/content/sekcje/hero.yaml"
+        fields:
+          - { label: "Nagłówek główny", name: "title", widget: "string", hint: "Główny nagłówek na stronie" }
+          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis pod nagłówkiem" }
+          - { label: "Tekst pierwszego przycisku", name: "cta1_text", widget: "string", default: "Zobacz nasze realizacje" }
+          - { label: "Link pierwszego przycisku", name: "cta1_link", widget: "string", default: "#realizacje" }
+          - { label: "Tekst drugiego przycisku", name: "cta2_text", widget: "string", default: "Skontaktuj się z nami" }
+          - { label: "Link drugiego przycisku", name: "cta2_link", widget: "string", default: "#kontakt" }
+          - { label: "Wideo tła (MP4)", name: "video_mp4", widget: "string", required: false, hint: "Ścieżka do wideo MP4" }
+          - { label: "Wideo tła (WebM)", name: "video_webm", widget: "string", required: false, hint: "Ścieżka do wideo WebM" }
+          - { label: "Zdjęcie zastępcze", name: "poster_image", widget: "image", required: false, hint: "Obraz wyświetlany gdy wideo się nie załaduje" }
+
+      - label: "Sekcja O Nas"
+        name: "about"
+        file: "src/content/sekcje/about.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji O Nas" }
+          - { label: "Opis główny", name: "description", widget: "text", hint: "Główny opis firmy" }
+          - { label: "Zdjęcie zespołu", name: "team_image", widget: "image", required: false, hint: "Zdjęcie zespołu lub założyciela" }
+          - { 
+              label: "Filary oferty", 
+              name: "pillars", 
+              widget: "list",
+              fields: [
+                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony (np. 'lightbulb', 'sound')" },
+                { label: "Tytuł", name: "title", widget: "string" },
+                { label: "Opis", name: "description", widget: "text" }
+              ]
+            }
+          - { 
+              label: "Statystyki", 
+              name: "stats", 
+              widget: "list",
+              fields: [
+                { label: "Liczba", name: "number", widget: "string" },
+                { label: "Opis", name: "label", widget: "string" }
+              ]
+            }
+
+      - label: "Sekcja Aplikacja Eventowa"
+        name: "app"
+        file: "src/content/sekcje/app.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji aplikacji" }
+          - { label: "Wprowadzenie", name: "intro", widget: "text", hint: "Krótki opis aplikacji" }
+          - { label: "Mockup aplikacji", name: "mockup_image", widget: "image", required: false, hint: "Zdjęcie mockupu telefonu z aplikacją" }
+          - { 
+              label: "Funkcje aplikacji", 
+              name: "features", 
+              widget: "list",
+              fields: [
+                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony" },
+                { label: "Tytuł", name: "title", widget: "string" },
+                { label: "Opis", name: "description", widget: "text" }
+              ]
+            }
+          - { label: "Tekst przycisku CTA", name: "cta_text", widget: "string", default: "Dowiedz się więcej" }
+          - { label: "Link przycisku CTA", name: "cta_link", widget: "string", default: "#kontakt" }
+
+      - label: "Sekcja Klienci"
+        name: "clients"
+        file: "src/content/sekcje/clients.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji klientów" }
+          - { 
+              label: "Logotypy klientów", 
+              name: "client_logos", 
+              widget: "list",
+              fields: [
+                { label: "Nazwa klienta", name: "name", widget: "string" },
+                { label: "Logo", name: "logo", widget: "image" },
+                { label: "Strona www", name: "website", widget: "string", required: false }
+              ]
+            }
+          - { 
+              label: "Testimoniale", 
+              name: "testimonials", 
+              widget: "list",
+              fields: [
+                { label: "Imię i nazwisko", name: "name", widget: "string" },
+                { label: "Stanowisko", name: "position", widget: "string" },
+                { label: "Firma", name: "company", widget: "string" },
+                { label: "Opinia", name: "quote", widget: "text" },
+                { label: "Zdjęcie", name: "photo", widget: "image", required: false },
+                { label: "Ocena (1-5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+              ]
+            }
+          - { 
+              label: "Statystyki", 
+              name: "stats", 
+              widget: "list",
+              fields: [
+                { label: "Liczba", name: "number", widget: "string" },
+                { label: "Opis", name: "label", widget: "string" }
+              ]
+            }
+
+      - label: "Sekcja Kontakt"
+        name: "contact"
+        file: "src/content/sekcje/contact.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji kontaktowej" }
+          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis nad formularzem" }
+          - { label: "Godziny pracy", name: "working_hours", widget: "string", hint: "Godziny dostępności" }
+          - { label: "Informacja o czasie odpowiedzi", name: "response_time", widget: "string", hint: "Średni czas odpowiedzi" }
+          - { 
+              label: "Metody kontaktu", 
+              name: "contact_methods", 
+              widget: "list",
+              fields: [
+                { label: "Ikona", name: "icon", widget: "string" },
+                { label: "Tytuł", name: "title", widget: "string" },
+                { label: "Wartość", name: "value", widget: "string" },
+                { label: "Link", name: "link", widget: "string", required: false }
+              ]
+            }
+
+  - name: "podstrony"
+    label: "Podstrony"
+    files:
+      - label: "Polityka Prywatności"
+        name: "privacy"
+        file: "src/content/podstrony/privacy.yaml"
+        fields:
+          - { label: "Tytuł", name: "title", widget: "string", default: "Polityka Prywatności" }
+          - { label: "Opis SEO", name: "description", widget: "text" }
+          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
+          - { label: "Treść", name: "content", widget: "markdown", hint: "Treść polityki prywatności" }
+
+      - label: "Polityka Cookies"
+        name: "cookies"
+        file: "src/content/podstrony/cookies.yaml"
+        fields:
+          - { label: "Tytuł", name: "title", widget: "string", default: "Polityka Cookies" }
+          - { label: "Opis SEO", name: "description", widget: "text" }
+          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
+          - { label: "Treść", name: "content", widget: "markdown", hint: "Treść polityki cookies" }
+
+      - label: "Regulamin"
+        name: "terms"
+        file: "src/content/podstrony/terms.yaml"
+        fields:
+          - { label: "Tytuł", name: "title", widget: "string", default: "Regulamin" }
+          - { label: "Opis SEO", name: "description", widget: "text" }
+          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
+          - { label: "Treść", name: "content", widget: "markdown", hint: "Treść regulaminu" }
