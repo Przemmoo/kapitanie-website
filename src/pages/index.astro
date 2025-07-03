@@ -2,14 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// Pobierz dane firmy z CMS
-const siteData = await import('../content/ustawienia/site.yaml').then(m => m.default).catch(() => ({
+// Dane firmy - tymczasowo hardcoded, później będą z CMS
+const siteData = {
   company_name: "kapitanie",
   tagline: "Tworzymy niezapomniane wydarzenia", 
-  description: "Jesteśmy zespołem specjalistów od organizacji wydarzeń, który zamienia Twoje wizje w rzeczywistość.",
+  description: "Jesteśmy zespołem specjalistów od organizacji wydarzeń, który zamienia Twoje wizje w rzeczywistość. Od konferencji biznesowych po gale firmowe - każdy event realizujemy z pasją i dbałością o najdrobniejsze detale.",
   email: "kontakt@kapitanie.pl",
-  phone: "+48 123 456 789"
-}));
+  phone: "+48 123 456 789",
+  address: "ul. Eventowa 12, 00-001 Warszawa"
+};
 
 // Pobierz najnowsze realizacje
 const realizacje = await getCollection('realizacje');
