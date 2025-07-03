@@ -9,8 +9,6 @@ backend:
     uploadMedia: '[skip ci] Upload "{{path}}"'
     deleteMedia: '[skip ci] Delete "{{path}}"'
     openAuthoring: '{{message}}'
-
-local_backend: true
 media_folder: "src/assets/images"
 public_folder: "/src/assets/images"
 
