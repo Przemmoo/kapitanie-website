@@ -15,6 +15,8 @@
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
    - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/`
+   
+   **WAŻNE:** Sprawdź czy callback URL kończy się na `/admin/` (z ukośnikiem na końcu)
 4. Zapisz aplikację
 
 ### Krok 2: Po utworzeniu OAuth App
@@ -44,6 +46,39 @@ Po dodaniu zmiennych środowiskowych, Cloudflare automatycznie przebuduje stron�
 2. Kliknij **"Login with GitHub"**
 3. Autoryzuj aplikację
 4. Powinieneś zobaczyć panel CMS
+
+## 🔧 ROZWIĄZYWANIE PROBLEMÓW
+
+### Problem: Panel CMS wpada w pętlę autoryzacji
+
+**Objawy:** Strona `/admin` ciągle się przeładowuje lub przekierowuje
+
+**Możliwe przyczyny i rozwiązania:**
+
+#### 1. Sprawdź GitHub OAuth App ustawienia
+Idź na: https://github.com/settings/developers
+1. Znajdź aplikację `kapitanie CMS`
+2. Sprawdź czy:
+   - **Homepage URL:** `https://kapitanie-website.pages.dev`
+   - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/`
+   - **WAŻNE:** URL musi kończyć się DOKŁADNIE na `/admin/`
+
+#### 2. Sprawdź Client ID
+- Client ID musi być: `Ov23ctnA9FmTTvGVovkR`
+- W config.yml jako `app_id`
+- W Cloudflare Pages jako `GITHUB_CLIENT_ID`
+
+#### 3. Sprawdź Client Secret
+- Musi być ustawiony w Cloudflare Pages jako `GITHUB_CLIENT_SECRET`
+- Typ: Secret (nie Text)
+
+#### 4. Wyczyść cache przeglądarki
+- Otwórz `/admin` w trybie incognito
+- Lub wyczyść cache i cookies
+
+#### 5. Sprawdź konsole przeglądarki
+- F12 → Console
+- Sprawdź błędy związane z OAuth lub CORS
 
 ## Uwagi
 

@@ -9,7 +9,19 @@
   <meta http-equiv="Expires" content="0" />
 </head>
 <body>
-  <!-- Decap CMS - wersja stabilna -->
-  <script src="https://unpkg.com/decap-cms@3.1.10/dist/decap-cms.js"></script>
+  <!-- Include the script that builds the page and powers Decap CMS -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  
+  <script>
+    // Debug information
+    console.log('Decap CMS loading...');
+    console.log('Current URL:', window.location.href);
+    console.log('Hash:', window.location.hash);
+    
+    // Handle potential authentication issues
+    window.addEventListener('message', function(e) {
+      console.log('Message received:', e.data);
+    });
+  </script>
 </body>
 </html>
