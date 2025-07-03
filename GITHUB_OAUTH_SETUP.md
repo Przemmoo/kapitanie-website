@@ -1,5 +1,9 @@
 # GitHub OAuth App Configuration
 
+## AKTUALNY STATUS - POPRAWIONY ✅
+
+✅ **ROZWIĄZANO:** Poprawiony Client ID na `Ov23ctnA9FmTTvGVovkR`
+
 ## Instrukcja konfiguracji GitHub OAuth dla Decap CMS
 
 ### Krok 1: Utwórz OAuth App w GitHub
@@ -11,14 +15,13 @@
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
    - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/`
-4. **WAŻNE:** Zaznacz **"Enable Device Flow"** (jeśli dostępne)
-5. Zapisz aplikację
+4. Zapisz aplikację
 
 ### Krok 2: Po utworzeniu OAuth App
 
-1. Skopiuj **Client ID**
+1. Skopiuj **Client ID** (format: `Ov1.1234567890abcdef`)
 2. Wygeneruj i skopiuj **Client Secret**
-3. Te dane będą potrzebne do konfiguracji w Cloudflare Pages
+3. Zaktualizuj `app_id` w pliku `public/admin/config.yml`
 
 ### Krok 3: Konfiguracja Environment Variables w Cloudflare Pages
 
@@ -26,7 +29,7 @@ W panelu Cloudflare Pages dla projektu `kapitanie-website`:
 
 1. Idź do **Settings** > **Environment variables**
 2. Dodaj zmienne:
-   - **GITHUB_CLIENT_ID:** `0v23ctnA9FmTTvGVovkR` (Type: Text)
+   - **GITHUB_CLIENT_ID:** `Ov23ctnA9FmTTvGVovkR` (Type: Text)
    - **GITHUB_CLIENT_SECRET:** `[Twój Client Secret]` (Type: Secret)
 
 **UWAGA:** Upewnij się, że nazwy zmiennych są DOKŁADNIE takie jak powyżej!
