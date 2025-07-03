@@ -24,8 +24,10 @@ W panelu Cloudflare Pages dla projektu `kapitanie-website`:
 
 1. Idź do **Settings** > **Environment variables**
 2. Dodaj zmienne:
-   - **GITHUB_CLIENT_ID:** [Twój Client ID]
-   - **GITHUB_CLIENT_SECRET:** [Twój Client Secret]
+   - **GITHUB_CLIENT_ID:** `0v23ctnA9FmTTvGVovkR` (Type: Text)
+   - **GITHUB_CLIENT_SECRET:** `[Twój Client Secret]` (Type: Secret)
+
+**UWAGA:** Upewnij się, że nazwy zmiennych są DOKŁADNIE takie jak powyżej!
 
 ### Krok 4: Redeploy
 
