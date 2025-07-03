@@ -106,7 +106,7 @@
 ### Pliki usunięte (nieaktualne/niepotrzebne):
 
 **📋 Dokumentacja/Guides:**
-- ❌ `kapitanie.md` - pierwotna koncepcja, już zaimplementowana ✅
+- ✅ `kapitanie.md` - zachowane (pierwotna koncepcja do referencji)
 - ❌ `Setup-Guide.md` - przewodnik setupu, już nieaktualny ✅  
 - ❌ `PAT_SETUP.md` - alternatywne rozwiązanie, już nie używane ✅
 - ❌ `LOCAL_CMS_GUIDE.md` - pusty plik ✅
@@ -116,17 +116,22 @@
 - ❌ `src/assets/` - folder z nieużywanymi SVG ✅
 - ❌ `src/components/Welcome.astro` - nieużywany komponent ✅
 - ❌ `src/types/globals.d.ts` - definicje Netlify Identity, już nie używane ✅
+- ❌ `public/admin/tina.html` - TinaCMS (nieużywany) ✅
+- ❌ `public/admin/index-netlify.html` - Netlify CMS (nieużywany) ✅
 
 **📄 Pliki zachowane:**
+- ✅ `kapitanie.md` - pierwotna koncepcja (do referencji)
 - ✅ `GITHUB_OAUTH_SETUP.md` - aktualna dokumentacja OAuth
 - ✅ `STATUS.md` - status projektu  
 - ✅ `README.md` - dokumentacja podstawowa
 - ✅ `functions/` - niezbędne dla OAuth
-- ✅ `public/admin/` - panel CMS
+- ✅ `public/admin/index.html` - główny panel CMS
+- ✅ `public/admin/config.yml` - konfiguracja CMS
 - ✅ `src/` - kod źródłowy strony
 
 ### Wynik czyszczenia:
-- **Usunięto:** 8 niepotrzebnych plików/folderów
+- **Usunięto:** 8 niepotrzebnych plików/folderów (zachowano kapitanie.md)
 - **Build status:** ✅ Działa poprawnie
 - **Funkcjonalność:** ✅ Bez zmian
-- **Rozmiar projektu:** Zredukowany o ~550KB dokumentacji
+- **Panel CMS:** ✅ Tylko jeden plik (index.html) + config.yml
+- **Rozmiar projektu:** Zoptymalizowany, usunięto alternatywne rozwiązania CMS
