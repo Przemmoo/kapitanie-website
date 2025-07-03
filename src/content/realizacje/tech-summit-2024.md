@@ -1,17 +1,20 @@
 ---
-title: "Konferencja Tech Summit 2024"
-client: "TechCorp"
+title: Konferencja Tech Summit 2024
+client: TechCorp
 date: 2024-06-15
-category: "Konferencja"
-featured_image: "/src/assets/images/tech-summit-main.jpg"
-gallery:
-  - image: "/src/assets/images/tech-summit-1.jpg"
-  - image: "/src/assets/images/tech-summit-2.jpg"
-  - image: "/src/assets/images/tech-summit-3.jpg"
-description: "Tech Summit 2024 to prestiżowa konferencja technologiczna, która zgromadziła ponad 500 specjalistów IT z całego kraju. Event obejmował 3 dni prezentacji, warsztatów i networkingu w nowoczesnym centrum konferencyjnym."
-challenge: "Organizacja międzynarodowej konferencji dla 500+ uczestników z jednoczesną transmisją online dla 2000+ widzów na całym świecie."
-solution: "Zastosowaliśmy hybrydowy model eventu z profesjonalną transmisją streaming, interaktywnymi sesjami Q&A oraz dedykowaną aplikacją mobilną dla uczestników."
-results: "95% zadowolenia uczestników, 100% wypełnienie miejsc, 2000+ widzów online, 15+ partnerów mediowych"
+category: Konferencja
+featured_image: ""
+gallery: []
+description: Tech Summit 2024 to prestiżowa konferencja technologiczna, która
+  zgromadziła ponad 500 specjalistów IT z całego kraju. Event obejmował 3 dni
+  prezentacji, warsztatów i networkingu w nowoczesnym centrum konferencyjnym.
+challenge: Organizacja międzynarodowej konferencji dla 500+ uczestników z
+  jednoczesną transmisją online dla 2000+ widzów na całym świecie.
+solution: Zastosowaliśmy hybrydowy model eventu z profesjonalną transmisją
+  streaming, interaktywnymi sesjami Q&A oraz dedykowaną aplikacją mobilną dla
+  uczestników.
+results: 95% zadowolenia uczestników, 100% wypełnienie miejsc, 2000+ widzów
+  online, 15+ partnerów mediowych
 ---
 
 Konferencja Tech Summit 2024 była jednym z najważniejszych wydarzeń branży technologicznej w Polsce. Przez 3 dni eksperci dzielili się najnowszymi trendami w obszarze sztucznej inteligencji, blockchain i cyberbezpieczeństwa.
