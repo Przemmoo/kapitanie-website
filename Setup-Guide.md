@@ -87,8 +87,8 @@ git status
 # Jeśli nie ma repozytorium Git, zainicjalizuj je
 git init
 
-# Połącz z GitHub repository (zastąp TWOJA-NAZWA-UŻYTKOWNIKA)
-git remote add origin https://github.com/TWOJA-NAZWA-UŻYTKOWNIKA/kapitanie-website.git
+# Połącz z GitHub repository
+git remote add origin https://github.com/Przemmoo/kapitanie-website.git
 
 # Sprawdź połączenie
 git remote -v
@@ -101,7 +101,7 @@ git remote -v
 cd c:\xampp\htdocs
 
 # Sklonuj repository
-git clone https://github.com/TWOJA-NAZWA-UŻYTKOWNIKA/kapitanie-website.git
+git clone https://github.com/Przemmoo/kapitanie-website.git
 
 # Przejdź do folderu projektu
 cd kapitanie-website
@@ -365,7 +365,7 @@ W `public/admin/config.yml` zmień backend na:
 ```yaml
 backend:
   name: github
-  repo: TWOJA-NAZWA-UŻYTKOWNIKA/kapitanie-website
+  repo: Przemmoo/kapitanie-website
   branch: main
 ```
 
@@ -463,15 +463,30 @@ Po wykonaniu wszystkich kroków będziesz mieć:
 
 - **Twoja strona:** `https://kapitanie-website.pages.dev`
 - **Panel CMS:** `https://kapitanie-website.pages.dev/admin/`
-- **GitHub Repo:** `https://github.com/TWOJA-NAZWA/kapitanie-website`
+- **GitHub Repo:** `https://github.com/Przemmoo/kapitanie-website`
 - **Cloudflare Dashboard:** `https://dash.cloudflare.com`
 
 ### **Następne kroki:**
 
-1. **Utwórz projekt Astro** w VS Code
+1. ✅ **Projekt Astro utworzony** w katalogu `kapitanie/`
 2. **Zaprojektuj komponenty** zgodnie z specyfikacją
 3. **Dodaj pierwsze treści** przez Decap CMS
 4. **Skonfiguruj własną domenę** (jeśli masz)
+
+### **Struktura projektu:**
+
+```
+c:\Astro_kapitanie/
+├── kapitanie/          # Projekt Astro
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── astro.config.mjs
+├── kapitanie.md        # Dokumentacja projektu
+├── Plan.md            # Plan rozwoju
+├── Setup-Guide.md     # Ten przewodnik
+└── README.md          # Opis repozytorium
+```
 
 ---
 
