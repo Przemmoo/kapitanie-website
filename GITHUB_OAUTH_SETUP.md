@@ -14,9 +14,9 @@
    - **Application name:** `kapitanie CMS`
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
-   - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/`
+   - **Authorization callback URL:** `https://sveltia-cms-auth.netlify.app/callback`
    
-   **WAŻNE:** Sprawdź czy callback URL kończy się na `/admin/` (z ukośnikiem na końcu)
+   **WAŻNE:** Callback URL musi wskazywać na proxy serwer, NIE na naszą stronę!
    
    **AKTUALIZACJA:** Przełączono na Static CMS dla lepszej kompatybilności z GitHub OAuth
 4. Zapisz aplikację
@@ -35,6 +35,10 @@ W panelu Cloudflare Pages dla projektu `kapitanie-website`:
 2. Dodaj zmienne:
    - **GITHUB_CLIENT_ID:** `Ov23ctnA9FmTTvGVovkR` (Type: Text)
    - **GITHUB_CLIENT_SECRET:** `[Twój Client Secret]` (Type: Secret)
+   - **OAUTH_GITHUB_CLIENT_ID:** `Ov23ctnA9FmTTvGVovkR` (Type: Text) - dla proxy
+   - **OAUTH_GITHUB_CLIENT_SECRET:** `[Twój Client Secret]` (Type: Secret) - dla proxy
+
+**UWAGA:** Proxy serwer wymaga zarówno GITHUB_* jak i OAUTH_GITHUB_* zmiennych!
 
 **UWAGA:** Upewnij się, że nazwy zmiennych są DOKŁADNIE takie jak powyżej!
 
