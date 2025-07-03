@@ -2,15 +2,9 @@ backend:
   name: github
   repo: Przemmoo/kapitanie-website
   branch: main
-  commit_messages:
-    create: 'Create {{collection}} "{{slug}}"'
-    update: 'Update {{collection}} "{{slug}}"'
-    delete: 'Delete {{collection}} "{{slug}}"'
-    uploadMedia: '[skip ci] Upload "{{path}}"'
-    deleteMedia: '[skip ci] Delete "{{path}}"'
-    openAuthoring: '{{message}}'
-media_folder: "src/assets/images"
-public_folder: "/src/assets/images"
+
+media_folder: "public/images"
+public_folder: "/images"
 
 collections:
   - name: "realizacje"
@@ -23,8 +17,7 @@ collections:
       - { label: "Klient", name: "client", widget: "string" }
       - { label: "Data", name: "date", widget: "datetime" }
       - { label: "Kategoria", name: "category", widget: "select", options: ["Konferencja", "Gala", "Koncert", "Event Firmowy"] }
-      - { label: "Zdjęcie główne", name: "featured_image", widget: "image" }
-      - { label: "Galeria", name: "gallery", widget: "list", field: { label: "Zdjęcie", name: "image", widget: "image" } }
+      - { label: "Zdjęcie główne", name: "featured_image", widget: "image", required: false }
       - { label: "Opis", name: "description", widget: "markdown" }
       - { label: "Wyzwanie", name: "challenge", widget: "text" }
       - { label: "Rozwiązanie", name: "solution", widget: "text" }
@@ -43,8 +36,3 @@ collections:
           - { label: "Email", name: "email", widget: "string" }
           - { label: "Telefon", name: "phone", widget: "string" }
           - { label: "Adres", name: "address", widget: "text" }
-          - { label: "Social Media", name: "social", widget: "object", fields: [
-              { label: "Facebook", name: "facebook", widget: "string", required: false },
-              { label: "Instagram", name: "instagram", widget: "string", required: false },
-              { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
-            ]}
