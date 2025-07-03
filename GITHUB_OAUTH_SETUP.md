@@ -14,9 +14,9 @@
    - **Application name:** `kapitanie CMS`
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
-   - **Authorization callback URL:** `https://sveltia-cms-auth.netlify.app/callback`
+   - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/index.html`
    
-   **WAŻNE:** Callback URL musi wskazywać na proxy serwer, NIE na naszą stronę!
+   **WAŻNE:** Callback URL wskazuje bezpośrednio na panel CMS (bez przekierowań)
    
    **AKTUALIZACJA:** Przełączono na Static CMS dla lepszej kompatybilności z GitHub OAuth
 4. Zapisz aplikację
@@ -48,7 +48,7 @@ Po dodaniu zmiennych środowiskowych, Cloudflare automatycznie przebuduje stron�
 
 ### Krok 5: Test
 
-1. Idź na: https://kapitanie-website.pages.dev/admin/
+1. Idź na: https://kapitanie-website.pages.dev/admin/index.html
 2. Kliknij **"Login with GitHub"**
 3. Autoryzuj aplikację
 4. Powinieneś zobaczyć panel CMS

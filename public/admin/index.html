@@ -9,25 +9,19 @@
   <meta http-equiv="Expires" content="0" />
 </head>
 <body>
-  <!-- Static CMS - lepsze wsparcie dla GitHub OAuth -->
-  <script src="https://unpkg.com/@staticcms/app@^4.0.0/dist/static-cms-app.js"></script>
+  <!-- Decap CMS - wersja stabilna dla GitHub OAuth -->
+  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   
   <script>
-    // Debug information for Static CMS
-    console.log('Static CMS loading...');
+    // Debug information for Decap CMS
+    console.log('Decap CMS loading...');
     console.log('Current URL:', window.location.href);
     console.log('Hash:', window.location.hash);
-    
-    // Initialize Static CMS
-    window.CMS_MANUAL_INIT = true;
-    
-    window.addEventListener('load', function() {
-      window.CMS.init();
-    });
     
     // Handle potential authentication issues
     window.addEventListener('message', function(e) {
       console.log('Message received:', e.data);
+    });
     });
   </script>
 </body>
