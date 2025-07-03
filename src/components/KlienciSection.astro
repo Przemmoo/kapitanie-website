@@ -1,12 +1,49 @@
 ---
 // Sekcja "Zaufali Nam" z karuzelą klientów
+export interface Props {
+  data?: {
+    title?: string;
+    client_logos?: Array<{
+      name: string;
+      logo: string;
+      website?: string;
+    }>;
+    testimonials?: Array<{
+      name: string;
+      position: string;
+      company: string;
+      quote: string;
+      photo?: string;
+      rating: number;
+    }>;
+    stats?: Array<{
+      number: string;
+      label: string;
+    }>;
+  };
+}
+
+const { data } = Astro.props;
+
+// Fallback values jeśli brak danych z CMS
+const clientsData = {
+  title: data?.title || "Cieszymy się zaufaniem najlepszych",
+  stats: data?.stats || [
+    { number: "150", label: "Zadowolonych klientów" },
+    { number: "300", label: "Zrealizowanych projektów" },
+    { number: "98", label: "% satysfakcji" },
+    { number: "10", label: "Lat na rynku" }
+  ],
+  client_logos: data?.client_logos || [],
+  testimonials: data?.testimonials || []
+};
 ---
 
 <section id="klienci" class="section klienci-section">
   <div class="container">
     <!-- Section Header -->
     <div class="section-header">
-      <h2 class="section-title">Cieszymy się zaufaniem najlepszych</h2>
+      <h2 class="section-title">{clientsData.title}</h2>
       <p class="section-subtitle">
         Od startupsów po korporacje, od lokalnych eventów po międzynarodowe konferencje - 
         każdego klienta traktujemy z równą pasją i zaangażowaniem.
@@ -15,22 +52,12 @@
 
     <!-- Statystyki klientów -->
     <div class="client-stats">
-      <div class="stat-item">
-        <div class="stat-number" data-count="150">0</div>
-        <div class="stat-label">Zadowolonych klientów</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-count="300">0</div>
-        <div class="stat-label">Zrealizowanych projektów</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-count="98">0</div>
-        <div class="stat-label">% satysfakcji</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-count="10">0</div>
-        <div class="stat-label">Lat na rynku</div>
-      </div>
+      {clientsData.stats.map((stat) => (
+        <div class="stat-item">
+          <div class="stat-number" data-count={stat.number.replace(/\D/g, '')}>{stat.number}</div>
+          <div class="stat-label">{stat.label}</div>
+        </div>
+      ))}
     </div>
 
     <!-- Karuzela logotypów -->

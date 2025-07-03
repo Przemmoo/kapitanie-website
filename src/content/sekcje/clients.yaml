@@ -1,4 +1,4 @@
-title: "Nasi klienci"
+title: "Cieszymy się zaufaniem najlepszych"
 client_logos:
   - name: "Tech Summit 2024"
     logo: "/images/clients/tech-summit.png"
@@ -23,9 +23,11 @@ testimonials:
     photo: "/images/testimonials/anna-nowak.jpg"
     rating: 5
 stats:
-  - number: "98%"
+  - number: "150"
     label: "Zadowolonych klientów"
-  - number: "24h"
-    label: "Wsparcie techniczne"
-  - number: "0"
-    label: "Awarii podczas eventów"
+  - number: "300"
+    label: "Zrealizowanych projektów"
+  - number: "98%"
+    label: "satysfakcji"
+  - number: "10"
+    label: "Lat na rynku"

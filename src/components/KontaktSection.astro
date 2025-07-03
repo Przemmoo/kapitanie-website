@@ -1,15 +1,58 @@
 ---
 // Sekcja Kontakt z formularzem i informacjami
+export interface Props {
+  data?: {
+    title?: string;
+    subtitle?: string;
+    working_hours?: string;
+    response_time?: string;
+    contact_methods?: Array<{
+      icon: string;
+      title: string;
+      value: string;
+      link?: string;
+    }>;
+  };
+}
+
+const { data } = Astro.props;
+
+// Fallback values jeśli brak danych z CMS
+const contactData = {
+  title: data?.title || "Porozmawiajmy o Twoim wydarzeniu",
+  subtitle: data?.subtitle || "Masz pomysł, planujesz event lub potrzebujesz wyceny? Wypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin.",
+  working_hours: data?.working_hours || "Poniedziałek - Piątek: 9:00 - 18:00",
+  response_time: data?.response_time || "Średni czas odpowiedzi: 2 godziny",
+  contact_methods: data?.contact_methods || [
+    {
+      icon: "phone",
+      title: "Telefon",
+      value: "+48 501 181 703",
+      link: "tel:+48501181703"
+    },
+    {
+      icon: "mail",
+      title: "Email",
+      value: "kontakt@kapitanie.pl",
+      link: "mailto:kontakt@kapitanie.pl"
+    },
+    {
+      icon: "map-pin",
+      title: "Adres",
+      value: "ul. Różana 54B/1, 32-020 Wieliczka",
+      link: "https://maps.google.com/maps?q=ul.+Różana+54B/1,+32-020+Wieliczka"
+    }
+  ]
+};
 ---
 
 <section id="kontakt" class="section kontakt-section">
   <div class="container">
     <!-- Section Header -->
     <div class="section-header">
-      <h2 class="section-title">Porozmawiajmy o Twoim wydarzeniu</h2>
+      <h2 class="section-title">{contactData.title}</h2>
       <p class="section-subtitle">
-        Masz pomysł, planujesz event lub potrzebujesz wyceny? Wypełnij formularz lub zadzwoń. 
-        Odpowiadamy w ciągu 24 godzin.
+        {contactData.subtitle}
       </p>
     </div>
 
@@ -226,44 +269,45 @@
           <h3>Skontaktuj się bezpośrednio</h3>
           
           <div class="contact-methods">
-            <div class="contact-method">
-              <div class="contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                </svg>
+            {contactData.contact_methods.map((method) => (
+              <div class="contact-method">
+                <div class="contact-icon">
+                  {method.icon === 'phone' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                  )}
+                  {method.icon === 'mail' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                      <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                  )}
+                  {method.icon === 'map-pin' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                      <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                  )}
+                  {method.icon === 'clock' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12,6 12,12 16,14"/>
+                    </svg>
+                  )}
+                </div>
+                <div class="contact-details">
+                  <span class="contact-label">{method.title}</span>
+                  {method.link ? (
+                    <a href={method.link} class="contact-value">{method.value}</a>
+                  ) : (
+                    <span class="contact-value">{method.value}</span>
+                  )}
+                </div>
               </div>
-              <div class="contact-details">
-                <span class="contact-label">Telefon</span>
-                <a href="tel:+48501181703" class="contact-value">+48 501 181 703</a>
-              </div>
-            </div>
-
-            <div class="contact-method">
-              <div class="contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                  <polyline points="22,6 12,13 2,6"/>
-                </svg>
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Email</span>
-                <a href="mailto:kontakt@kapitanie.pl" class="contact-value">kontakt@kapitanie.pl</a>
-              </div>
-            </div>
-
-            <div class="contact-method">
-              <div class="contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                  <circle cx="12" cy="10" r="3"/>
-                </svg>
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Adres</span>
-                <span class="contact-value">ul. Różana 54B/1<br />32-020 Wieliczka</span>
-              </div>
-            </div>
-
+            ))}
+            
+            <!-- Dodatkowe informacje -->
             <div class="contact-method">
               <div class="contact-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -273,7 +317,20 @@
               </div>
               <div class="contact-details">
                 <span class="contact-label">Godziny pracy</span>
-                <span class="contact-value">Pn-Pt: 9:00-18:00<br />Sb: 10:00-15:00</span>
+                <span class="contact-value">{contactData.working_hours}</span>
+              </div>
+            </div>
+            
+            <div class="contact-method">
+              <div class="contact-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="2"/>
+                  <path d="M20.2 20.2c2.04-2.03.02-7.36-.61-10.57C19.59 9.63 19.59 6.37 19.59 6.37s-1.17-2.63-7.59-2.63S4.41 6.37 4.41 6.37s0 3.26 0 3.26c-.63 3.21-2.65 8.54-.61 10.57"/>
+                </svg>
+              </div>
+              <div class="contact-details">
+                <span class="contact-label">Czas odpowiedzi</span>
+                <span class="contact-value">{contactData.response_time}</span>
               </div>
             </div>
           </div>

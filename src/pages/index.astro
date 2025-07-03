@@ -9,14 +9,22 @@ import KlienciSection from '../components/KlienciSection.astro';
 import KontaktSection from '../components/KontaktSection.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 // Pobierz dane z kolekcji content
 const realizacje = await getCollection('realizacje');
 
+// Pobierz dane z sekcji
+const heroData = await getEntry('sekcje', 'hero');
+const aboutData = await getEntry('sekcje', 'about');
+const appData = await getEntry('sekcje', 'app');
+const clientsData = await getEntry('sekcje', 'clients');
+const contactData = await getEntry('sekcje', 'contact');
+const siteData = await getEntry('ustawienia', 'site');
+
 // Metadane strony głównej dla SEO
-const pageTitle = "kapitanie - Organizacja Wydarzeń i Eventów | Konferencje, Gale, Imprezy Firmowe";
-const pageDescription = "Profesjonalna organizacja wydarzeń biznesowych w Polsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z. Skontaktuj się z nami!";
+const pageTitle = siteData?.data?.site_name ? `${siteData.data.site_name} - Organizacja Wydarzeń i Eventów` : "kapitanie - Organizacja Wydarzeń i Eventów";
+const pageDescription = siteData?.data?.site_description || "Profesjonalna organizacja wydarzeń biznesowych w Polsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z.";
 const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, imprezy biznesowe, event management, organizacja imprez, kapitanie";
 ---
 
@@ -30,26 +38,26 @@ const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, 
 
   <main>
     <!-- Hero Section z tłem wideo -->
-    <HeroSection />
+    <HeroSection data={heroData?.data} />
 
     <!-- Sekcja O Nas -->
-    <AboutSection />
+    <AboutSection data={aboutData?.data} />
 
     <!-- Sekcja Realizacje z portfoliem -->
     <RealizacjeSection realizacje={realizacje} />
 
     <!-- Sekcja Aplikacja Eventowa -->
-    <AplikacjaSection />
+    <AplikacjaSection data={appData?.data} />
 
     <!-- Sekcja Klienci z karuzelą -->
-    <KlienciSection />
+    <KlienciSection data={clientsData?.data} />
 
     <!-- Sekcja Kontakt z formularzem -->
-    <KontaktSection />
+    <KontaktSection data={contactData?.data} />
   </main>
 
   <!-- Footer -->
-  <Footer />
+  <Footer data={siteData?.data} />
 
   <!-- Banner Cookies/RODO -->
   <CookieBanner />

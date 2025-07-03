@@ -1,5 +1,33 @@
 ---
 // Hero Section z dynamicznym wideo tłem
+export interface Props {
+  data?: {
+    title?: string;
+    subtitle?: string;
+    cta1_text?: string;
+    cta1_link?: string;
+    cta2_text?: string;
+    cta2_link?: string;
+    video_mp4?: string;
+    video_webm?: string;
+    poster_image?: string;
+  };
+}
+
+const { data } = Astro.props;
+
+// Fallback values jeśli brak danych z CMS
+const heroData = {
+  title: data?.title || "Twoje wydarzenie w najlepszym świetle",
+  subtitle: data?.subtitle || "Jesteśmy kapitanami technicznej strony Twojego sukcesu. Zapewniamy kompleksową obsługę multimedialną eventów, koncertów i konferencji.",
+  cta1_text: data?.cta1_text || "Zobacz nasze realizacje",
+  cta1_link: data?.cta1_link || "#realizacje",
+  cta2_text: data?.cta2_text || "Skontaktuj się z nami",
+  cta2_link: data?.cta2_link || "#kontakt",
+  video_mp4: data?.video_mp4 || "/videos/hero-video.mp4",
+  video_webm: data?.video_webm || "/videos/hero-video.webm",
+  poster_image: data?.poster_image || "/images/hero-poster.jpg"
+};
 ---
 
 <section id="hero" class="hero">
@@ -11,11 +39,11 @@
       loop 
       playsinline 
       class="hero-video"
-      poster="/images/hero-poster.jpg"
+      poster={heroData.poster_image}
       aria-hidden="true"
     >
-      <source src="/videos/hero-video.mp4" type="video/mp4">
-      <source src="/videos/hero-video.webm" type="video/webm">
+      <source src={heroData.video_mp4} type="video/mp4">
+      <source src={heroData.video_webm} type="video/webm">
     </video>
     <div class="video-overlay"></div>
   </div>
@@ -24,20 +52,19 @@
   <div class="container">
     <div class="hero-content">
       <h1 class="hero-title fade-in-up">
-        Twoje wydarzenie w najlepszym świetle
+        {heroData.title}
       </h1>
       
       <p class="hero-subtitle fade-in-up">
-        Jesteśmy kapitanami technicznej strony Twojego sukcesu. 
-        Zapewniamy kompleksową obsługę multimedialną eventów, koncertów i konferencji.
+        {heroData.subtitle}
       </p>
       
       <div class="hero-buttons fade-in-up">
-        <a href="#realizacje" class="btn btn-primary">
-          Zobacz nasze realizacje
+        <a href={heroData.cta1_link} class="btn btn-primary">
+          {heroData.cta1_text}
         </a>
-        <a href="#kontakt" class="btn btn-secondary">
-          Skontaktuj się z nami
+        <a href={heroData.cta2_link} class="btn btn-secondary">
+          {heroData.cta2_text}
         </a>
       </div>
       

@@ -1,5 +1,52 @@
 ---
 // Sekcja O Nas z dwukolumnowym layoutem
+export interface Props {
+  data?: {
+    title?: string;
+    description?: string;
+    team_image?: string;
+    pillars?: Array<{
+      icon: string;
+      title: string;
+      description: string;
+    }>;
+    stats?: Array<{
+      number: string;
+      label: string;
+    }>;
+  };
+}
+
+const { data } = Astro.props;
+
+// Fallback values jeśli brak danych z CMS
+const aboutData = {
+  title: data?.title || "Kapitan na pokładzie Twojego eventu",
+  description: data?.description || "Witaj na pokładzie! Nazywam się [Imię Założyciela] i jestem kapitanem, który od ponad 10 lat bezpiecznie prowadzi wydarzenia przez wszystkie, nawet najbardziej wzburzone, wody technicznych wyzwań.",
+  team_image: data?.team_image || "/images/team-kapitanie.jpg",
+  pillars: data?.pillars || [
+    {
+      icon: "lightbulb",
+      title: "Oświetlenie",
+      description: "Profesjonalne systemy oświetleniowe, które nadają Twojemu wydarzeniu właściwy nastrój i charakter."
+    },
+    {
+      icon: "mic",
+      title: "Nagłośnienie", 
+      description: "Krystalicznie czyste brzmienie dzięki najnowocześniejszemu sprzętowi audio i profesjonalnej obsłudze."
+    },
+    {
+      icon: "monitor",
+      title: "Multimedia",
+      description: "Zaawansowane systemy wizualne, ekrany LED i projekcje, które przeniosą Twoich gości w inny wymiar."
+    }
+  ],
+  stats: data?.stats || [
+    { number: "150", label: "Zrealizowanych eventów" },
+    { number: "10", label: "Lat doświadczenia" },
+    { number: "50", label: "Zadowolonych klientów" }
+  ]
+};
 ---
 
 <section id="o-nas" class="section about-section">
@@ -9,7 +56,7 @@
       <div class="about-image">
         <div class="image-container">
           <img 
-            src="/images/team-kapitanie.jpg" 
+            src={aboutData.team_image} 
             alt="Zespół kapitanie w akcji - przy konsolecie na scenie"
             class="team-photo"
             loading="lazy"
@@ -29,76 +76,59 @@
       <!-- Prawa strona - treść -->
       <div class="about-content">
         <h2 class="section-title">
-          Kapitan na pokładzie Twojego eventu
+          {aboutData.title}
         </h2>
         
         <div class="about-text">
           <p class="lead">
-            Witaj na pokładzie! Nazywam się <strong>[Imię Założyciela]</strong> i jestem kapitanem, 
-            który od ponad 10 lat bezpiecznie prowadzi wydarzenia przez wszystkie, 
-            nawet najbardziej wzburzone, wody technicznych wyzwań.
-          </p>
-          
-          <p>
-            <strong>"kapitanie"</strong> to nie tylko nazwa – to obietnica. Obietnica precyzji, spokoju 
-            i pełnej kontroli nad technologią, która tworzy niezapomniane wrażenia.
+            {aboutData.description}
           </p>
         </div>
 
         <!-- Główne filary oferty -->
         <div class="services-pillars">
-          <div class="pillar">
-            <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M12 1v6m0 6v6"/>
-                <path d="m21 12-6-3-6 3-6-3"/>
-              </svg>
+          {aboutData.pillars.map((pillar) => (
+            <div class="pillar">
+              <div class="pillar-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  {pillar.icon === 'lightbulb' && (
+                    <>
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M12 1v6m0 6v6"/>
+                      <path d="m21 12-6-3-6 3-6-3"/>
+                    </>
+                  )}
+                  {pillar.icon === 'mic' && (
+                    <>
+                      <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                      <line x1="12" y1="19" x2="12" y2="23"/>
+                      <line x1="8" y1="23" x2="16" y2="23"/>
+                    </>
+                  )}
+                  {pillar.icon === 'monitor' && (
+                    <>
+                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                      <line x1="8" y1="21" x2="16" y2="21"/>
+                      <line x1="12" y1="17" x2="12" y2="21"/>
+                    </>
+                  )}
+                </svg>
+              </div>
+              <h3>{pillar.title}</h3>
+              <p>{pillar.description}</p>
             </div>
-            <h3>Oświetlenie</h3>
-            <p>Profesjonalne systemy oświetleniowe, które nadają Twojemu wydarzeniu właściwy nastrój i charakter.</p>
-          </div>
-
-          <div class="pillar">
-            <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-                <line x1="12" y1="19" x2="12" y2="23"/>
-                <line x1="8" y1="23" x2="16" y2="23"/>
-              </svg>
-            </div>
-            <h3>Nagłośnienie</h3>
-            <p>Krystalicznie czyste brzmienie dzięki najnowocześniejszemu sprzętowi audio i profesjonalnej obsłudze.</p>
-          </div>
-
-          <div class="pillar">
-            <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                <line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
-              </svg>
-            </div>
-            <h3>Multimedia</h3>
-            <p>Zaawansowane systemy wizualne, ekrany LED i projekcje, które przeniosa Twoich gości w inny wymiar.</p>
-          </div>
+          ))}
         </div>
 
         <!-- Statystyki -->
         <div class="stats">
-          <div class="stat">
-            <span class="stat-number" data-count="150">0</span>
-            <span class="stat-label">Zrealizowanych eventów</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-count="10">0</span>
-            <span class="stat-label">Lat doświadczenia</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-count="50">0</span>
-            <span class="stat-label">Zadowolonych klientów</span>
-          </div>
+          {aboutData.stats.map((stat) => (
+            <div class="stat">
+              <span class="stat-number" data-count={stat.number}>0</span>
+              <span class="stat-label">{stat.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
