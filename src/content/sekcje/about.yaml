@@ -1,20 +1,23 @@
-title: "O nas"
-description: "Jesteśmy zespołem pasjonatów technologii dźwięku i światła. Od ponad 10 lat realizujemy wydarzenia każdej skali - od kameralnych spotkań po wielkie koncerty. Nasze doświadczenie i profesjonalizm gwarantują sukces Twojego wydarzenia."
-team_image: "/images/team.jpg"
+title: O nas
+description: Jesteśmy zespołem pasjonatów technologii dźwięku i światła. Od
+  ponad 10 lat realizujemy wydarzenia każdej skali - od kameralnych spotkań po
+  wielkie koncerty. Nasze doświadczenie i profesjonalizm gwarantują sukces
+  Twojego wydarzenia.
+team_image: ""
 pillars:
-  - icon: "lightbulb"
-    title: "Innowacyjność"
-    description: "Wykorzystujemy najnowsze technologie i rozwiązania w branży eventowej"
-  - icon: "headphones"
-    title: "Jakość dźwięku"
-    description: "Kristalicznie czysty dźwięk to nasza specjalność"
-  - icon: "zap"
-    title: "Kompleksowość"
-    description: "Od koncepcji po realizację - wszystko w jednym miejscu"
+  - icon: lightbulb
+    title: Innowacyjność
+    description: Wykorzystujemy najnowsze technologie i rozwiązania w branży eventowej
+  - icon: headphones
+    title: Jakość dźwięku
+    description: Kristalicznie czysty dźwięk to nasza specjalność
+  - icon: zap
+    title: Kompleksowość
+    description: Od koncepcji po realizację - wszystko w jednym miejscu
 stats:
-  - number: "200+"
-    label: "Zrealizowanych eventów"
-  - number: "50+"
-    label: "Zadowolonych klientów"
+  - number: 200+
+    label: Zrealizowanych eventów
+  - number: 50+
+    label: Zadowolonych klientów
   - number: "10"
-    label: "Lat doświadczenia"
+    label: Lat doświadczenia
