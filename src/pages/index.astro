@@ -1,162 +1,57 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import HeroSection from '../components/HeroSection.astro';
+import AboutSection from '../components/AboutSection.astro';
+import RealizacjeSection from '../components/RealizacjeSection.astro';
+import AplikacjaSection from '../components/AplikacjaSection.astro';
+import KlienciSection from '../components/KlienciSection.astro';
+import KontaktSection from '../components/KontaktSection.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 import { getCollection } from 'astro:content';
 
-// Dane firmy - tymczasowo hardcoded, później będą z CMS
-const siteData = {
-  company_name: "kapitanie",
-  tagline: "Tworzymy niezapomniane wydarzenia", 
-  description: "Jesteśmy zespołem specjalistów od organizacji wydarzeń, który zamienia Twoje wizje w rzeczywistość. Od konferencji biznesowych po gale firmowe - każdy event realizujemy z pasją i dbałością o najdrobniejsze detale.",
-  email: "kontakt@kapitanie.pl",
-  phone: "+48 123 456 789",
-  address: "ul. Eventowa 12, 00-001 Warszawa"
-};
-
-// Pobierz najnowsze realizacje
+// Pobierz dane z kolekcji content
 const realizacje = await getCollection('realizacje');
-const najnowszeRealizacje = realizacje.slice(0, 3);
+
+// Metadane strony głównej dla SEO
+const pageTitle = "kapitanie - Organizacja Wydarzeń i Eventów | Konferencje, Gale, Imprezy Firmowe";
+const pageDescription = "Profesjonalna organizacja wydarzeń biznesowych w Polsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z. Skontaktuj się z nami!";
+const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, imprezy biznesowe, event management, organizacja imprez, kapitanie";
 ---
 
-<Layout>
+<Layout 
+  title={pageTitle}
+  description={pageDescription}
+  keywords={pageKeywords}
+>
+  <!-- Sticky Header z nawigacją -->
+  <Header />
+
   <main>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="container">
-        <h1>{siteData.company_name}</h1>
-        <p class="tagline">{siteData.tagline}</p>
-        <p class="description">{siteData.description}</p>
-        <a href="#kontakt" class="cta-button">Skontaktuj się z nami</a>
-      </div>
-    </section>
+    <!-- Hero Section z tłem wideo -->
+    <HeroSection />
 
-    <!-- Najnowsze Realizacje -->
-    <section class="realizacje">
-      <div class="container">
-        <h2>Nasze Najnowsze Realizacje</h2>
-        <div class="realizacje-grid">
-          {najnowszeRealizacje.map((realizacja) => (
-            <div class="realizacja-card">
-              <h3>{realizacja.data.title}</h3>
-              <p><strong>Klient:</strong> {realizacja.data.client}</p>
-              <p><strong>Kategoria:</strong> {realizacja.data.category}</p>
-              <p>{realizacja.data.description.slice(0, 150)}...</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <!-- Sekcja O Nas -->
+    <AboutSection />
 
-    <!-- Kontakt -->
-    <section id="kontakt" class="kontakt">
-      <div class="container">
-        <h2>Kontakt</h2>
-        <div class="kontakt-info">
-          <p><strong>Email:</strong> {siteData.email}</p>
-          <p><strong>Telefon:</strong> {siteData.phone}</p>
-        </div>
-      </div>
-    </section>
+    <!-- Sekcja Realizacje z portfoliem -->
+    <RealizacjeSection realizacje={realizacje} />
+
+    <!-- Sekcja Aplikacja Eventowa -->
+    <AplikacjaSection />
+
+    <!-- Sekcja Klienci z karuzelą -->
+    <KlienciSection />
+
+    <!-- Sekcja Kontakt z formularzem -->
+    <KontaktSection />
   </main>
+
+  <!-- Footer -->
+  <Footer />
+
+  <!-- Banner Cookies/RODO -->
+  <CookieBanner />
 </Layout>
 
-<style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-  }
-
-  .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    text-align: center;
-    padding: 100px 0;
-  }
-
-  .hero h1 {
-    font-size: 3.5rem;
-    margin: 0 0 20px 0;
-    font-weight: bold;
-  }
-
-  .tagline {
-    font-size: 1.5rem;
-    margin: 0 0 20px 0;
-    opacity: 0.9;
-  }
-
-  .description {
-    font-size: 1.1rem;
-    margin: 0 0 40px 0;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-  }
-
-  .cta-button {
-    background: white;
-    color: #667eea;
-    padding: 15px 30px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: transform 0.3s ease;
-  }
-
-  .cta-button:hover {
-    transform: translateY(-2px);
-  }
-
-  .realizacje {
-    padding: 80px 0;
-    background: #f8f9fa;
-  }
-
-  .realizacje h2 {
-    text-align: center;
-    margin-bottom: 50px;
-    font-size: 2.5rem;
-    color: #333;
-  }
-
-  .realizacje-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-  }
-
-  .realizacja-card {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-  }
-
-  .realizacja-card:hover {
-    transform: translateY(-5px);
-  }
-
-  .realizacja-card h3 {
-    color: #667eea;
-    margin-bottom: 15px;
-  }
-
-  .kontakt {
-    padding: 80px 0;
-    background: #333;
-    color: white;
-    text-align: center;
-  }
-
-  .kontakt h2 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-  }
-
-  .kontakt-info p {
-    font-size: 1.2rem;
-    margin: 10px 0;
-  }
-</style>

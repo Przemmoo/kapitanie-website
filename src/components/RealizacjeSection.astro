@@ -1,0 +1,864 @@
+---
+// Sekcja Realizacji z gridem projektów i lightbox galeria
+
+// Interface dla props
+export interface Props {
+  realizacje?: any[];
+}
+
+// Pobierz realizacje z props lub użyj mock danych
+const { realizacje: propRealizacje } = Astro.props;
+
+// Przykładowe dane jeśli brak realizacji z CMS
+const mockRealizacje = [
+  {
+    id: 'gala-x-kom',
+    title: 'Gala Jubileuszowa X-KOM',
+    client: 'X-KOM',
+    category: 'Gala Firmowa',
+    description: 'Stworzenie immersyjnej oprawy wizualnej dla gali na 1000 osób, która połączy elegancję z technologicznym charakterem marki.',
+    challenge: 'Stworzenie immersyjnej oprawy wizualnej dla gali na 1000 osób, która połączy elegancję z technologicznym charakterem marki.',
+    solution: 'Zaprojektowaliśmy i zrealizowaliśmy system oświetlenia kinetycznego, zsynchronizowany z treściami wyświetlanymi na ekranie LED o powierzchni 100m².',
+    image: '/images/realizacje/gala-x-kom.jpg',
+    gallery: [
+      '/images/realizacje/gala-x-kom-1.jpg',
+      '/images/realizacje/gala-x-kom-2.jpg',
+      '/images/realizacje/gala-x-kom-3.jpg'
+    ]
+  },
+  {
+    id: 'tech-summit-2024',
+    title: 'Tech Summit 2024',
+    client: 'TechCorp',
+    category: 'Konferencja IT',
+    description: 'Kompleksowa obsługa techniczna konferencji technologicznej z udziałem 500 uczestników.',
+    challenge: 'Zapewnienie najwyższej jakości transmisji online oraz wsparcia hybrydowego wydarzenia.',
+    solution: 'Wdrożyliśmy zaawansowany system streamingu 4K z wielokamerową realizacją na żywo.',
+    image: '/images/realizacje/tech-summit.jpg',
+    gallery: [
+      '/images/realizacje/tech-summit-1.jpg',
+      '/images/realizacje/tech-summit-2.jpg',
+      '/images/realizacje/tech-summit-3.jpg'
+    ]
+  },
+  {
+    id: 'koncert-philharmonic',
+    title: 'Koncert Filharmonii',
+    client: 'Filharmonia Krakowska',
+    category: 'Koncert',
+    description: 'Profesjonalna obsługa dźwięku dla koncertu symfonicznego z wykorzystaniem przestrzennych systemów audio.',
+    challenge: 'Zachowanie naturalnej akustyki sali przy jednoczesnym wsparciu elektronicznym.',
+    solution: 'Zastosowaliśmy subtelny system wspomagania akustycznego z mikrofonami pojemnościowymi najwyższej klasy.',
+    image: '/images/realizacje/koncert-philharmonic.jpg',
+    gallery: [
+      '/images/realizacje/koncert-1.jpg',
+      '/images/realizacje/koncert-2.jpg',
+      '/images/realizacje/koncert-3.jpg'
+    ]
+  },
+  {
+    id: 'fashion-week',
+    title: 'Kraków Fashion Week',
+    client: 'Fashion Week Kraków',
+    category: 'Pokaz Mody',
+    description: 'Spektakularna oprawa świetlna pokazów mody z dynamicznym oświetleniem LED.',
+    challenge: 'Stworzenie różnorodnych nastrojów świetlnych dla każdego projektanta.',
+    solution: 'Zaprogramowaliśmy 50 scen świetlnych zsynchronizowanych z muzyką i choreografią pokazów.',
+    image: '/images/realizacje/fashion-week.jpg',
+    gallery: [
+      '/images/realizacje/fashion-1.jpg',
+      '/images/realizacje/fashion-2.jpg',
+      '/images/realizacje/fashion-3.jpg'
+    ]
+  },
+  {
+    id: 'corporate-event',
+    title: 'Konferencja Roczna ABC Corp',
+    client: 'ABC Corporation',
+    category: 'Event Korporacyjny',
+    description: 'Organizacja i obsługa techniczna dorocznej konferencji firmy z udziałem zarządu i partnerów.',
+    challenge: 'Zapewnienie bezproblemowej transmisji prezentacji dla 300 uczestników stacjonarnych i 100 online.',
+    solution: 'Wdrożyliśmy system hybrydowy z interaktywnymi możliwościami Q&A i networking.',
+    image: '/images/realizacje/corporate-event.jpg',
+    gallery: [
+      '/images/realizacje/corporate-1.jpg',
+      '/images/realizacje/corporate-2.jpg',
+      '/images/realizacje/corporate-3.jpg'
+    ]
+  },
+  {
+    id: 'wedding-luxury',
+    title: 'Ekskluzywne Wesele',
+    client: 'Prywatny Klient',
+    category: 'Wesele',
+    description: 'Kompleksowa obsługa audiowizualna ekskluzywnego wesela w plenerze.',
+    challenge: 'Zapewnienie wysokiej jakości dźwięku i oświetlenia w trudnych warunkach zewnętrznych.',
+    solution: 'Zastosowaliśmy weatherproof sprzęt i backup systemy dla pełnej niezawodności.',
+    image: '/images/realizacje/wedding-luxury.jpg',
+    gallery: [
+      '/images/realizacje/wedding-1.jpg',
+      '/images/realizacje/wedding-2.jpg',
+      '/images/realizacje/wedding-3.jpg'
+    ]
+  }
+];
+
+const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propRealizacje.map(r => ({
+  id: r.slug,
+  title: r.data.title,
+  client: r.data.client,
+  category: r.data.category,
+  description: r.data.description,
+  challenge: r.data.challenge || '',
+  solution: r.data.solution || '',
+  image: r.data.featured_image || '/images/placeholder-project.jpg',
+  gallery: r.data.gallery?.map(g => g.image) || []
+})) : mockRealizacje;
+---
+
+<section id="realizacje" class="section realizacje-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">Nasze Realizacje</h2>
+      <p class="section-subtitle">
+        Każdy projekt to unikalna historia sukcesu. Zobacz, jak przekuwamy wizje w rzeczywistość.
+      </p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">Wszystkie</button>
+      <button class="filter-btn" data-filter="Gala Firmowa">Gale Firmowe</button>
+      <button class="filter-btn" data-filter="Konferencja IT">Konferencje</button>
+      <button class="filter-btn" data-filter="Koncert">Koncerty</button>
+      <button class="filter-btn" data-filter="Pokaz Mody">Pokazy Mody</button>
+      <button class="filter-btn" data-filter="Event Korporacyjny">Eventy Korporacyjne</button>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+      {displayRealizacje.map((projekt) => (
+        <div 
+          class="project-card" 
+          data-category={projekt.category}
+          data-project-id={projekt.id}
+        >
+          <div class="project-image">
+            <img 
+              src={projekt.image} 
+              alt={`Realizacja: ${projekt.title}`}
+              loading="lazy"
+              width="400"
+              height="300"
+            />
+            <div class="project-overlay">
+              <div class="project-info">
+                <h3 class="project-title">{projekt.title}</h3>
+                <p class="project-category">{projekt.category}</p>
+                <button class="view-details-btn" aria-label={`Zobacz szczegóły projektu ${projekt.title}`}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  Zobacz szczegóły
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Load More Button -->
+    <div class="load-more-container">
+      <button class="btn btn-secondary load-more-btn">
+        Pokaż więcej projektów
+      </button>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" aria-label="Zamknij lightbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      
+      <div class="lightbox-body">
+        <div class="lightbox-gallery">
+          <div class="gallery-main">
+            <img class="gallery-main-image" src="" alt="" />
+            <button class="gallery-prev" aria-label="Poprzednie zdjęcie">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"/>
+              </svg>
+            </button>
+            <button class="gallery-next" aria-label="Następne zdjęcie">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"/>
+              </svg>
+            </button>
+          </div>
+          <div class="gallery-thumbs"></div>
+        </div>
+        
+        <div class="lightbox-info">
+          <h3 id="lightbox-title" class="lightbox-project-title"></h3>
+          <div class="lightbox-meta">
+            <span class="lightbox-client"></span>
+            <span class="lightbox-category"></span>
+          </div>
+          <div class="lightbox-description"></div>
+          <div class="lightbox-case-study">
+            <div class="case-study-section">
+              <h4>Wyzwanie</h4>
+              <p class="case-study-challenge"></p>
+            </div>
+            <div class="case-study-section">
+              <h4>Rozwiązanie</h4>
+              <p class="case-study-solution"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .realizacje-section {
+    background-color: var(--bg-main);
+    position: relative;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-title {
+    color: var(--text-main);
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Filter Buttons */
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .filter-btn {
+    padding: 10px 20px;
+    background: var(--bg-secondary);
+    border: 2px solid rgba(0, 169, 255, 0.2);
+    color: var(--text-secondary);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-weight: 500;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  /* Projects Grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .project-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    transition: var(--transition-fast);
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .project-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-fast);
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
+  }
+
+  .project-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 169, 255, 0.8) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-fast);
+  }
+
+  .project-card:hover .project-overlay {
+    opacity: 1;
+  }
+
+  .project-info {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+  }
+
+  .project-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .project-category {
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    font-size: 0.9rem;
+  }
+
+  .view-details-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    color: var(--accent-blue);
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    margin: 0 auto;
+  }
+
+  .view-details-btn:hover {
+    background: var(--text-main);
+    transform: scale(1.05);
+  }
+
+  .view-details-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Load More */
+  .load-more-container {
+    text-align: center;
+  }
+
+  .load-more-btn {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+  }
+
+  /* Lightbox Modal */
+  .lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-lightbox);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition: var(--transition-fast);
+  }
+
+  .lightbox-modal.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(5px);
+  }
+
+  .lightbox-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90%;
+    background: var(--bg-secondary);
+    border-radius: 20px;
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: var(--transition-fast);
+  }
+
+  .lightbox-modal.open .lightbox-content {
+    transform: scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition-fast);
+  }
+
+  .lightbox-close:hover {
+    background: var(--accent-blue);
+  }
+
+  .lightbox-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .lightbox-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 600px;
+  }
+
+  /* Gallery */
+  .lightbox-gallery {
+    position: relative;
+    background: var(--bg-main);
+  }
+
+  .gallery-main {
+    position: relative;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-main-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .gallery-prev,
+  .gallery-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .gallery-prev {
+    left: 20px;
+  }
+
+  .gallery-next {
+    right: 20px;
+  }
+
+  .gallery-prev:hover,
+  .gallery-next:hover {
+    background: var(--accent-blue);
+  }
+
+  .gallery-thumbs {
+    height: 20%;
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    overflow-x: auto;
+  }
+
+  .gallery-thumb {
+    flex-shrink: 0;
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: var(--transition-fast);
+  }
+
+  .gallery-thumb.active {
+    border-color: var(--accent-blue);
+  }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Lightbox Info */
+  .lightbox-info {
+    padding: 2rem;
+    overflow-y: auto;
+  }
+
+  .lightbox-project-title {
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .lightbox-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lightbox-client,
+  .lightbox-category {
+    padding: 5px 12px;
+    background: var(--accent-blue);
+    color: white;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .lightbox-description {
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .case-study-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .case-study-section h4 {
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .case-study-section p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .lightbox-body {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .lightbox-gallery {
+      height: 400px;
+    }
+
+    .gallery-main {
+      height: 320px;
+    }
+
+    .gallery-thumbs {
+      height: 80px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .filter-buttons {
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    .lightbox-content {
+      width: 95%;
+      max-height: 95%;
+    }
+
+    .lightbox-info {
+      padding: 1.5rem;
+    }
+
+    .lightbox-project-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-image {
+      height: 200px;
+    }
+
+    .lightbox-gallery {
+      height: 300px;
+    }
+
+    .gallery-main {
+      height: 220px;
+    }
+
+    .gallery-prev,
+    .gallery-next {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* Hidden class for filtering */
+  .project-card.hidden {
+    display: none;
+  }
+
+  /* Loading animation */
+  .project-card.loading {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .project-card.fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+</style>
+
+<script define:vars={{ displayRealizacje }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Filter projects
+        projectCards.forEach(card => {
+          const category = card.dataset.category;
+          if (filter === 'all' || category === filter) {
+            card.classList.remove('hidden');
+            card.classList.add('fade-in');
+          } else {
+            card.classList.add('hidden');
+            card.classList.remove('fade-in');
+          }
+        });
+      });
+    });
+
+    // Lightbox functionality
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxBackdrop = document.querySelector('.lightbox-backdrop');
+    const mainImage = document.querySelector('.gallery-main-image');
+    const galleryThumbs = document.querySelector('.gallery-thumbs');
+    const prevBtn = document.querySelector('.gallery-prev');
+    const nextBtn = document.querySelector('.gallery-next');
+    
+    let currentGallery = [];
+    let currentImageIndex = 0;
+
+    // Open lightbox
+    projectCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const projectId = card.dataset.projectId;
+        const project = displayRealizacje.find(p => p.id === projectId);
+        
+        if (project) {
+          openLightbox(project);
+        }
+      });
+    });
+
+    function openLightbox(project) {
+      // Set project info
+      document.querySelector('.lightbox-project-title').textContent = project.title;
+      document.querySelector('.lightbox-client').textContent = project.client;
+      document.querySelector('.lightbox-category').textContent = project.category;
+      document.querySelector('.lightbox-description').textContent = project.description;
+      document.querySelector('.case-study-challenge').textContent = project.challenge;
+      document.querySelector('.case-study-solution').textContent = project.solution;
+      
+      // Set gallery
+      currentGallery = project.gallery && project.gallery.length > 0 ? project.gallery : [project.image];
+      currentImageIndex = 0;
+      
+      updateGallery();
+      createThumbnails();
+      
+      // Show modal
+      lightboxModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lightboxModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox() {
+      lightboxModal.classList.remove('open');
+      document.body.style.overflow = '';
+      lightboxModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function updateGallery() {
+      if (currentGallery[currentImageIndex]) {
+        mainImage.src = currentGallery[currentImageIndex];
+        mainImage.alt = `Zdjęcie ${currentImageIndex + 1} z galerii`;
+        
+        // Update active thumbnail
+        document.querySelectorAll('.gallery-thumb').forEach((thumb, index) => {
+          thumb.classList.toggle('active', index === currentImageIndex);
+        });
+      }
+    }
+
+    function createThumbnails() {
+      galleryThumbs.innerHTML = '';
+      
+      currentGallery.forEach((image, index) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'gallery-thumb';
+        thumb.innerHTML = `<img src="${image}" alt="Miniatura ${index + 1}" />`;
+        
+        thumb.addEventListener('click', () => {
+          currentImageIndex = index;
+          updateGallery();
+        });
+        
+        galleryThumbs.appendChild(thumb);
+      });
+    }
+
+    // Navigation
+    prevBtn?.addEventListener('click', () => {
+      currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : currentGallery.length - 1;
+      updateGallery();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      currentImageIndex = currentImageIndex < currentGallery.length - 1 ? currentImageIndex + 1 : 0;
+      updateGallery();
+    });
+
+    // Close lightbox
+    lightboxClose?.addEventListener('click', closeLightbox);
+    lightboxBackdrop?.addEventListener('click', closeLightbox);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightboxModal.classList.contains('open')) {
+        switch(e.key) {
+          case 'Escape':
+            closeLightbox();
+            break;
+          case 'ArrowLeft':
+            prevBtn?.click();
+            break;
+          case 'ArrowRight':
+            nextBtn?.click();
+            break;
+        }
+      }
+    });
+
+    // Load more functionality (future implementation)
+    const loadMoreBtn = document.querySelector('.load-more-btn');
+    loadMoreBtn?.addEventListener('click', () => {
+      // Future implementation: load more projects from API
+      console.log('Load more projects');
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    // Observe project cards
+    projectCards.forEach(card => {
+      observer.observe(card);
+    });
+  });
+</script>

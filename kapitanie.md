@@ -171,100 +171,8 @@ Astro to nowoczesny generator stron statycznych, który idealnie pasuje do tego 
 
 Proces opiera się na pełnej automatyzacji: edycja treści w Decap CMS powoduje aktualizację kodu na GitHub, co z kolei uruchamia automatyczne wdrożenie nowej wersji strony na Cloudflare Pages.
 
-## **8. Szczegóły Techniczne**
 
-### **A. Struktura Folderów Projektu
-
-```
-kapitanie-website/
-├── src/
-│   ├── components/          # Komponenty wielokrotnego użytku
-│   │   ├── Header.astro
-│   │   ├── Footer.astro
-│   │   ├── Hero.astro
-│   │   ├── ContactForm.astro
-│   │   └── CookieBanner.astro
-│   ├── layouts/            # Główne layouty strony
-│   │   └── Layout.astro
-│   ├── pages/              # Strony witryny
-│   │   ├── index.astro     # Strona główna
-│   │   ├── polityka-prywatnosci.astro
-│   │   └── 404.astro
-│   ├── styles/             # Style CSS
-│   │   ├── global.css
-│   │   └── components/
-│   └── assets/             # Obrazy, wideo, ikony
-│       ├── images/
-│       ├── videos/
-│       └── icons/
-├── public/                 # Pliki statyczne
-│   ├── favicon.ico
-│   ├── robots.txt
-│   └── admin/              # Konfiguracja Decap CMS
-│       ├── config.yml
-│       └── index.html
-├── astro.config.mjs        # Konfiguracja Astro
-├── package.json
-├── tailwind.config.mjs     # Konfiguracja Tailwind CSS
-└── README.md
-```
-
-### **B. Konfiguracja Astro**
-
-**Wymagane pluginy i integracje:**
-- `@astrojs/tailwind` - dla stylowania
-- `@astrojs/image` - optymalizacja obrazów
-- `@astrojs/sitemap` - generowanie mapy strony
-- `@astrojs/partytown` - optymalizacja skryptów zewnętrznych
-- `astro-seo` - zaawansowane SEO
-
-**Podstawowa konfiguracja astro.config.mjs:**
-```javascript
-export default defineConfig({
-  site: 'https://kapitanie.pl',
-  integrations: [
-    tailwind(),
-    image(),
-    sitemap(),
-    partytown({
-      config: {
-        forward: ['gtag']
-      }
-    })
-  ],
-  output: 'static',
-  build: {
-    assets: 'assets'
-  }
-});
-```
-
-### **C. Deployment Pipeline (CI/CD)**
-
-**Automatyzacja wdrożenia:**
-1. **Commit do GitHub** - Push zmian uruchamia proces
-2. **GitHub Actions** - Budowanie projektu i testy
-3. **Cloudflare Pages** - Automatyczne wdrożenie
-4. **Invalidacja cache** - Odświeżenie CDN
-
-**Przykładowy workflow (.github/workflows/deploy.yml):**
-```yaml
-name: Deploy to Cloudflare Pages
-on:
-  push:
-    branches: [main]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm install
-      - run: npm run build
-      - uses: cloudflare/pages-action@v1
-```
-
-## **9. Elementy UX/UI**
+## **8. Elementy UX/UI**
 
 ### **A. Wireframes i Mockupy**
 
@@ -310,7 +218,7 @@ jobs:
 - **Failed video load** - fallback na statyczny obraz
 - **Network errors** - graceful degradation
 
-## **10. Analytics i Tracking**
+## **9. Analytics i Tracking**
 
 ### **A. Google Analytics 4 (GA4)**
 
@@ -367,7 +275,7 @@ fbq('track', 'PageView');
 - **Błędy indeksowania** - wykrywanie problemów SEO
 - **Core Web Vitals** - monitoring wskaźników wydajności
 
-## **11. Szczegóły Prawne**
+## **10. Szczegóły Prawne**
 
 ### **A. Rozszerzony Regulamin**
 

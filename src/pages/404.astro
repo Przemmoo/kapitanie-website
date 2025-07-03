@@ -1,0 +1,354 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const pageTitle = "Strona nie została znaleziona - kapitanie";
+const pageDescription = "Przepraszamy, ale strona której szukasz nie istnieje. Wróć na stronę główną kapitanie.pl";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <Header />
+  
+  <main class="error-page">
+    <div class="container">
+      <div class="error-content">
+        <div class="error-number">404</div>
+        <h1>Strona nie została znaleziona</h1>
+        <p class="error-description">
+          Przepraszamy, ale strona której szukasz nie istnieje lub została przeniesiona. 
+          Sprawdź czy adres został wpisany poprawnie lub wróć na stronę główną.
+        </p>
+        
+        <div class="error-actions">
+          <a href="/" class="btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="9,22 9,12 15,12 15,22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Strona główna
+          </a>
+          
+          <a href="#kontakt" class="btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Skontaktuj się z nami
+          </a>
+        </div>
+
+        <div class="helpful-links">
+          <h3>Może Cię zainteresuje:</h3>
+          <ul>
+            <li><a href="/#o-nas">O nas</a></li>
+            <li><a href="/#realizacje">Nasze realizacje</a></li>
+            <li><a href="/#aplikacja">Aplikacja eventowa</a></li>
+            <li><a href="/#klienci">Nasi klienci</a></li>
+            <li><a href="/#kontakt">Kontakt</a></li>
+          </ul>
+        </div>
+
+        <div class="error-animation">
+          <div class="spotlight"></div>
+          <div class="stage-lights">
+            <div class="light light-1"></div>
+            <div class="light light-2"></div>
+            <div class="light light-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .error-page {
+    min-height: 100vh;
+    background: var(--color-bg-main);
+    color: var(--color-text-primary);
+    padding: 120px 0 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .error-content {
+    position: relative;
+  }
+
+  .error-number {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 12rem;
+    line-height: 1;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #4FC3F7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 20px rgba(0, 169, 255, 0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      text-shadow: 0 4px 20px rgba(0, 169, 255, 0.3);
+    }
+    to {
+      text-shadow: 0 4px 30px rgba(0, 169, 255, 0.6);
+    }
+  }
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-text-primary);
+  }
+
+  .error-description {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #4FC3F7 100%);
+    color: white;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 169, 255, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 169, 255, 0.4);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    border: 2px solid rgba(0, 169, 255, 0.3);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(0, 169, 255, 0.1);
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .helpful-links {
+    background: var(--color-bg-secondary);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 169, 255, 0.1);
+    margin-bottom: 3rem;
+  }
+
+  .helpful-links h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--color-accent);
+  }
+
+  .helpful-links ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .helpful-links li {
+    margin: 0;
+  }
+
+  .helpful-links a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(0, 169, 255, 0.05);
+    transition: all 0.3s ease;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .helpful-links a:hover {
+    background: rgba(0, 169, 255, 0.1);
+    color: var(--color-accent);
+  }
+
+  .error-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    opacity: 0.1;
+  }
+
+  .spotlight {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: spotlight 4s ease-in-out infinite;
+  }
+
+  @keyframes spotlight {
+    0%, 100% {
+      opacity: 0.3;
+      transform: translateX(-50%) scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: translateX(-50%) scale(1.1);
+    }
+  }
+
+  .stage-lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .light {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 30px var(--color-accent);
+    animation: stageLights 3s ease-in-out infinite;
+  }
+
+  .light-1 {
+    animation-delay: 0s;
+  }
+
+  .light-2 {
+    animation-delay: 1s;
+  }
+
+  .light-3 {
+    animation-delay: 2s;
+  }
+
+  @keyframes stageLights {
+    0%, 80%, 100% {
+      opacity: 0.2;
+      transform: scale(1);
+    }
+    40% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .error-page {
+      padding: 100px 0 40px;
+    }
+
+    .error-number {
+      font-size: 8rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    .error-description {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .error-actions {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      max-width: 300px;
+      justify-content: center;
+    }
+
+    .helpful-links ul {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .helpful-links a {
+      display: block;
+      text-align: center;
+    }
+
+    .spotlight {
+      width: 200px;
+      height: 200px;
+    }
+
+    .light {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>

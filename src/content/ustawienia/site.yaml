@@ -1,11 +1,11 @@
 # Site configuration for kapitanie website
+site_name: "kapitanie"
+site_description: "Jesteśmy kapitanami technicznej strony Twojego sukcesu. Zapewniamy kompleksową obsługę multimedialną eventów, koncertów i konferencji."
 company_name: "kapitanie"
-tagline: "Tworzymy niezapomniane wydarzenia"
-description: "Jesteśmy zespołem specjalistów od organizacji wydarzeń, który zamienia Twoje wizje w rzeczywistość. Od konferencji biznesowych po gale firmowe - każdy event realizujemy z pasją i dbałością o najdrobniejsze detale."
 email: "kontakt@kapitanie.pl"
-phone: "+48 123 456 789"
-address: "ul. Eventowa 12, 00-001 Warszawa"
-social:
+phone: "501181703"
+address: "Wieliczka 32-020, ul. Różana 54B/1"
+social_media:
   facebook: ""
   instagram: ""
   linkedin: ""

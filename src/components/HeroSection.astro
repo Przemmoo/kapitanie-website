@@ -1,0 +1,345 @@
+---
+// Hero Section z dynamicznym wideo tłem
+---
+
+<section id="hero" class="hero">
+  <!-- Video background -->
+  <div class="video-container">
+    <video 
+      autoplay 
+      muted 
+      loop 
+      playsinline 
+      class="hero-video"
+      poster="/images/hero-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="/videos/hero-video.mp4" type="video/mp4">
+      <source src="/videos/hero-video.webm" type="video/webm">
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+  <!-- Hero content -->
+  <div class="container">
+    <div class="hero-content">
+      <h1 class="hero-title fade-in-up">
+        Twoje wydarzenie w najlepszym świetle
+      </h1>
+      
+      <p class="hero-subtitle fade-in-up">
+        Jesteśmy kapitanami technicznej strony Twojego sukcesu. 
+        Zapewniamy kompleksową obsługę multimedialną eventów, koncertów i konferencji.
+      </p>
+      
+      <div class="hero-buttons fade-in-up">
+        <a href="#realizacje" class="btn btn-primary">
+          Zobacz nasze realizacje
+        </a>
+        <a href="#kontakt" class="btn btn-secondary">
+          Skontaktuj się z nami
+        </a>
+      </div>
+      
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator">
+        <span class="scroll-text">Przewiń w dół</span>
+        <div class="scroll-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m7 13 5 5 5-5"></path>
+            <path d="m7 6 5 5 5-5"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--text-main);
+  }
+
+  /* Video Background */
+  .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+  }
+
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(18, 18, 18, 0.8) 0%,
+      rgba(31, 31, 31, 0.6) 50%,
+      rgba(18, 18, 18, 0.9) 100%
+    );
+    z-index: -1;
+  }
+
+  /* Fallback background for when video fails */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      var(--bg-main) 0%,
+      var(--bg-secondary) 50%,
+      var(--bg-main) 100%
+    );
+    z-index: -3;
+  }
+
+  /* Hero Content */
+  .hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-title {
+    margin-bottom: 2rem;
+    background: linear-gradient(
+      135deg,
+      var(--text-main) 0%,
+      var(--accent-blue) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation-delay: 0.2s;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    margin-bottom: 3rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    animation-delay: 0.4s;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+    animation-delay: 0.6s;
+  }
+
+  .hero-buttons .btn {
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    min-width: 200px;
+  }
+
+  /* Scroll Indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .scroll-indicator:hover {
+    color: var(--accent-blue);
+  }
+
+  .scroll-text {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+  }
+
+  /* Parallax effect */
+  .hero-video {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 500px;
+      padding-top: 70px;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .hero-buttons .btn {
+      min-width: 250px;
+    }
+
+    .scroll-indicator {
+      bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-content {
+      padding: 0 16px;
+    }
+
+    .hero-buttons .btn {
+      min-width: 200px;
+      padding: 12px 24px;
+      font-size: 1rem;
+    }
+  }
+
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    .video-overlay {
+      background: rgba(0, 0, 0, 0.9);
+    }
+    
+    .hero-title {
+      background: none;
+      -webkit-text-fill-color: var(--text-main);
+      color: var(--text-main);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      transform: none;
+    }
+    
+    .scroll-arrow {
+      animation: none;
+    }
+    
+    .fade-in-up {
+      animation: none;
+    }
+  }
+
+  /* Performance optimizations */
+  .hero-video {
+    will-change: transform;
+  }
+
+  .fade-in-up {
+    will-change: transform, opacity;
+  }
+</style>
+
+<script>
+  // Hero section enhancements
+  document.addEventListener('DOMContentLoaded', () => {
+    const hero = document.querySelector('.hero');
+    const heroVideo = document.querySelector('.hero-video');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    // Parallax effect for video
+    const handleScroll = () => {
+      if (!heroVideo) return;
+      
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * -0.3;
+      
+      heroVideo.style.transform = `scale(1.1) translate3d(0, ${rate}px, 0)`;
+    };
+
+    // Scroll indicator click
+    scrollIndicator?.addEventListener('click', () => {
+      const nextSection = document.querySelector('#o-nas') || document.querySelector('section:nth-of-type(2)');
+      nextSection?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Video error handling
+    if (heroVideo) {
+      heroVideo.addEventListener('error', () => {
+        console.log('Video failed to load, using fallback background');
+        heroVideo.style.display = 'none';
+      });
+
+      // Preload video
+      heroVideo.addEventListener('canplay', () => {
+        heroVideo.style.opacity = '1';
+      });
+    }
+
+    // Add parallax only on desktop
+    if (window.innerWidth > 768) {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+
+    // Animation triggers
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const animationObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-up');
+        }
+      });
+    }, observerOptions);
+
+    // Observe hero elements
+    document.querySelectorAll('.hero-content > *').forEach(el => {
+      animationObserver.observe(el);
+    });
+  });
+</script>

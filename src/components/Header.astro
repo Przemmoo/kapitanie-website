@@ -1,0 +1,311 @@
+---
+// Header component z sticky navigation
+---
+
+<header class="header" id="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo "wąsów" -->
+      <div class="logo">
+        <a href="#hero" aria-label="kapitanie - strona główna">
+          <svg viewBox="0 0 100 40" class="logo-svg">
+            <!-- Stylizowany wąs w stylu kapitańskim -->
+            <path d="M10 20 Q25 10, 40 20 Q55 30, 70 20 Q85 10, 90 20" 
+                  stroke="currentColor" 
+                  stroke-width="3" 
+                  fill="none" 
+                  stroke-linecap="round"/>
+            <path d="M15 25 Q30 15, 45 25 Q60 35, 75 25 Q85 15, 85 25" 
+                  stroke="currentColor" 
+                  stroke-width="2" 
+                  fill="none" 
+                  stroke-linecap="round" 
+                  opacity="0.7"/>
+          </svg>
+          <span class="logo-text">kapitanie</span>
+        </a>
+      </div>
+
+      <!-- Menu nawigacyjne -->
+      <nav class="nav" role="navigation" aria-label="Menu główne">
+        <ul class="nav-list">
+          <li><a href="#o-nas" class="nav-link">O nas</a></li>
+          <li><a href="#realizacje" class="nav-link">Realizacje</a></li>
+          <li><a href="#aplikacja" class="nav-link">Aplikacja</a></li>
+          <li><a href="#klienci" class="nav-link">Klienci</a></li>
+          <li><a href="#kontakt" class="nav-link">Kontakt</a></li>
+          <li><a href="#kontakt" class="btn btn-primary cta-button">Wyceń Projekt</a></li>
+        </ul>
+        
+        <!-- Mobile menu button -->
+        <button class="mobile-menu-btn" aria-label="Otwórz menu mobilne" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-header);
+    background-color: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 169, 255, 0.1);
+    transition: var(--transition-fast);
+  }
+
+  .header.scrolled {
+    background-color: rgba(18, 18, 18, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+  }
+
+  /* Logo */
+  .logo a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-main);
+    transition: var(--transition-fast);
+  }
+
+  .logo a:hover {
+    color: var(--accent-blue);
+  }
+
+  .logo-svg {
+    width: 60px;
+    height: 24px;
+    color: var(--accent-blue);
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  /* Navigation */
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    color: var(--text-main);
+    padding: 8px 0;
+    position: relative;
+    transition: var(--transition-fast);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-blue);
+    transition: var(--transition-fast);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+
+  .nav-link:hover {
+    color: var(--accent-blue);
+  }
+
+  .cta-button {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    padding: 10px 24px;
+  }
+
+  /* Mobile menu */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+
+  .hamburger-line {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-main);
+    transition: var(--transition-fast);
+  }
+
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .nav-list {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background-color: var(--bg-main);
+      flex-direction: column;
+      gap: 0;
+      padding: 2rem 0;
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-fast);
+      border-top: 1px solid rgba(0, 169, 255, 0.1);
+    }
+
+    .nav-list.open {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .nav-list li {
+      width: 100%;
+      text-align: center;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .cta-button {
+      margin: 1rem auto 0;
+      display: inline-block;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+    }
+
+    .mobile-menu-btn.open .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .mobile-menu-btn.open .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-btn.open .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .header-content {
+      height: 60px;
+    }
+
+    .logo-svg {
+      width: 50px;
+      height: 20px;
+    }
+
+    .logo-text {
+      font-size: 1.2rem;
+    }
+  }
+</style>
+
+<script>
+  // Header scroll effect i mobile menu
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('header');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navList = document.querySelector('.nav-list');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // Scroll effect
+    let lastScrollY = window.scrollY;
+    
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > 50) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+      
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Mobile menu toggle
+    mobileMenuBtn?.addEventListener('click', () => {
+      const isOpen = navList?.classList.contains('open');
+      
+      if (isOpen) {
+        navList?.classList.remove('open');
+        mobileMenuBtn?.classList.remove('open');
+        mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+      } else {
+        navList?.classList.add('open');
+        mobileMenuBtn?.classList.add('open');
+        mobileMenuBtn?.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close mobile menu when clicking nav links
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navList?.classList.remove('open');
+        mobileMenuBtn?.classList.remove('open');
+        mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Active navigation highlighting
+    const observerOptions = {
+      threshold: 0.3,
+      rootMargin: '-70px 0px 0px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`[href="#${entry.target.id}"]`);
+          activeLink?.classList.add('active');
+        }
+      });
+    }, observerOptions);
+
+    // Observe sections
+    document.querySelectorAll('section[id]').forEach(section => {
+      observer.observe(section);
+    });
+  });
+</script>
