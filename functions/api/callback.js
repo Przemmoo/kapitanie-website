@@ -32,6 +32,21 @@ export async function onRequest(context) {
     try {
         const url = new URL(request.url);
         const code = url.searchParams.get('code');
+        
+        console.log('Callback URL:', url.toString());
+        console.log('Code received:', code);
+        console.log('Client ID:', client_id);
+        
+        if (!code) {
+            console.error('No code parameter received');
+            return new Response(renderBody('error', { message: 'No authorization code received' }), {
+                headers: {
+                    'content-type': 'text/html',
+                },
+                status: 400,
+            });
+        }
+        
         const response = await fetch(
             'https://github.com/login/oauth/access_token',
             {

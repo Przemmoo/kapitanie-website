@@ -3,32 +3,98 @@ backend:
   repo: Przemmoo/kapitanie-website
   branch: main
   base_url: https://kapitanie-website.pages.dev
-  auth_endpoint: api/auth
+  auth_endpoint: /api/auth
 
 # Uncomment for local development:
 # local_backend: true
 
-# local_backend: true  # Wyłączone dla produkcji - użyj npx @decaporg/decap-server dla lokalnego developmentu
-
 media_folder: "public/images"
 public_folder: "/images"
+
+# Site configuration
+site_url: https://kapitanie-website.pages.dev
+display_url: https://kapitanie-website.pages.dev
+logo_url: https://kapitanie-website.pages.dev/favicon.svg
 
 collections:
   - name: "realizacje"
     label: "Realizacje"
+    label_singular: "Realizacja"
     folder: "src/content/realizacje"
     create: true
     slug: "{{slug}}"
+    summary: "{{title}} - {{client}}"
+    sortable_fields: ["date", "title", "client"]
+    view_filters:
+      - label: "Konferencje"
+        field: category
+        pattern: "Konferencja"
+      - label: "Gale"
+        field: category
+        pattern: "Gala"
+      - label: "Koncerty"
+        field: category
+        pattern: "Koncert"
+      - label: "Eventy Firmowe"
+        field: category
+        pattern: "Event Firmowy"
     fields:
-      - { label: "Tytuł", name: "title", widget: "string" }
-      - { label: "Klient", name: "client", widget: "string" }
-      - { label: "Data", name: "date", widget: "datetime" }
-      - { label: "Kategoria", name: "category", widget: "select", options: ["Konferencja", "Gala", "Koncert", "Event Firmowy"] }
-      - { label: "Zdjęcie główne", name: "featured_image", widget: "image", required: false }
-      - { label: "Opis", name: "description", widget: "markdown" }
-      - { label: "Wyzwanie", name: "challenge", widget: "text" }
-      - { label: "Rozwiązanie", name: "solution", widget: "text" }
-      - { label: "Wyniki", name: "results", widget: "text", required: false }
+      - { label: "Tytuł", name: "title", widget: "string", hint: "Nazwa wydarzenia lub projektu" }
+      - { label: "Klient", name: "client", widget: "string", hint: "Nazwa firmy lub organizatora" }
+      - { label: "Data", name: "date", widget: "datetime", hint: "Data realizacji wydarzenia" }
+      - { 
+          label: "Kategoria", 
+          name: "category", 
+          widget: "select", 
+          options: ["Konferencja", "Gala", "Koncert", "Event Firmowy"],
+          hint: "Typ wydarzenia"
+        }
+      - { 
+          label: "Zdjęcie główne", 
+          name: "featured_image", 
+          widget: "image", 
+          required: false,
+          hint: "Główne zdjęcie reprezentujące projekt"
+        }
+      - { 
+          label: "Galeria zdjęć", 
+          name: "gallery", 
+          widget: "list",
+          required: false,
+          field: { label: "Zdjęcie", name: "image", widget: "image" },
+          hint: "Dodatkowe zdjęcia z wydarzenia"
+        }
+      - { 
+          label: "Opis", 
+          name: "description", 
+          widget: "text",
+          hint: "Krótki opis projektu (1-2 zdania)"
+        }
+      - { 
+          label: "Wyzwanie", 
+          name: "challenge", 
+          widget: "text",
+          hint: "Jakie było główne wyzwanie tego projektu?"
+        }
+      - { 
+          label: "Rozwiązanie", 
+          name: "solution", 
+          widget: "text",
+          hint: "Jak rozwiązaliście to wyzwanie?"
+        }
+      - { 
+          label: "Wyniki", 
+          name: "results", 
+          widget: "text", 
+          required: false,
+          hint: "Jakie były osiągnięte rezultaty? (opcjonalne)"
+        }
+      - { 
+          label: "Treść", 
+          name: "body", 
+          widget: "markdown",
+          hint: "Szczegółowy opis projektu w formacie Markdown"
+        }
 
   - name: "ustawienia"
     label: "Ustawienia strony"
@@ -37,9 +103,52 @@ collections:
         name: "site"
         file: "src/content/ustawienia/site.yaml"
         fields:
-          - { label: "Nazwa firmy", name: "company_name", widget: "string" }
-          - { label: "Slogan", name: "tagline", widget: "string" }
-          - { label: "Opis firmy", name: "description", widget: "text" }
-          - { label: "Email", name: "email", widget: "string" }
-          - { label: "Telefon", name: "phone", widget: "string" }
-          - { label: "Adres", name: "address", widget: "text" }
+          - { 
+              label: "Nazwa strony", 
+              name: "site_name", 
+              widget: "string", 
+              default: "kapitanie",
+              hint: "Nazwa wyświetlana w tytule strony"
+            }
+          - { 
+              label: "Opis strony", 
+              name: "site_description", 
+              widget: "text",
+              hint: "Opis strony dla SEO i social media"
+            }
+          - { 
+              label: "Nazwa firmy", 
+              name: "company_name", 
+              widget: "string", 
+              default: "kapitanie",
+              hint: "Oficjalna nazwa firmy"
+            }
+          - { 
+              label: "Email", 
+              name: "email", 
+              widget: "string", 
+              pattern: ["^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", "Wprowadź poprawny adres email"],
+              hint: "Główny adres email firmy"
+            }
+          - { 
+              label: "Telefon", 
+              name: "phone", 
+              widget: "string",
+              hint: "Numer telefonu kontaktowego"
+            }
+          - { 
+              label: "Adres", 
+              name: "address", 
+              widget: "text",
+              hint: "Pełny adres firmy"
+            }
+          - {
+              label: "Social Media",
+              name: "social_media",
+              widget: "object",
+              fields: [
+                { label: "Facebook", name: "facebook", widget: "string", required: false },
+                { label: "Instagram", name: "instagram", widget: "string", required: false },
+                { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
+              ]
+            }
