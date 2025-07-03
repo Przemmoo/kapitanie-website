@@ -4,8 +4,6 @@ export interface Props {
   data?: {
     title?: string;
     subtitle?: string;
-    working_hours?: string;
-    response_time?: string;
     contact_methods?: Array<{
       icon: string;
       title: string;
@@ -20,9 +18,7 @@ const { data } = Astro.props;
 // Fallback values jeśli brak danych z CMS
 const contactData = {
   title: data?.title || "Porozmawiajmy o Twoim wydarzeniu",
-  subtitle: data?.subtitle || "Masz pomysł, planujesz event lub potrzebujesz wyceny? Wypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin.",
-  working_hours: data?.working_hours || "Poniedziałek - Piątek: 9:00 - 18:00",
-  response_time: data?.response_time || "Średni czas odpowiedzi: 2 godziny",
+  subtitle: data?.subtitle || "Masz pomysł, planujesz event lub potrzebujesz wyceny?\nWypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin.",
   contact_methods: data?.contact_methods || [
     {
       icon: "phone",
@@ -41,6 +37,16 @@ const contactData = {
       title: "Adres",
       value: "ul. Różana 54B/1, 32-020 Wieliczka",
       link: "https://maps.google.com/maps?q=ul.+Różana+54B/1,+32-020+Wieliczka"
+    },
+    {
+      icon: "clock",
+      title: "Godziny pracy",
+      value: "Poniedziałek - Piątek: 9:00 - 18:00"
+    },
+    {
+      icon: "timer",
+      title: "Czas odpowiedzi",
+      value: "Średni czas odpowiedzi: 2 godziny"
     }
   ]
 };
@@ -51,8 +57,7 @@ const contactData = {
     <!-- Section Header -->
     <div class="section-header">
       <h2 class="section-title">{contactData.title}</h2>
-      <p class="section-subtitle">
-        {contactData.subtitle}
+      <p class="section-subtitle" set:html={contactData.subtitle.replace(/\n/g, '<br />')}>
       </p>
     </div>
 
@@ -138,9 +143,6 @@ const contactData = {
               <option value="">Wybierz rodzaj wydarzenia</option>
               <option value="konferencja">Konferencja</option>
               <option value="gala">Gala firmowa</option>
-              <option value="koncert">Koncert</option>
-              <option value="pokaz-mody">Pokaz mody</option>
-              <option value="wesele">Wesele</option>
               <option value="event-korporacyjny">Event korporacyjny</option>
               <option value="targi">Targi / Wystawa</option>
               <option value="inne">Inne</option>
@@ -182,40 +184,58 @@ const contactData = {
 
           <div class="form-group">
             <label for="services">Potrzebne usługi</label>
-            <div class="checkbox-group">
+            <div class="checkbox-grid">
+              <label class="checkbox-label">
+                <input type="checkbox" name="services" value="kompleksowa" />
+                <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                  <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="checkbox-text">Obsługa kompleksowa</span>
+              </label>
               <label class="checkbox-label">
                 <input type="checkbox" name="services" value="oswietlenie" />
-                <span class="checkmark"></span>
-                Oświetlenie sceniczne
+                <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                  <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="checkbox-text">Oświetlenie sceniczne</span>
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" name="services" value="naglosnienie" />
-                <span class="checkmark"></span>
-                Nagłośnienie
+                <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                  <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="checkbox-text">Nagłośnienie</span>
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" name="services" value="multimedia" />
-                <span class="checkmark"></span>
-                Multimedia / Ekrany LED
-              </label>
-              <label class="checkbox-label">
-                <input type="checkbox" name="services" value="aplikacja" />
-                <span class="checkmark"></span>
-                Aplikacja eventowa
+                <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                  <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="checkbox-text">Multimedia / Ekrany LED</span>
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" name="services" value="streaming" />
-                <span class="checkmark"></span>
-                Transmisja online
+                <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                  <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="checkbox-text">Transmisja online</span>
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="services" value="kompleksowa" />
-                <span class="checkmark"></span>
-                Obsługa kompleksowa
+                <input type="checkbox" name="services" value="aplikacja" />
+                <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                  <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                  <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="checkbox-text">Aplikacja eventowa</span>
               </label>
             </div>
           </div>
-
+<br>
           <div class="form-group">
             <label for="message">Opisz swoje wydarzenie *</label>
             <textarea 
@@ -232,18 +252,13 @@ const contactData = {
           <div class="form-group checkbox-group">
             <label class="checkbox-label">
               <input type="checkbox" name="privacy" required aria-describedby="privacy-error" />
-              <span class="checkmark"></span>
-              Akceptuję <a href="/polityka-prywatnosci" target="_blank">politykę prywatności</a> *
+              <svg class="checkbox-icon" viewBox="0 0 20 20" fill="none">
+                <rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2.5"/>
+                <path class="check" d="M6 10l3 3 5-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span class="checkbox-text">Akceptuję <a href="/polityka-prywatnosci" target="_blank">politykę prywatności</a> *</span>
             </label>
             <span class="error-message" id="privacy-error"></span>
-          </div>
-
-          <div class="form-group checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" name="newsletter" />
-              <span class="checkmark"></span>
-              Chcę otrzymywać newsletter z informacjami o nowościach i inspiracjach eventowych
-            </label>
           </div>
 
           <button type="submit" class="btn btn-primary submit-btn">
@@ -295,6 +310,15 @@ const contactData = {
                       <polyline points="12,6 12,12 16,14"/>
                     </svg>
                   )}
+                  {method.icon === 'timer' && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M12 1v6m0 6v6"/>
+                      <path d="m15.14 7.86-4.28 4.28"/>
+                      <path d="m9.86 15.14 4.28-4.28"/>
+                      <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                  )}
                 </div>
                 <div class="contact-details">
                   <span class="contact-label">{method.title}</span>
@@ -306,33 +330,6 @@ const contactData = {
                 </div>
               </div>
             ))}
-            
-            <!-- Dodatkowe informacje -->
-            <div class="contact-method">
-              <div class="contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polyline points="12,6 12,12 16,14"/>
-                </svg>
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Godziny pracy</span>
-                <span class="contact-value">{contactData.working_hours}</span>
-              </div>
-            </div>
-            
-            <div class="contact-method">
-              <div class="contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="2"/>
-                  <path d="M20.2 20.2c2.04-2.03.02-7.36-.61-10.57C19.59 9.63 19.59 6.37 19.59 6.37s-1.17-2.63-7.59-2.63S4.41 6.37 4.41 6.37s0 3.26 0 3.26c-.63 3.21-2.65 8.54-.61 10.57"/>
-                </svg>
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Czas odpowiedzi</span>
-                <span class="contact-value">{contactData.response_time}</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -391,12 +388,12 @@ const contactData = {
   }
 
   .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
   }
 
   .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
     color: var(--text-main);
     font-weight: 600;
     font-size: 0.9rem;
@@ -406,7 +403,7 @@ const contactData = {
   .form-group select,
   .form-group textarea {
     width: 100%;
-    padding: 12px 16px;
+    padding: 10px 16px;
     background: var(--bg-main);
     border: 2px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
@@ -433,13 +430,19 @@ const contactData = {
   .checkbox-group {
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1rem;
   }
 
   .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
     cursor: pointer;
     font-size: 0.9rem;
     color: var(--text-main);
@@ -454,32 +457,48 @@ const contactData = {
     display: none;
   }
 
-  .checkmark {
-    width: 20px;
-    height: 20px;
-    background: var(--bg-main);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    position: relative;
+  .checkbox-icon {
+    width: 18px;
+    height: 18px;
+    color: rgba(255, 255, 255, 0.2);
     transition: var(--transition-fast);
     flex-shrink: 0;
+    vertical-align: top;
   }
 
-  .checkbox-label input[type="checkbox"]:checked + .checkmark {
-    background: var(--accent-blue);
-    border-color: var(--accent-blue);
+  .checkbox-label span {
+    line-height: 18px;
+    display: inline-block;
   }
 
-  .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 2px;
-    width: 6px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
+  .checkbox-text {
+    font-size: 0.9rem;
+    line-height: 18px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    position: relative;
+    top: -3.5px;
+    left: 5px;
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-icon {
+    color: var(--accent-blue);
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-icon rect {
+    fill: var(--accent-blue);
+    stroke: var(--accent-blue);
+  }
+
+  .checkbox-label input[type="checkbox"] + .checkbox-icon .check {
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .checkbox-label input[type="checkbox"]:checked + .checkbox-icon .check {
+    opacity: 1;
   }
 
   /* Submit button */
@@ -706,6 +725,10 @@ const contactData = {
     .form-row {
       grid-template-columns: 1fr;
       gap: 0;
+    }
+
+    .checkbox-grid {
+      grid-template-columns: 1fr;
     }
 
     .contact-form-container {

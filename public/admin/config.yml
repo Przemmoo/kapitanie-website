@@ -260,18 +260,23 @@ collections:
         file: "src/content/sekcje/contact.yaml"
         fields:
           - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji kontaktowej" }
-          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis nad formularzem" }
-          - { label: "Godziny pracy", name: "working_hours", widget: "string", hint: "Godziny dostępności" }
-          - { label: "Informacja o czasie odpowiedzi", name: "response_time", widget: "string", hint: "Średni czas odpowiedzi" }
+          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis nad formularzem - użyj \\n dla nowych linii" }
           - { 
               label: "Metody kontaktu", 
               name: "contact_methods", 
               widget: "list",
+              hint: "Lista wszystkich metod kontaktu włącznie z godzinami pracy i czasem odpowiedzi",
               fields: [
-                { label: "Ikona", name: "icon", widget: "string" },
+                { 
+                  label: "Ikona", 
+                  name: "icon", 
+                  widget: "select",
+                  options: ["phone", "mail", "map-pin", "clock", "timer"],
+                  hint: "phone (telefon), mail (email), map-pin (adres), clock (godziny pracy), timer (czas odpowiedzi)"
+                },
                 { label: "Tytuł", name: "title", widget: "string" },
                 { label: "Wartość", name: "value", widget: "string" },
-                { label: "Link", name: "link", widget: "string", required: false }
+                { label: "Link", name: "link", widget: "string", required: false, hint: "Opcjonalny link (tel:, mailto:, https:)" }
               ]
             }
 

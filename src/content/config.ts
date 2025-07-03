@@ -103,8 +103,6 @@ const sekcje = defineCollection({
     z.object({
       title: z.string(),
       subtitle: z.string(),
-      working_hours: z.string(),
-      response_time: z.string(),
       contact_methods: z.array(z.object({
         icon: z.string(),
         title: z.string(),
