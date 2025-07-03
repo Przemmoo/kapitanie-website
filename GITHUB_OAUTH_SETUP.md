@@ -1,16 +1,8 @@
 # GitHub OAuth App Configuration
 
-## ✅ ROZWIĄZANIE DZIAŁA!
+## AKTUALNY STATUS - POPRAWIONY ✅
 
-**Status:** Panel CMS działa poprawnie z GitHub OAuth przez funkcje Cloudflare!
-
-**Rozwiązanie:** Użycie dedykowanych funkcji Cloudflare (`functions/api/auth.js` i `functions/api/callback.js`) zamiast próby użycia `auth_type: implicit` lub zewnętrznych proxy.
-
-**Kluczowe elementy:**
-- ✅ Funkcje Cloudflare obsługują OAuth flow
-- ✅ GitHub OAuth App callback URL: `https://kapitanie-website.pages.dev/api/callback`
-- ✅ Config.yml wskazuje na nasze endpointy: `base_url` i `auth_endpoint`
-- ✅ Variables and Secrets poprawnie skonfigurowane
+✅ **ROZWIĄZANO:** Poprawiony Client ID na `Ov23ctnA9FmTTvGVovkR`
 
 ## Instrukcja konfiguracji GitHub OAuth dla Decap CMS
 
@@ -22,9 +14,9 @@
    - **Application name:** `kapitanie CMS`
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
-   - **Authorization callback URL:** `https://kapitanie-website.pages.dev/api/callback`
+   - **Authorization callback URL:** `https://api.netlify.com/auth/done`
    
-   **WAŻNE:** Używamy nasze własne funkcje Cloudflare OAuth
+   **WAŻNE:** Używamy Netlify OAuth proxy dla lepszej kompatybilności
    
    **AKTUALIZACJA:** Przełączono na Static CMS dla lepszej kompatybilności z GitHub OAuth
 4. Zapisz aplikację

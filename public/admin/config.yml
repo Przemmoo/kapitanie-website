@@ -2,9 +2,8 @@ backend:
   name: github
   repo: Przemmoo/kapitanie-website
   branch: main
-  site_domain: kapitanie-website.pages.dev
-  base_url: https://kapitanie-website.pages.dev
-  auth_endpoint: api/auth
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 # Uncomment for local development:
 # local_backend: true
