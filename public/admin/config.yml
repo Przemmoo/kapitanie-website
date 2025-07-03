@@ -182,7 +182,7 @@ collections:
               name: "pillars", 
               widget: "list",
               fields: [
-                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony (np. 'lightbulb', 'sound')" },
+                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. lightbulb, mic, monitor, audio-lines, heart, star, settings). Zobacz pełną listę: https://lucide.dev/icons/" },
                 { label: "Tytuł", name: "title", widget: "string" },
                 { label: "Opis", name: "description", widget: "text" }
               ]
@@ -209,7 +209,7 @@ collections:
               name: "features", 
               widget: "list",
               fields: [
-                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony" },
+                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. message-circle, calendar, users, phone, heart). Zobacz pełną listę: https://lucide.dev/icons/" },
                 { label: "Tytuł", name: "title", widget: "string" },
                 { label: "Opis", name: "description", widget: "text" }
               ]
@@ -270,9 +270,8 @@ collections:
                 { 
                   label: "Ikona", 
                   name: "icon", 
-                  widget: "select",
-                  options: ["phone", "mail", "map-pin", "clock", "timer"],
-                  hint: "phone (telefon), mail (email), map-pin (adres), clock (godziny pracy), timer (czas odpowiedzi)"
+                  widget: "string",
+                  hint: "Nazwa ikony z Lucide Icons (np. phone, mail, map-pin, clock, timer, home, settings). Zobacz pełną listę: https://lucide.dev/icons/"
                 },
                 { label: "Tytuł", name: "title", widget: "string" },
                 { label: "Wartość", name: "value", widget: "string" },
