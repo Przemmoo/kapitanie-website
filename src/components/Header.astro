@@ -8,20 +8,7 @@
       <!-- Logo "wąsów" -->
       <div class="logo">
         <a href="#hero" aria-label="kapitanie - strona główna">
-          <svg viewBox="0 0 100 40" class="logo-svg">
-            <!-- Stylizowany wąs w stylu kapitańskim -->
-            <path d="M10 20 Q25 10, 40 20 Q55 30, 70 20 Q85 10, 90 20" 
-                  stroke="currentColor" 
-                  stroke-width="3" 
-                  fill="none" 
-                  stroke-linecap="round"/>
-            <path d="M15 25 Q30 15, 45 25 Q60 35, 75 25 Q85 15, 85 25" 
-                  stroke="currentColor" 
-                  stroke-width="2" 
-                  fill="none" 
-                  stroke-linecap="round" 
-                  opacity="0.7"/>
-          </svg>
+          <img src="/favicon.svg" alt="kapitanie logo" class="logo-svg" />
           <span class="logo-text">kapitanie</span>
         </a>
       </div>
@@ -89,7 +76,7 @@
   .logo-svg {
     width: 60px;
     height: 24px;
-    color: var(--accent-blue);
+    object-fit: contain;
   }
 
   .logo-text {
