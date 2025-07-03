@@ -11,6 +11,8 @@
    - **Homepage URL:** `https://kapitanie-website.pages.dev`
    - **Application description:** `CMS dla strony kapitanie`
    - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/`
+4. **WAŻNE:** Zaznacz **"Enable Device Flow"** (jeśli dostępne)
+5. Zapisz aplikację
 
 ### Krok 2: Po utworzeniu OAuth App
 

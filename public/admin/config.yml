@@ -2,6 +2,11 @@ backend:
   name: github
   repo: Przemmoo/kapitanie-website
   branch: main
+  auth_type: implicit
+  app_id: 0v23ctnA9FmTTvGVovkR
+  auth_scope: repo
+
+local_backend: true
 
 media_folder: "public/images"
 public_folder: "/images"

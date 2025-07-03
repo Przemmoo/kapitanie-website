@@ -1,11 +1,161 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Pobierz dane firmy z CMS
+const siteData = await import('../content/ustawienia/site.yaml').then(m => m.default).catch(() => ({
+  company_name: "kapitanie",
+  tagline: "Tworzymy niezapomniane wydarzenia", 
+  description: "Jesteśmy zespołem specjalistów od organizacji wydarzeń, który zamienia Twoje wizje w rzeczywistość.",
+  email: "kontakt@kapitanie.pl",
+  phone: "+48 123 456 789"
+}));
+
+// Pobierz najnowsze realizacje
+const realizacje = await getCollection('realizacje');
+const najnowszeRealizacje = realizacje.slice(0, 3);
 ---
 
 <Layout>
-	<Welcome />
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>{siteData.company_name}</h1>
+        <p class="tagline">{siteData.tagline}</p>
+        <p class="description">{siteData.description}</p>
+        <a href="#kontakt" class="cta-button">Skontaktuj się z nami</a>
+      </div>
+    </section>
+
+    <!-- Najnowsze Realizacje -->
+    <section class="realizacje">
+      <div class="container">
+        <h2>Nasze Najnowsze Realizacje</h2>
+        <div class="realizacje-grid">
+          {najnowszeRealizacje.map((realizacja) => (
+            <div class="realizacja-card">
+              <h3>{realizacja.data.title}</h3>
+              <p><strong>Klient:</strong> {realizacja.data.client}</p>
+              <p><strong>Kategoria:</strong> {realizacja.data.category}</p>
+              <p>{realizacja.data.description.slice(0, 150)}...</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt" class="kontakt">
+      <div class="container">
+        <h2>Kontakt</h2>
+        <div class="kontakt-info">
+          <p><strong>Email:</strong> {siteData.email}</p>
+          <p><strong>Telefon:</strong> {siteData.phone}</p>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+  }
+
+  .hero h1 {
+    font-size: 3.5rem;
+    margin: 0 0 20px 0;
+    font-weight: bold;
+  }
+
+  .tagline {
+    font-size: 1.5rem;
+    margin: 0 0 20px 0;
+    opacity: 0.9;
+  }
+
+  .description {
+    font-size: 1.1rem;
+    margin: 0 0 40px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .cta-button {
+    background: white;
+    color: #667eea;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .realizacje {
+    padding: 80px 0;
+    background: #f8f9fa;
+  }
+
+  .realizacje h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: #333;
+  }
+
+  .realizacje-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .realizacja-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .realizacja-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .realizacja-card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+  }
+
+  .kontakt {
+    padding: 80px 0;
+    background: #333;
+    color: white;
+    text-align: center;
+  }
+
+  .kontakt h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+
+  .kontakt-info p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+</style>
