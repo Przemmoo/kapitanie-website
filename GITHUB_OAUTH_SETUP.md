@@ -17,6 +17,8 @@
    - **Authorization callback URL:** `https://kapitanie-website.pages.dev/admin/`
    
    **WAŻNE:** Sprawdź czy callback URL kończy się na `/admin/` (z ukośnikiem na końcu)
+   
+   **AKTUALIZACJA:** Przełączono na Static CMS dla lepszej kompatybilności z GitHub OAuth
 4. Zapisz aplikację
 
 ### Krok 2: Po utworzeniu OAuth App

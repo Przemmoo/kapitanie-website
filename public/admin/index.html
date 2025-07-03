@@ -9,14 +9,21 @@
   <meta http-equiv="Expires" content="0" />
 </head>
 <body>
-  <!-- Include the script that builds the page and powers Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <!-- Static CMS - lepsze wsparcie dla GitHub OAuth -->
+  <script src="https://unpkg.com/@staticcms/app@^4.0.0/dist/static-cms-app.js"></script>
   
   <script>
-    // Debug information
-    console.log('Decap CMS loading...');
+    // Debug information for Static CMS
+    console.log('Static CMS loading...');
     console.log('Current URL:', window.location.href);
     console.log('Hash:', window.location.hash);
+    
+    // Initialize Static CMS
+    window.CMS_MANUAL_INIT = true;
+    
+    window.addEventListener('load', function() {
+      window.CMS.init();
+    });
     
     // Handle potential authentication issues
     window.addEventListener('message', function(e) {
