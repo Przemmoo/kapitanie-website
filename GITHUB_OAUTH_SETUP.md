@@ -27,18 +27,16 @@
 2. Wygeneruj i skopiuj **Client Secret**
 3. Zaktualizuj `app_id` w pliku `public/admin/config.yml`
 
-### Krok 3: Konfiguracja Environment Variables w Cloudflare Pages
+### Krok 3: Konfiguracja Variables and Secrets w Cloudflare Pages
 
 W panelu Cloudflare Pages dla projektu `kapitanie-website`:
 
-1. Idź do **Settings** > **Environment variables**
-2. Dodaj zmienne:
-   - **GITHUB_CLIENT_ID:** `Ov23ctnA9FmTTvGVovkR` (Type: Text)
+1. Idź do **Settings** > **Variables and Secrets**
+2. W sekcji "Variables and Secrets" dodaj zmienne:
+   - **GITHUB_CLIENT_ID:** `Ov23ctnA9FmTTvGVovkR` (Type: Plaintext)
    - **GITHUB_CLIENT_SECRET:** `[Twój Client Secret]` (Type: Secret)
-   - **OAUTH_GITHUB_CLIENT_ID:** `Ov23ctnA9FmTTvGVovkR` (Type: Text) - dla proxy
-   - **OAUTH_GITHUB_CLIENT_SECRET:** `[Twój Client Secret]` (Type: Secret) - dla proxy
 
-**UWAGA:** Proxy serwer wymaga zarówno GITHUB_* jak i OAUTH_GITHUB_* zmiennych!
+**UWAGA:** W Cloudflare Pages to nazywa się "Variables and Secrets", nie "Environment Variables"!
 
 **UWAGA:** Upewnij się, że nazwy zmiennych są DOKŁADNIE takie jak powyżej!
 
