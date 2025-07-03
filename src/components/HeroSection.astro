@@ -55,8 +55,7 @@ const heroData = {
         {heroData.title}
       </h1>
       
-      <p class="hero-subtitle fade-in-up">
-        {heroData.subtitle}
+      <p class="hero-subtitle fade-in-up" set:html={heroData.subtitle.replace(/\n/g, '<br />')}>
       </p>
       
       <div class="hero-buttons fade-in-up">

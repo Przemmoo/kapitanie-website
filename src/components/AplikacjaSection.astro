@@ -46,8 +46,19 @@ const appData = {
 
 <section id="aplikacja" class="section section-secondary aplikacja-section">
   <div class="container">
+    <!-- Section Header - wycentrowany -->
+    <div class="section-header">
+      <h2 class="section-title">
+        {appData.title}
+      </h2>
+      
+      <p class="section-intro" set:html={appData.intro.replace(/\n/g, '<br />')}>
+      </p>
+    </div>
+
+    <!-- Główna siatka 50:50 -->
     <div class="aplikacja-grid">
-      <!-- Lewa strona - Mockup aplikacji -->
+      <!-- Lewa kolumna - Mockup aplikacji -->
       <div class="app-mockup">
         <div class="phone-container">
           <div class="phone-frame">
@@ -155,16 +166,8 @@ const appData = {
         </div>
       </div>
 
-      <!-- Prawa strona - Informacje o aplikacji -->
+      <!-- Prawa kolumna - Funkcje i CTA -->
       <div class="app-info">
-        <h2 class="section-title">
-          {appData.title}
-        </h2>
-        
-        <p class="app-description">
-          {appData.intro}
-        </p>
-
         <!-- Lista funkcji -->
         <div class="features-list">
           {appData.features.map((feature) => (
@@ -194,7 +197,7 @@ const appData = {
               </div>
               <div class="feature-content">
                 <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
+                <p set:html={feature.description.replace(/\n/g, '<br />')}></p>
               </div>
             </div>
           ))}
@@ -223,6 +226,27 @@ const appData = {
   .aplikacja-section {
     position: relative;
     overflow: hidden;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+  }
+
+  .section-intro {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
   }
 
   .aplikacja-grid {
@@ -536,12 +560,7 @@ const appData = {
 
   /* App Info */
   .app-info {
-    padding-left: 2rem;
-  }
-
-  .section-title {
-    color: var(--text-main);
-    margin-bottom: 2rem;
+    padding-right: 2rem;
   }
 
   .app-description {
@@ -640,7 +659,7 @@ const appData = {
     }
 
     .app-info {
-      padding-left: 1rem;
+      padding-right: 1rem;
     }
 
     .phone-frame {
@@ -656,7 +675,7 @@ const appData = {
     }
 
     .app-info {
-      padding-left: 0;
+      padding-right: 0;
     }
 
     .floating-element {

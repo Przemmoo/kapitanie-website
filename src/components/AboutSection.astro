@@ -80,8 +80,7 @@ const aboutData = {
         </h2>
         
         <div class="about-text">
-          <p class="lead">
-            {aboutData.description}
+          <p class="lead" set:html={aboutData.description.replace(/\n/g, '<br />')}>
           </p>
         </div>
 
@@ -116,7 +115,7 @@ const aboutData = {
                 </svg>
               </div>
               <h3>{pillar.title}</h3>
-              <p>{pillar.description}</p>
+              <p set:html={pillar.description.replace(/\n/g, '<br />')}></p>
             </div>
           ))}
         </div>
