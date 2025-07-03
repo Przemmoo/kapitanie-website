@@ -1,5 +1,5 @@
 ---
-title: Konferencja Tech Summit 2024
+title: Konferencja Tech Summit 2025
 client: TechCorp
 date: 2024-06-15
 category: Konferencja
