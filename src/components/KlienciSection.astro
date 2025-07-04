@@ -3,6 +3,9 @@
 export interface Props {
   data?: {
     title?: string;
+    subtitle?: string;
+    hidden?: boolean;
+    hide_testimonials?: boolean;
     client_logos?: Array<{
       name: string;
       logo: string;
@@ -25,14 +28,22 @@ export interface Props {
 
 const { data } = Astro.props;
 
+// Jeśli sekcja jest ukryta, nie renderuj jej
+if (data?.hidden) {
+  return null;
+}
+
 // Fallback values jeśli brak danych z CMS
 const clientsData = {
   title: data?.title || "Cieszymy się zaufaniem najlepszych",
+  subtitle: data?.subtitle || "Od startupsów po korporacje, od lokalnych eventów po międzynarodowe konferencje - każdego klienta traktujemy z równą pasją i zaangażowaniem.",
+  hidden: data?.hidden || false,
+  hide_testimonials: data?.hide_testimonials || false,
   stats: data?.stats || [
-    { number: "150", label: "Zadowolonych klientów" },
-    { number: "300", label: "Zrealizowanych projektów" },
-    { number: "98", label: "% satysfakcji" },
-    { number: "10", label: "Lat na rynku" }
+    { number: "150+", label: "Zadowolonych klientów" },
+    { number: "300+", label: "Zrealizowanych projektów" },
+    { number: "98%", label: "satysfakcji" },
+    { number: "10+", label: "Lat na rynku" }
   ],
   client_logos: data?.client_logos || [],
   testimonials: data?.testimonials || []
@@ -45,8 +56,7 @@ const clientsData = {
     <div class="section-header">
       <h2 class="section-title">{clientsData.title}</h2>
       <p class="section-subtitle">
-        Od startupsów po korporacje, od lokalnych eventów po międzynarodowe konferencje - 
-        każdego klienta traktujemy z równą pasją i zaangażowaniem.
+        {clientsData.subtitle}
       </p>
     </div>
 
@@ -63,140 +73,156 @@ const clientsData = {
     <!-- Karuzela logotypów -->
     <div class="clients-carousel-container">
       <div class="clients-carousel">
-        <!-- Pierwsza linia logotypów -->
-        <div class="carousel-track" data-direction="left">
-          <!-- Tier 1 - Premium clients -->
-          <div class="client-logo premium">
-            <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
+        {clientsData.client_logos.length > 0 ? (
+          <div class="carousel-track" data-direction="left">
+            {clientsData.client_logos.map((client, index) => (
+              <div class="client-logo">
+                <img src={client.logo} alt={client.name} loading="lazy" />
+              </div>
+            ))}
+            <!-- Duplicated for seamless loop -->
+            {clientsData.client_logos.map((client, index) => (
+              <div class="client-logo">
+                <img src={client.logo} alt={client.name} loading="lazy" />
+              </div>
+            ))}
           </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
+        ) : (
+          <!-- Fallback hardcoded logos if no CMS data -->
+          <div class="carousel-track" data-direction="left">
+            <!-- Tier 1 - Premium clients -->
+            <div class="client-logo premium">
+              <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
+            </div>
+            
+            <!-- Duplicated for seamless loop -->
+            <div class="client-logo premium">
+              <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
+            </div>
+            <div class="client-logo premium">
+              <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
+            </div>
           </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
-          </div>
-          
-          <!-- Duplicated for seamless loop -->
-          <div class="client-logo premium">
-            <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
-          </div>
-          <div class="client-logo premium">
-            <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
-          </div>
-        </div>
 
-        <!-- Druga linia logotypów -->
-        <div class="carousel-track" data-direction="right">
-          <!-- Tier 2 - Tech companies -->
-          <div class="client-logo">
-            <img src="/images/clients/spotify.svg" alt="Spotify" loading="lazy" />
+          <!-- Druga linia logotypów -->
+          <div class="carousel-track" data-direction="right">
+            <!-- Tier 2 - Tech companies -->
+            <div class="client-logo">
+              <img src="/images/clients/spotify.svg" alt="Spotify" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/tesla.svg" alt="Tesla" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/uber.svg" alt="Uber" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/airbnb.svg" alt="Airbnb" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/slack.svg" alt="Slack" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/zoom.svg" alt="Zoom" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/dropbox.svg" alt="Dropbox" loading="lazy" />
+            </div>
+            
+            <!-- Duplicated for seamless loop -->
+            <div class="client-logo">
+              <img src="/images/clients/spotify.svg" alt="Spotify" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/tesla.svg" alt="Tesla" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/uber.svg" alt="Uber" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/airbnb.svg" alt="Airbnb" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/slack.svg" alt="Slack" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/zoom.svg" alt="Zoom" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/dropbox.svg" alt="Dropbox" loading="lazy" />
+            </div>
           </div>
-          <div class="client-logo">
-            <img src="/images/clients/tesla.svg" alt="Tesla" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/uber.svg" alt="Uber" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/airbnb.svg" alt="Airbnb" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/slack.svg" alt="Slack" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/zoom.svg" alt="Zoom" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/dropbox.svg" alt="Dropbox" loading="lazy" />
-          </div>
-          
-          <!-- Duplicated for seamless loop -->
-          <div class="client-logo">
-            <img src="/images/clients/spotify.svg" alt="Spotify" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/tesla.svg" alt="Tesla" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/uber.svg" alt="Uber" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/airbnb.svg" alt="Airbnb" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/slack.svg" alt="Slack" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/zoom.svg" alt="Zoom" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/dropbox.svg" alt="Dropbox" loading="lazy" />
-          </div>
-        </div>
 
-        <!-- Trzecia linia logotypów -->
-        <div class="carousel-track" data-direction="left">
-          <!-- Tier 3 - Local companies -->
-          <div class="client-logo">
-            <img src="/images/clients/allegro.svg" alt="Allegro" loading="lazy" />
+          <!-- Trzecia linia logotypów -->
+          <div class="carousel-track" data-direction="left">
+            <!-- Tier 3 - Local companies -->
+            <div class="client-logo">
+              <img src="/images/clients/allegro.svg" alt="Allegro" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/cd-projekt.svg" alt="CD Projekt" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/pko.svg" alt="PKO Bank Polski" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/orlen.svg" alt="Orlen" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/asseco.svg" alt="Asseco" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/livechat.svg" alt="LiveChat" loading="lazy" />
+            </div>
+            
+            <!-- Duplicated for seamless loop -->
+            <div class="client-logo">
+              <img src="/images/clients/allegro.svg" alt="Allegro" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/cd-projekt.svg" alt="CD Projekt" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/pko.svg" alt="PKO Bank Polski" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/orlen.svg" alt="Orlen" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/asseco.svg" alt="Asseco" loading="lazy" />
+            </div>
+            <div class="client-logo">
+              <img src="/images/clients/livechat.svg" alt="LiveChat" loading="lazy" />
+            </div>
           </div>
-          <div class="client-logo">
-            <img src="/images/clients/cd-projekt.svg" alt="CD Projekt" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/pko.svg" alt="PKO Bank Polski" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/orlen.svg" alt="Orlen" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/asseco.svg" alt="Asseco" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/livechat.svg" alt="LiveChat" loading="lazy" />
-          </div>
-          
-          <!-- Duplicated for seamless loop -->
-          <div class="client-logo">
-            <img src="/images/clients/allegro.svg" alt="Allegro" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/cd-projekt.svg" alt="CD Projekt" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/pko.svg" alt="PKO Bank Polski" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/orlen.svg" alt="Orlen" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/asseco.svg" alt="Asseco" loading="lazy" />
-          </div>
-          <div class="client-logo">
-            <img src="/images/clients/livechat.svg" alt="LiveChat" loading="lazy" />
-          </div>
-        </div>
+        )}
       </div>
 
       <!-- Gradient overlays for smooth edges -->
@@ -205,68 +231,43 @@ const clientsData = {
     </div>
 
     <!-- Testimonials -->
-    <div class="testimonials">
-      <div class="testimonial active">
-        <div class="testimonial-content">
-          <blockquote>
-            "kapitanie" to zespół, na który zawsze możemy liczyć. Ich profesjonalizm i dbałość o detale 
-            sprawiają, że każdy nasz event jest wyjątkowy."
-          </blockquote>
-          <div class="testimonial-author">
-            <div class="author-info">
-              <div class="author-name">Anna Kowalska</div>
-              <div class="author-position">Event Manager, TechCorp</div>
-            </div>
-            <div class="author-avatar">
-              <img src="/images/testimonials/anna-kowalska.jpg" alt="Anna Kowalska" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <blockquote>
-            "Dzięki wsparciu kapitanie nasze konferencje osiągnęły nowy poziom. Ich autorska aplikacja 
-            mobilna znacznie zwiększyła zaangażowanie uczestników."
-          </blockquote>
-          <div class="testimonial-author">
-            <div class="author-info">
-              <div class="author-name">Michał Nowak</div>
-              <div class="author-position">CEO, StartupHub</div>
-            </div>
-            <div class="author-avatar">
-              <img src="/images/testimonials/michal-nowak.jpg" alt="Michał Nowak" loading="lazy" />
+    {!clientsData.hide_testimonials && clientsData.testimonials.length > 0 && (
+      <div class="testimonials">
+        {clientsData.testimonials.map((testimonial, index) => (
+          <div class={`testimonial ${index === 0 ? 'active' : ''}`}>
+            <div class="testimonial-content">
+              <blockquote>
+                {testimonial.quote}
+              </blockquote>
+              <div class="testimonial-author">
+                <div class="author-info">
+                  <div class="author-name">{testimonial.name}</div>
+                  <div class="author-position">{testimonial.position}, {testimonial.company}</div>
+                </div>
+                {testimonial.photo && (
+                  <div class="author-avatar">
+                    <img src={testimonial.photo} alt={testimonial.name} loading="lazy" />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        ))}
 
-      <div class="testimonial">
-        <div class="testimonial-content">
-          <blockquote>
-            "Kompleksowa obsługa na najwyższym poziomie. Od oświetlenia po nagłośnienie - 
-            wszystko działało perfekcyjnie. Nasz event był sukcesem!"
-          </blockquote>
-          <div class="testimonial-author">
-            <div class="author-info">
-              <div class="author-name">Katarzyna Wiśniewska</div>
-              <div class="author-position">Marketing Director, InnovateLab</div>
-            </div>
-            <div class="author-avatar">
-              <img src="/images/testimonials/katarzyna-wisniewska.jpg" alt="Katarzyna Wiśniewska" loading="lazy" />
-            </div>
+        <!-- Testimonial navigation -->
+        {clientsData.testimonials.length > 1 && (
+          <div class="testimonial-nav">
+            {clientsData.testimonials.map((_, index) => (
+              <button 
+                class={`testimonial-dot ${index === 0 ? 'active' : ''}`} 
+                data-testimonial={index} 
+                aria-label={`Opinia ${index + 1}`}
+              />
+            ))}
           </div>
-        </div>
+        )}
       </div>
-
-      <!-- Testimonial navigation -->
-      <div class="testimonial-nav">
-        <button class="testimonial-dot active" data-testimonial="0" aria-label="Opinia 1"></button>
-        <button class="testimonial-dot" data-testimonial="1" aria-label="Opinia 2"></button>
-        <button class="testimonial-dot" data-testimonial="2" aria-label="Opinia 3"></button>
-      </div>
-    </div>
+    )}
   </div>
 </section>
 

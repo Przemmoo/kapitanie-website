@@ -175,6 +175,17 @@ collections:
         file: "src/content/sekcje/clients.yaml"
         fields:
           - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji klientów" }
+          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis pod tytułem sekcji", required: false }
+          - { label: "Ukryj sekcję", name: "hidden", widget: "boolean", default: false, hint: "Zaznacz aby ukryć całą sekcję" }
+          - { 
+              label: "Statystyki", 
+              name: "stats", 
+              widget: "list",
+              fields: [
+                { label: "Liczba", name: "number", widget: "string" },
+                { label: "Opis", name: "label", widget: "string" }
+              ]
+            }
           - { 
               label: "Logotypy klientów", 
               name: "client_logos", 
@@ -185,6 +196,7 @@ collections:
                 { label: "Strona www", name: "website", widget: "string", required: false }
               ]
             }
+          - { label: "Ukryj testimoniale", name: "hide_testimonials", widget: "boolean", default: false, hint: "Zaznacz aby ukryć sekcję testimoniali" }
           - { 
               label: "Testimoniale", 
               name: "testimonials", 
@@ -196,15 +208,6 @@ collections:
                 { label: "Opinia", name: "quote", widget: "text" },
                 { label: "Zdjęcie", name: "photo", widget: "image", required: false },
                 { label: "Ocena (1-5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
-              ]
-            }
-          - { 
-              label: "Statystyki", 
-              name: "stats", 
-              widget: "list",
-              fields: [
-                { label: "Liczba", name: "number", widget: "string" },
-                { label: "Opis", name: "label", widget: "string" }
               ]
             }
 

@@ -1,5 +1,16 @@
 section_type: clients
 title: Cieszymy się zaufaniem najlepszych
+subtitle: Od startupsów po korporacje, od lokalnych eventów po międzynarodowe konferencje - każdego klienta traktujemy z równą pasją i zaangażowaniem.
+hidden: false
+stats:
+  - number: "150+"
+    label: Zadowolonych klientów
+  - number: "300+"
+    label: Zrealizowanych projektów
+  - number: "98%"
+    label: satysfakcji
+  - number: "10+"
+    label: Lat na rynku
 client_logos:
   - name: RMF FM
     logo: https://pl.wikipedia.org/wiki/RMF_FM#/media/Plik:RMF_FM_logotyp_2022.png
@@ -10,13 +21,23 @@ client_logos:
   - name: Festiwal Muzyczny Kraków
     logo: /images/clients/festiwal-logo.png
     website: https://festiwal-krakow.pl
-testimonials: []
-stats:
-  - number: "150"
-    label: Zadowolonych klientów
-  - number: "300"
-    label: Zrealizowanych projektów
-  - number: 98%
-    label: satysfakcji
-  - number: "10"
-    label: Lat na rynku
+hide_testimonials: false
+testimonials:
+  - name: Anna Kowalska
+    position: Event Manager
+    company: TechCorp
+    quote: '"kapitanie" to zespół, na który zawsze możemy liczyć. Ich profesjonalizm i dbałość o detale sprawiają, że każdy nasz event jest wyjątkowy.'
+    photo: /images/testimonials/anna-kowalska.jpg
+    rating: 5
+  - name: Michał Nowak
+    position: CEO
+    company: StartupHub
+    quote: 'Dzięki wsparciu kapitanie nasze konferencje osiągnęły nowy poziom. Ich autorska aplikacja mobilna znacznie zwiększyła zaangażowanie uczestników.'
+    photo: /images/testimonials/michal-nowak.jpg
+    rating: 5
+  - name: Katarzyna Wiśniewska
+    position: Marketing Director
+    company: InnovateLab
+    quote: 'Kompleksowa obsługa na najwyższym poziomie. Od oświetlenia po nagłośnienie - wszystko działało perfekcyjnie. Nasz event był sukcesem!'
+    photo: /images/testimonials/katarzyna-wisniewska.jpg
+    rating: 5

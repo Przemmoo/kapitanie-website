@@ -77,6 +77,8 @@ const sekcje = defineCollection({
     cta_link: z.string().optional(),
     
     // Clients section fields
+    hidden: z.boolean().optional(),
+    hide_testimonials: z.boolean().optional(),
     client_logos: z.array(z.object({
       name: z.string(),
       logo: z.string(),
