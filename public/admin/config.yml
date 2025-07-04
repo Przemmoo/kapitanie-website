@@ -17,8 +17,56 @@ display_url: https://kapitanie-website.pages.dev
 logo_url: https://kapitanie-website.pages.dev/favicon.svg
 
 collections:
+  # Sekcje strony w kolejności wyświetlania
+  - label: "Sekcja Hero (Główna)"
+    name: "hero"
+    files:
+      - label: "Ustawienia sekcji Hero"
+        name: "hero"
+        file: "src/content/sekcje/hero.yaml"
+        fields:
+          - { label: "Nagłówek główny", name: "title", widget: "string", hint: "Główny nagłówek na stronie" }
+          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis pod nagłówkiem" }
+          - { label: "Tekst pierwszego przycisku", name: "cta1_text", widget: "string", default: "Zobacz nasze realizacje" }
+          - { label: "Link pierwszego przycisku", name: "cta1_link", widget: "string", default: "#realizacje" }
+          - { label: "Tekst drugiego przycisku", name: "cta2_text", widget: "string", default: "Skontaktuj się z nami" }
+          - { label: "Link drugiego przycisku", name: "cta2_link", widget: "string", default: "#kontakt" }
+          - { label: "Wideo tła (MP4)", name: "video_mp4", widget: "string", required: false, hint: "Ścieżka do wideo MP4" }
+          - { label: "Wideo tła (WebM)", name: "video_webm", widget: "string", required: false, hint: "Ścieżka do wideo WebM" }
+          - { label: "Zdjęcie zastępcze", name: "poster_image", widget: "image", required: false, hint: "Obraz wyświetlany gdy wideo się nie załaduje" }
+
+  - label: "Sekcja O Nas"
+    name: "about"
+    files:
+      - label: "Ustawienia sekcji O Nas"
+        name: "about"
+        file: "src/content/sekcje/about.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji O Nas" }
+          - { label: "Opis główny", name: "description", widget: "text", hint: "Główny opis firmy" }
+          - { label: "Zdjęcie zespołu", name: "team_image", widget: "image", required: false, hint: "Zdjęcie zespołu lub założyciela" }
+          - { 
+              label: "Filary oferty", 
+              name: "pillars", 
+              widget: "list",
+              fields: [
+                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. lightbulb, mic, monitor, audio-lines, heart, star, settings). Zobacz pełną listę: https://lucide.dev/icons/" },
+                { label: "Tytuł", name: "title", widget: "string" },
+                { label: "Opis", name: "description", widget: "text" }
+              ]
+            }
+          - { 
+              label: "Statystyki", 
+              name: "stats", 
+              widget: "list",
+              fields: [
+                { label: "Liczba", name: "number", widget: "string" },
+                { label: "Opis", name: "label", widget: "string" }
+              ]
+            }
+
   - name: "realizacje"
-    label: "Realizacje"
+    label: "Sekcja Realizacje"
     label_singular: "Realizacja"
     folder: "src/content/realizacje"
     create: true
@@ -96,10 +144,101 @@ collections:
           hint: "Szczegółowy opis projektu w formacie Markdown"
         }
 
-  - name: "ustawienia"
-    label: "Ustawienia strony"
+  - label: "Sekcja Aplikacja Eventowa"
+    name: "app"
     files:
-      - label: "Informacje o firmie"
+      - label: "Ustawienia sekcji Aplikacja"
+        name: "app"
+        file: "src/content/sekcje/app.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji aplikacji" }
+          - { label: "Wprowadzenie", name: "intro", widget: "text", hint: "Krótki opis aplikacji" }
+          - { label: "Mockup aplikacji", name: "mockup_image", widget: "image", required: false, hint: "Zdjęcie mockupu telefonu z aplikacją" }
+          - { 
+              label: "Funkcje aplikacji", 
+              name: "features", 
+              widget: "list",
+              fields: [
+                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. message-circle, calendar, users, phone, heart). Zobacz pełną listę: https://lucide.dev/icons/" },
+                { label: "Tytuł", name: "title", widget: "string" },
+                { label: "Opis", name: "description", widget: "text" }
+              ]
+            }
+          - { label: "Tekst przycisku CTA", name: "cta_text", widget: "string", default: "Dowiedz się więcej" }
+          - { label: "Link przycisku CTA", name: "cta_link", widget: "string", default: "#kontakt" }
+
+  - label: "Sekcja Klienci"
+    name: "clients"
+    files:
+      - label: "Ustawienia sekcji Klienci"
+        name: "clients"
+        file: "src/content/sekcje/clients.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji klientów" }
+          - { 
+              label: "Logotypy klientów", 
+              name: "client_logos", 
+              widget: "list",
+              fields: [
+                { label: "Nazwa klienta", name: "name", widget: "string" },
+                { label: "Logo", name: "logo", widget: "image" },
+                { label: "Strona www", name: "website", widget: "string", required: false }
+              ]
+            }
+          - { 
+              label: "Testimoniale", 
+              name: "testimonials", 
+              widget: "list",
+              fields: [
+                { label: "Imię i nazwisko", name: "name", widget: "string" },
+                { label: "Stanowisko", name: "position", widget: "string" },
+                { label: "Firma", name: "company", widget: "string" },
+                { label: "Opinia", name: "quote", widget: "text" },
+                { label: "Zdjęcie", name: "photo", widget: "image", required: false },
+                { label: "Ocena (1-5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
+              ]
+            }
+          - { 
+              label: "Statystyki", 
+              name: "stats", 
+              widget: "list",
+              fields: [
+                { label: "Liczba", name: "number", widget: "string" },
+                { label: "Opis", name: "label", widget: "string" }
+              ]
+            }
+
+  - label: "Sekcja Kontakt"
+    name: "contact"
+    files:
+      - label: "Ustawienia sekcji Kontakt"
+        name: "contact"
+        file: "src/content/sekcje/contact.yaml"
+        fields:
+          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji kontaktowej" }
+          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis nad formularzem - użyj \\n dla nowych linii" }
+          - { 
+              label: "Metody kontaktu", 
+              name: "contact_methods", 
+              widget: "list",
+              hint: "Lista wszystkich metod kontaktu włącznie z godzinami pracy i czasem odpowiedzi",
+              fields: [
+                { 
+                  label: "Ikona", 
+                  name: "icon", 
+                  widget: "string",
+                  hint: "Nazwa ikony z Lucide Icons (np. phone, mail, map-pin, clock, timer, home, settings). Zobacz pełną listę: https://lucide.dev/icons/"
+                },
+                { label: "Tytuł", name: "title", widget: "string" },
+                { label: "Wartość", name: "value", widget: "string" },
+                { label: "Link", name: "link", widget: "string", required: false, hint: "Opcjonalny link (tel:, mailto:, https:)" }
+              ]
+            }
+
+  - label: "Sekcja Footer"
+    name: "site"
+    files:
+      - label: "Ustawienia footera"
         name: "site"
         file: "src/content/ustawienia/site.yaml"
         fields:
@@ -159,132 +298,6 @@ collections:
                 { label: "Instagram", name: "instagram", widget: "string", required: false, hint: "Link do profilu Instagram (pełny URL)" },
                 { label: "LinkedIn", name: "linkedin", widget: "string", required: false, hint: "Link do profilu LinkedIn (pełny URL)" },
                 { label: "YouTube", name: "youtube", widget: "string", required: false, hint: "Link do kanału YouTube (pełny URL)" }
-              ]
-            }
-
-  - name: "sekcje"
-    label: "Sekcje strony"
-    files:
-      - label: "Sekcja Hero (Główna)"
-        name: "hero"
-        file: "src/content/sekcje/hero.yaml"
-        fields:
-          - { label: "Nagłówek główny", name: "title", widget: "string", hint: "Główny nagłówek na stronie" }
-          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis pod nagłówkiem" }
-          - { label: "Tekst pierwszego przycisku", name: "cta1_text", widget: "string", default: "Zobacz nasze realizacje" }
-          - { label: "Link pierwszego przycisku", name: "cta1_link", widget: "string", default: "#realizacje" }
-          - { label: "Tekst drugiego przycisku", name: "cta2_text", widget: "string", default: "Skontaktuj się z nami" }
-          - { label: "Link drugiego przycisku", name: "cta2_link", widget: "string", default: "#kontakt" }
-          - { label: "Wideo tła (MP4)", name: "video_mp4", widget: "string", required: false, hint: "Ścieżka do wideo MP4" }
-          - { label: "Wideo tła (WebM)", name: "video_webm", widget: "string", required: false, hint: "Ścieżka do wideo WebM" }
-          - { label: "Zdjęcie zastępcze", name: "poster_image", widget: "image", required: false, hint: "Obraz wyświetlany gdy wideo się nie załaduje" }
-
-      - label: "Sekcja O Nas"
-        name: "about"
-        file: "src/content/sekcje/about.yaml"
-        fields:
-          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji O Nas" }
-          - { label: "Opis główny", name: "description", widget: "text", hint: "Główny opis firmy" }
-          - { label: "Zdjęcie zespołu", name: "team_image", widget: "image", required: false, hint: "Zdjęcie zespołu lub założyciela" }
-          - { 
-              label: "Filary oferty", 
-              name: "pillars", 
-              widget: "list",
-              fields: [
-                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. lightbulb, mic, monitor, audio-lines, heart, star, settings). Zobacz pełną listę: https://lucide.dev/icons/" },
-                { label: "Tytuł", name: "title", widget: "string" },
-                { label: "Opis", name: "description", widget: "text" }
-              ]
-            }
-          - { 
-              label: "Statystyki", 
-              name: "stats", 
-              widget: "list",
-              fields: [
-                { label: "Liczba", name: "number", widget: "string" },
-                { label: "Opis", name: "label", widget: "string" }
-              ]
-            }
-
-      - label: "Sekcja Aplikacja Eventowa"
-        name: "app"
-        file: "src/content/sekcje/app.yaml"
-        fields:
-          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji aplikacji" }
-          - { label: "Wprowadzenie", name: "intro", widget: "text", hint: "Krótki opis aplikacji" }
-          - { label: "Mockup aplikacji", name: "mockup_image", widget: "image", required: false, hint: "Zdjęcie mockupu telefonu z aplikacją" }
-          - { 
-              label: "Funkcje aplikacji", 
-              name: "features", 
-              widget: "list",
-              fields: [
-                { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. message-circle, calendar, users, phone, heart). Zobacz pełną listę: https://lucide.dev/icons/" },
-                { label: "Tytuł", name: "title", widget: "string" },
-                { label: "Opis", name: "description", widget: "text" }
-              ]
-            }
-          - { label: "Tekst przycisku CTA", name: "cta_text", widget: "string", default: "Dowiedz się więcej" }
-          - { label: "Link przycisku CTA", name: "cta_link", widget: "string", default: "#kontakt" }
-
-      - label: "Sekcja Klienci"
-        name: "clients"
-        file: "src/content/sekcje/clients.yaml"
-        fields:
-          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji klientów" }
-          - { 
-              label: "Logotypy klientów", 
-              name: "client_logos", 
-              widget: "list",
-              fields: [
-                { label: "Nazwa klienta", name: "name", widget: "string" },
-                { label: "Logo", name: "logo", widget: "image" },
-                { label: "Strona www", name: "website", widget: "string", required: false }
-              ]
-            }
-          - { 
-              label: "Testimoniale", 
-              name: "testimonials", 
-              widget: "list",
-              fields: [
-                { label: "Imię i nazwisko", name: "name", widget: "string" },
-                { label: "Stanowisko", name: "position", widget: "string" },
-                { label: "Firma", name: "company", widget: "string" },
-                { label: "Opinia", name: "quote", widget: "text" },
-                { label: "Zdjęcie", name: "photo", widget: "image", required: false },
-                { label: "Ocena (1-5)", name: "rating", widget: "number", value_type: "int", min: 1, max: 5, default: 5 }
-              ]
-            }
-          - { 
-              label: "Statystyki", 
-              name: "stats", 
-              widget: "list",
-              fields: [
-                { label: "Liczba", name: "number", widget: "string" },
-                { label: "Opis", name: "label", widget: "string" }
-              ]
-            }
-
-      - label: "Sekcja Kontakt"
-        name: "contact"
-        file: "src/content/sekcje/contact.yaml"
-        fields:
-          - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji kontaktowej" }
-          - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis nad formularzem - użyj \\n dla nowych linii" }
-          - { 
-              label: "Metody kontaktu", 
-              name: "contact_methods", 
-              widget: "list",
-              hint: "Lista wszystkich metod kontaktu włącznie z godzinami pracy i czasem odpowiedzi",
-              fields: [
-                { 
-                  label: "Ikona", 
-                  name: "icon", 
-                  widget: "string",
-                  hint: "Nazwa ikony z Lucide Icons (np. phone, mail, map-pin, clock, timer, home, settings). Zobacz pełną listę: https://lucide.dev/icons/"
-                },
-                { label: "Tytuł", name: "title", widget: "string" },
-                { label: "Wartość", name: "value", widget: "string" },
-                { label: "Link", name: "link", widget: "string", required: false, hint: "Opcjonalny link (tel:, mailto:, https:)" }
               ]
             }
 
