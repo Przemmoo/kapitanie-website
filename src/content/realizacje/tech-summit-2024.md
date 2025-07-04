@@ -2,7 +2,7 @@
 title: Konferencja Tech Summit 2025
 client: TechCorp
 date: 2024-06-15
-category: Konferencja
+category: konferencje
 featured_image: ""
 gallery: []
 description: Tech Summit 2024 to prestiżowa konferencja technologiczna, która

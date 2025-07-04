@@ -13,6 +13,7 @@ import { getCollection, getEntry } from 'astro:content';
 
 // Pobierz dane z kolekcji content
 const realizacje = await getCollection('realizacje');
+const kategorieRealizacji = await getCollection('kategorie-realizacji');
 
 // Pobierz dane z sekcji
 const heroData = await getEntry('sekcje', 'hero');
@@ -44,7 +45,7 @@ const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, 
     <AboutSection data={aboutData?.data} />
 
     <!-- Sekcja Realizacje z portfoliem -->
-    <RealizacjeSection realizacje={realizacje} />
+    <RealizacjeSection realizacje={realizacje} kategorieRealizacji={kategorieRealizacji} />
 
     <!-- Sekcja Aplikacja Eventowa -->
     <AplikacjaSection data={appData?.data} />

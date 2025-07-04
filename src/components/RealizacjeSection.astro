@@ -4,10 +4,11 @@
 // Interface dla props
 export interface Props {
   realizacje?: any[];
+  kategorieRealizacji?: any[];
 }
 
-// Pobierz realizacje z props lub użyj mock danych
-const { realizacje: propRealizacje } = Astro.props;
+// Pobierz realizacje i kategorie z props lub użyj mock danych
+const { realizacje: propRealizacje, kategorieRealizacji: propKategorieRealizacji } = Astro.props;
 
 // Przykładowe dane jeśli brak realizacji z CMS
 const mockRealizacje = [
@@ -15,7 +16,8 @@ const mockRealizacje = [
     id: 'gala-x-kom',
     title: 'Gala Jubileuszowa X-KOM',
     client: 'X-KOM',
-    category: 'Gala Firmowa',
+    category: 'gale-firmowe',
+    categoryName: 'Gala Firmowa',
     description: 'Stworzenie immersyjnej oprawy wizualnej dla gali na 1000 osób, która połączy elegancję z technologicznym charakterem marki.',
     challenge: 'Stworzenie immersyjnej oprawy wizualnej dla gali na 1000 osób, która połączy elegancję z technologicznym charakterem marki.',
     solution: 'Zaprojektowaliśmy i zrealizowaliśmy system oświetlenia kinetycznego, zsynchronizowany z treściami wyświetlanymi na ekranie LED o powierzchni 100m².',
@@ -30,7 +32,8 @@ const mockRealizacje = [
     id: 'tech-summit-2024',
     title: 'Tech Summit 2024',
     client: 'TechCorp',
-    category: 'Konferencja IT',
+    category: 'konferencje',
+    categoryName: 'Konferencje',
     description: 'Kompleksowa obsługa techniczna konferencji technologicznej z udziałem 500 uczestników.',
     challenge: 'Zapewnienie najwyższej jakości transmisji online oraz wsparcia hybrydowego wydarzenia.',
     solution: 'Wdrożyliśmy zaawansowany system streamingu 4K z wielokamerową realizacją na żywo.',
@@ -45,7 +48,8 @@ const mockRealizacje = [
     id: 'koncert-philharmonic',
     title: 'Koncert Filharmonii',
     client: 'Filharmonia Krakowska',
-    category: 'Koncert',
+    category: 'koncerty',
+    categoryName: 'Koncerty',
     description: 'Profesjonalna obsługa dźwięku dla koncertu symfonicznego z wykorzystaniem przestrzennych systemów audio.',
     challenge: 'Zachowanie naturalnej akustyki sali przy jednoczesnym wsparciu elektronicznym.',
     solution: 'Zastosowaliśmy subtelny system wspomagania akustycznego z mikrofonami pojemnościowymi najwyższej klasy.',
@@ -60,7 +64,8 @@ const mockRealizacje = [
     id: 'fashion-week',
     title: 'Kraków Fashion Week',
     client: 'Fashion Week Kraków',
-    category: 'Pokaz Mody',
+    category: 'eventy-korporacyjne',
+    categoryName: 'Eventy Korporacyjne',
     description: 'Spektakularna oprawa świetlna pokazów mody z dynamicznym oświetleniem LED.',
     challenge: 'Stworzenie różnorodnych nastrojów świetlnych dla każdego projektanta.',
     solution: 'Zaprogramowaliśmy 50 scen świetlnych zsynchronizowanych z muzyką i choreografią pokazów.',
@@ -75,7 +80,8 @@ const mockRealizacje = [
     id: 'corporate-event',
     title: 'Konferencja Roczna ABC Corp',
     client: 'ABC Corporation',
-    category: 'Event Korporacyjny',
+    category: 'eventy-korporacyjne',
+    categoryName: 'Eventy Korporacyjne',
     description: 'Organizacja i obsługa techniczna dorocznej konferencji firmy z udziałem zarządu i partnerów.',
     challenge: 'Zapewnienie bezproblemowej transmisji prezentacji dla 300 uczestników stacjonarnych i 100 online.',
     solution: 'Wdrożyliśmy system hybrydowy z interaktywnymi możliwościami Q&A i networking.',
@@ -90,7 +96,8 @@ const mockRealizacje = [
     id: 'wedding-luxury',
     title: 'Ekskluzywne Wesele',
     client: 'Prywatny Klient',
-    category: 'Wesele',
+    category: 'eventy-korporacyjne',
+    categoryName: 'Eventy Korporacyjne',
     description: 'Kompleksowa obsługa audiowizualna ekskluzywnego wesela w plenerze.',
     challenge: 'Zapewnienie wysokiej jakości dźwięku i oświetlenia w trudnych warunkach zewnętrznych.',
     solution: 'Zastosowaliśmy weatherproof sprzęt i backup systemy dla pełnej niezawodności.',
@@ -103,17 +110,37 @@ const mockRealizacje = [
   }
 ];
 
-const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propRealizacje.map(r => ({
-  id: r.slug,
-  title: r.data.title,
-  client: r.data.client,
-  category: r.data.category,
-  description: r.data.description,
-  challenge: r.data.challenge || '',
-  solution: r.data.solution || '',
-  image: r.data.featured_image || '/images/placeholder-project.jpg',
-  gallery: r.data.gallery?.map((g: { image: string }) => g.image) || []
-})) : mockRealizacje;
+// Pobierz kategorie i przefiltruj aktywne
+const availableCategories = propKategorieRealizacji && propKategorieRealizacji.length > 0 
+  ? propKategorieRealizacji
+      .filter(k => k.data.active)
+      .sort((a, b) => a.data.order - b.data.order)
+      .map(k => ({
+        slug: k.data.slug || k.id,
+        name: k.data.name,
+        color: k.data.color
+      }))
+  : [];
+
+const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propRealizacje.map(r => {
+  const kategoria = availableCategories.find(k => k.slug === r.data.category);
+  return {
+    id: r.slug,
+    title: r.data.title,
+    client: r.data.client,
+    category: r.data.category,
+    categoryName: kategoria?.name || r.data.category,
+    description: r.data.description,
+    challenge: r.data.challenge || '',
+    solution: r.data.solution || '',
+    image: r.data.featured_image || '/images/placeholder-project.jpg',
+    gallery: r.data.gallery?.map((g: { image: string }) => g.image) || []
+  };
+}) : mockRealizacje;
+
+// Pobierz używane kategorie z realizacji
+const usedCategories = [...new Set(displayRealizacje.map(r => r.category))];
+const activeCategories = availableCategories.filter(cat => usedCategories.includes(cat.slug));
 ---
 
 <section id="realizacje" class="section realizacje-section">
@@ -129,11 +156,15 @@ const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propReal
     <!-- Filter Buttons -->
     <div class="filter-buttons">
       <button class="filter-btn active" data-filter="all">Wszystkie</button>
-      <button class="filter-btn" data-filter="Gala Firmowa">Gale Firmowe</button>
-      <button class="filter-btn" data-filter="Konferencja IT">Konferencje</button>
-      <button class="filter-btn" data-filter="Koncert">Koncerty</button>
-      <button class="filter-btn" data-filter="Pokaz Mody">Pokazy Mody</button>
-      <button class="filter-btn" data-filter="Event Korporacyjny">Eventy Korporacyjne</button>
+      {activeCategories.map((kategoria) => (
+        <button 
+          class="filter-btn" 
+          data-filter={kategoria.slug}
+          style={kategoria.color ? `--category-color: ${kategoria.color}` : ''}
+        >
+          {kategoria.name}
+        </button>
+      ))}
     </div>
 
     <!-- Projects Grid -->
@@ -155,7 +186,7 @@ const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propReal
             <div class="project-overlay">
               <div class="project-info">
                 <h3 class="project-title">{projekt.title}</h3>
-                <p class="project-category">{projekt.category}</p>
+                <p class="project-category">{projekt.categoryName}</p>
                 <button class="view-details-btn" aria-label={`Zobacz szczegóły projektu ${projekt.title}`}>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -276,8 +307,8 @@ const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propReal
 
   .filter-btn:hover,
   .filter-btn.active {
-    background: var(--accent-blue);
-    border-color: var(--accent-blue);
+    background: var(--category-color, var(--accent-blue));
+    border-color: var(--category-color, var(--accent-blue));
     color: white;
     transform: translateY(-2px);
   }
