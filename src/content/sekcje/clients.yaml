@@ -14,14 +14,18 @@ stats:
     label: Lat na rynku
 client_logos:
   - name: RMF FM
-    logo: /images/rmf_fm_logotyp_2022.png
+    logo: /images/rmf.svg
     website: ""
+  - name: RMF MAXX
+    logo: /images/RMF_MAXX_logo.svg
   - name: Stowarzyszenie Europejski Instytut Mobilności Pracy
-    logo: /images/elmi_logo_rgb_word.jpg
+    logo: /images/elmi_logo_rgb_word.svg
     website: ""
   - name: Dematec
     logo: /images/dematec.svg
     website: ""
+  - name: Automotive Zasada
+    logo: /images/automotive_zasada.svg
 hide_testimonials: true
 testimonials:
   - name: Anna Kowalska
