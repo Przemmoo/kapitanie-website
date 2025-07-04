@@ -28,6 +28,7 @@ const ustawienia = defineCollection({
     phone: z.string(),
     address: z.string(),
     social_media: z.object({
+      show_social_media: z.boolean().optional(),
       facebook: z.string().optional(),
       instagram: z.string().optional(),
       linkedin: z.string().optional(),

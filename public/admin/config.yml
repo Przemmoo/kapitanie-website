@@ -147,6 +147,7 @@ collections:
               name: "social_media",
               widget: "object",
               fields: [
+                { label: "Pokaż sekcję Social Media", name: "show_social_media", widget: "boolean", default: true, hint: "Włącz/wyłącz wyświetlanie sekcji social media w footerze" },
                 { label: "Facebook", name: "facebook", widget: "string", required: false },
                 { label: "Instagram", name: "instagram", widget: "string", required: false },
                 { label: "LinkedIn", name: "linkedin", widget: "string", required: false }
