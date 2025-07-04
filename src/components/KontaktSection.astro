@@ -806,22 +806,27 @@ const contactData = {
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('contact-form');
-    const submitBtn = form.querySelector('.submit-btn');
-    const formResponse = document.getElementById('form-response');
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const submitBtn = form?.querySelector('.submit-btn') as HTMLButtonElement;
+    const formResponse = document.getElementById('form-response') as HTMLDivElement;
+
+    if (!form || !submitBtn || !formResponse) {
+      console.error('Required form elements not found');
+      return;
+    }
 
     // Set minimum date to today
-    const eventDateInput = document.getElementById('eventDate');
+    const eventDateInput = document.getElementById('eventDate') as HTMLInputElement;
     if (eventDateInput) {
       const today = new Date().toISOString().split('T')[0];
       eventDateInput.setAttribute('min', today);
     }
 
     // Form validation
-    const validateField = (field) => {
+    const validateField = (field: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement) => {
       const value = field.value.trim();
       const name = field.name;
-      const errorElement = document.getElementById(`${name}-error`);
+      const errorElement = document.getElementById(`${name}-error`) as HTMLSpanElement;
       const formGroup = field.closest('.form-group');
       
       let isValid = true;
@@ -852,7 +857,7 @@ const contactData = {
       }
 
       // Privacy checkbox validation
-      if (name === 'privacy' && field.required && !field.checked) {
+      if (name === 'privacy' && field.required && !(field as HTMLInputElement).checked) {
         isValid = false;
         errorMessage = 'Akceptacja polityki prywatności jest wymagana';
       }
@@ -870,18 +875,18 @@ const contactData = {
     };
 
     // Real-time validation
-    const formFields = form.querySelectorAll('input, select, textarea');
+    const formFields = form.querySelectorAll('input, select, textarea') as NodeListOf<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
     formFields.forEach(field => {
       field.addEventListener('blur', () => validateField(field));
       field.addEventListener('input', () => {
-        if (field.closest('.form-group').classList.contains('error')) {
+        if (field.closest('.form-group')?.classList.contains('error')) {
           validateField(field);
         }
       });
     });
 
     // Form submission
-    form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e: Event) => {
       e.preventDefault();
 
       // Validate all fields
@@ -907,7 +912,7 @@ const contactData = {
       try {
         // Prepare form data
         const formData = new FormData(form);
-        const data = {};
+        const data: { [key: string]: any } = {};
         
         // Handle regular fields
         for (let [key, value] of formData.entries()) {
@@ -939,8 +944,8 @@ const contactData = {
         });
 
         // Track conversion (analytics)
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'form_submit', {
+        if (typeof (window as any).gtag !== 'undefined') {
+          (window as any).gtag('event', 'form_submit', {
             event_category: 'Contact',
             event_label: 'Contact Form'
           });
@@ -962,7 +967,7 @@ const contactData = {
     });
 
     // Intersection Observer for animations
-    const observerOptions = {
+    const observerOptions: IntersectionObserverInit = {
       threshold: 0.2,
       rootMargin: '0px 0px -50px 0px'
     };
@@ -981,25 +986,28 @@ const contactData = {
     });
 
     // Auto-resize textarea
-    const messageTextarea = document.getElementById('message');
+    const messageTextarea = document.getElementById('message') as HTMLTextAreaElement;
     if (messageTextarea) {
-      messageTextarea.addEventListener('input', function() {
+      messageTextarea.addEventListener('input', function(this: HTMLTextAreaElement) {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
       });
     }
 
     // Phone number formatting
-    const phoneInput = document.getElementById('phone');
+    const phoneInput = document.getElementById('phone') as HTMLInputElement;
     if (phoneInput) {
-      phoneInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
+      phoneInput.addEventListener('input', function(e: Event) {
+        const target = e.target as HTMLInputElement;
+        if (!target) return;
+        
+        let value = target.value.replace(/\D/g, '');
         if (value.startsWith('48')) {
           value = '+48 ' + value.substring(2);
         } else if (value.length > 0 && !value.startsWith('+')) {
           value = '+48 ' + value;
         }
-        e.target.value = value;
+        target.value = value;
       });
     }
   });
