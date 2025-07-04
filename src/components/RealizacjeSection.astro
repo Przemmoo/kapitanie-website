@@ -112,7 +112,7 @@ const displayRealizacje = propRealizacje && propRealizacje.length > 0 ? propReal
   challenge: r.data.challenge || '',
   solution: r.data.solution || '',
   image: r.data.featured_image || '/images/placeholder-project.jpg',
-  gallery: r.data.gallery?.map(g => g.image) || []
+  gallery: r.data.gallery?.map((g: { image: string }) => g.image) || []
 })) : mockRealizacje;
 ---
 
