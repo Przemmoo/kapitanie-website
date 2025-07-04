@@ -394,15 +394,16 @@ const clientsData = {
     justify-content: center;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 12px;
-    padding: 1rem;
+    padding: 0.5rem;
     transition: var(--transition-fast);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
   }
 
   .client-logo:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(0, 169, 255, 0.3);
-    transform: translateY(-5px);
+    transform: translateY(-3px);
   }
 
   .client-logo.premium {
@@ -411,15 +412,16 @@ const clientsData = {
   }
 
   .client-logo img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    filter: grayscale(100%) brightness(0.7);
+    filter: brightness(1);
     transition: var(--transition-fast);
   }
 
   .client-logo:hover img {
-    filter: grayscale(0%) brightness(1);
+    filter: brightness(1.1);
+    transform: scale(1.05);
   }
 
   /* Carousel gradients */
@@ -559,6 +561,7 @@ const clientsData = {
     .client-logo {
       width: 150px;
       height: 70px;
+      padding: 0.4rem;
     }
 
     .carousel-track {
@@ -576,6 +579,7 @@ const clientsData = {
     .client-logo {
       width: 120px;
       height: 60px;
+      padding: 0.3rem;
     }
 
     .carousel-track {
@@ -623,6 +627,7 @@ const clientsData = {
     .client-logo {
       width: 100px;
       height: 50px;
+      padding: 0.2rem;
     }
 
     .carousel-container {
@@ -666,11 +671,11 @@ const clientsData = {
   /* High contrast mode */
   @media (prefers-contrast: high) {
     .client-logo img {
-      filter: contrast(2) brightness(1);
+      filter: contrast(1.5) brightness(1);
     }
     
     .client-logo:hover img {
-      filter: contrast(2) brightness(1.2);
+      filter: contrast(1.5) brightness(1.2);
     }
   }
 </style>
