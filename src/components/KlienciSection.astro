@@ -681,7 +681,8 @@ const clientsData = {
       const counters = document.querySelectorAll('.client-stats .stat-number');
       
       counters.forEach(counter => {
-        const target = parseInt(counter.dataset.count);
+        const element = counter as HTMLElement;
+        const target = parseInt(element.dataset.count || '0');
         const suffix = target === 98 ? '%' : '+';
         const duration = 2000;
         const step = target / (duration / 16);
@@ -706,7 +707,7 @@ const clientsData = {
     const testimonialDots = document.querySelectorAll('.testimonial-dot');
     let currentTestimonial = 0;
 
-    const showTestimonial = (index) => {
+    const showTestimonial = (index: number) => {
       testimonials.forEach((testimonial, i) => {
         testimonial.classList.toggle('active', i === index);
       });
@@ -773,11 +774,14 @@ const clientsData = {
     // Handle logo loading errors
     const clientLogos = document.querySelectorAll('.client-logo img');
     clientLogos.forEach(img => {
-      img.addEventListener('error', () => {
+      const imgElement = img as HTMLImageElement;
+      imgElement.addEventListener('error', () => {
         // Replace with placeholder or hide
-        img.style.display = 'none';
-        img.parentElement.style.background = 'rgba(255, 255, 255, 0.1)';
-        img.parentElement.innerHTML += '<span style="color: var(--text-secondary); font-size: 0.8rem;">Logo</span>';
+        imgElement.style.display = 'none';
+        if (imgElement.parentElement) {
+          (imgElement.parentElement as HTMLElement).style.background = 'rgba(255, 255, 255, 0.1)';
+          imgElement.parentElement.innerHTML += '<span style="color: var(--text-secondary); font-size: 0.8rem;">Logo</span>';
+        }
       });
     });
 
@@ -796,11 +800,11 @@ const clientsData = {
       const carouselTracks = document.querySelectorAll('.carousel-track');
       if (document.hidden) {
         carouselTracks.forEach(track => {
-          track.style.animationPlayState = 'paused';
+          (track as HTMLElement).style.animationPlayState = 'paused';
         });
       } else {
         carouselTracks.forEach(track => {
-          track.style.animationPlayState = 'running';
+          (track as HTMLElement).style.animationPlayState = 'running';
         });
       }
     };
