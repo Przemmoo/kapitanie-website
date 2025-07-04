@@ -19,9 +19,9 @@ client_logos:
   - name: Stowarzyszenie Europejski Instytut Mobilności Pracy
     logo: /images/elmi_logo_rgb_word.jpg
     website: https://galeria-sztuki.pl
-  - name: Festiwal Muzyczny Kraków
-    logo: /images/clients/festiwal-logo.png
-    website: https://festiwal-krakow.pl
+  - name: Dematec
+    logo: /images/dematec.svg
+    website: ""
 hide_testimonials: true
 testimonials:
   - name: Anna Kowalska
