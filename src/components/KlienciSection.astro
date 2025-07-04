@@ -74,19 +74,32 @@ const clientsData = {
     <div class="clients-carousel-container">
       <div class="clients-carousel">
         {clientsData.client_logos.length > 0 ? (
-          <div class="carousel-track" data-direction="left">
-            {clientsData.client_logos.map((client, index) => (
-              <div class="client-logo">
-                <img src={client.logo} alt={client.name} loading="lazy" />
+          <>
+            {/* Pierwsza linia logotypów */}
+            <div class="carousel-track" data-direction="left">
+              {/* Potrójna duplikacja dla płynnego loop */}
+              {Array(4).fill(null).map((_, setIndex) => 
+                clientsData.client_logos.map((client, index) => (
+                  <div class="client-logo">
+                    <img src={client.logo} alt={client.name} loading="lazy" />
+                  </div>
+                ))
+              )}
+            </div>
+            
+            {/* Druga linia logotypów (jeśli więcej niż 3 logotypy) */}
+            {clientsData.client_logos.length > 3 && (
+              <div class="carousel-track" data-direction="right">
+                {Array(4).fill(null).map((_, setIndex) => 
+                  clientsData.client_logos.map((client, index) => (
+                    <div class="client-logo">
+                      <img src={client.logo} alt={client.name} loading="lazy" />
+                    </div>
+                  ))
+                )}
               </div>
-            ))}
-            <!-- Duplicated for seamless loop -->
-            {clientsData.client_logos.map((client, index) => (
-              <div class="client-logo">
-                <img src={client.logo} alt={client.name} loading="lazy" />
-              </div>
-            ))}
-          </div>
+            )}
+          </>
         ) : (
           <!-- Fallback hardcoded logos if no CMS data -->
           <div class="carousel-track" data-direction="left">
@@ -347,26 +360,21 @@ const clientsData = {
     display: flex;
     gap: 3rem;
     align-items: center;
-    animation-duration: 30s;
+    animation-duration: 40s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     padding: 0 15px;
+    will-change: transform;
   }
 
   .carousel-track[data-direction="left"] {
     animation-name: scrollLeft;
+    animation-duration: 40s;
   }
 
   .carousel-track[data-direction="right"] {
     animation-name: scrollRight;
-  }
-
-  .carousel-track:nth-child(2) {
-    animation-duration: 35s;
-  }
-
-  .carousel-track:nth-child(3) {
-    animation-duration: 25s;
+    animation-duration: 40s;
   }
 
   @keyframes scrollLeft {
@@ -374,13 +382,13 @@ const clientsData = {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-25%);
     }
   }
 
   @keyframes scrollRight {
     0% {
-      transform: translateX(-50%);
+      transform: translateX(-25%);
     }
     100% {
       transform: translateX(0);
