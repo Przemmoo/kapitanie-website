@@ -665,11 +665,18 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
     const newsletterForm = document.getElementById('newsletter-form');
     const newsletterResponse = document.querySelector('.newsletter-response');
 
-    newsletterForm?.addEventListener('submit', async (e) => {
+    newsletterForm?.addEventListener('submit', async (e: Event) => {
       e.preventDefault();
       
-      const email = e.target.querySelector('input[type="email"]').value;
-      const button = e.target.querySelector('button');
+      const form = e.target as HTMLFormElement;
+      if (!form) return;
+      
+      const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+      const button = form.querySelector('button') as HTMLButtonElement;
+      
+      if (!emailInput || !button) return;
+      
+      const email = emailInput.value;
       
       // Basic email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -685,14 +692,14 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
 
       try {
         // Simulate API call (replace with actual endpoint)
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        await new Promise<void>((resolve) => setTimeout(resolve, 1500));
         
         showNewsletterResponse('Dziękujemy! Zostałeś dodany do newslettera.', 'success');
-        e.target.reset();
+        form.reset();
         
         // Track conversion
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'newsletter_signup', {
+        if (typeof (window as any).gtag !== 'undefined') {
+          (window as any).gtag('event', 'newsletter_signup', {
             event_category: 'Newsletter',
             event_label: 'Footer Newsletter'
           });
@@ -706,7 +713,8 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
       }
     });
 
-    const showNewsletterResponse = (message, type) => {
+    const showNewsletterResponse = (message: string, type: string) => {
+      const newsletterResponse = document.querySelector('.newsletter-response') as HTMLElement;
       if (newsletterResponse) {
         newsletterResponse.textContent = message;
         newsletterResponse.className = `newsletter-response ${type}`;
@@ -721,13 +729,15 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
     // Smooth scroll for footer links
     const footerLinks = document.querySelectorAll('.footer a[href^="#"]');
     footerLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href.startsWith('#')) {
+      link.addEventListener('click', (e: Event) => {
+        const anchor = link as HTMLAnchorElement;
+        const href = anchor.getAttribute('href');
+        if (href && href.startsWith('#')) {
           e.preventDefault();
-          const target = document.querySelector(href);
+          const target = document.querySelector(href) as HTMLElement;
           if (target) {
-            const headerHeight = document.querySelector('.header')?.offsetHeight || 70;
+            const headerElement = document.querySelector('.header') as HTMLElement;
+            const headerHeight = headerElement?.offsetHeight || 70;
             const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
             
             window.scrollTo({
@@ -742,23 +752,24 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
     // Keyboard navigation for social links
     const socialLinks = document.querySelectorAll('.social-links a');
     socialLinks.forEach(link => {
-      link.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+      link.addEventListener('keydown', (e: Event) => {
+        const keyEvent = e as KeyboardEvent;
+        if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
           e.preventDefault();
-          link.click();
+          (link as HTMLAnchorElement).click();
         }
       });
     });
 
     // Current year update
-    const copyrightText = document.querySelector('.copyright p');
+    const copyrightText = document.querySelector('.copyright p') as HTMLParagraphElement;
     if (copyrightText) {
       const currentYear = new Date().getFullYear();
       copyrightText.innerHTML = copyrightText.innerHTML.replace('2025', currentYear.toString());
     }
 
     // Intersection observer for footer animations
-    const observerOptions = {
+    const observerOptions: IntersectionObserverInit = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     };
@@ -780,7 +791,7 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
     const socialMediaLinks = document.querySelectorAll('.social-links a');
     socialMediaLinks.forEach(link => {
       link.addEventListener('error', () => {
-        console.warn(`Social media link failed: ${link.href}`);
+        console.warn(`Social media link failed: ${(link as HTMLAnchorElement).href}`);
       });
     });
   });

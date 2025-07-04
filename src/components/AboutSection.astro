@@ -417,7 +417,8 @@ const aboutData = {
       const counters = document.querySelectorAll('.stat-number');
       
       counters.forEach(counter => {
-        const target = parseInt(counter.dataset.count);
+        const htmlCounter = counter as HTMLElement;
+        const target = parseInt(htmlCounter.dataset.count || '0');
         const duration = 2000;
         const step = target / (duration / 16);
         let current = 0;
@@ -425,9 +426,9 @@ const aboutData = {
         const updateCounter = () => {
           current += step;
           if (current >= target) {
-            counter.textContent = target + '+';
+            htmlCounter.textContent = target + '+';
           } else {
-            counter.textContent = Math.floor(current);
+            htmlCounter.textContent = Math.floor(current).toString();
             requestAnimationFrame(updateCounter);
           }
         };
@@ -472,7 +473,7 @@ const aboutData = {
       const handleScroll = () => {
         const scrolled = window.pageYOffset;
         const aboutSection = document.querySelector('.about-section');
-        const aboutImage = document.querySelector('.about-image');
+        const aboutImage = document.querySelector('.about-image') as HTMLElement;
         
         if (aboutSection && aboutImage) {
           const rect = aboutSection.getBoundingClientRect();
