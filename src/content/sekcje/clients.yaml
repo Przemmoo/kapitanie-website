@@ -1,9 +1,9 @@
 section_type: clients
 title: Cieszymy się zaufaniem najlepszych
 client_logos:
-  - name: Tech Summit 2024
-    logo: /images/clients/tech-summit.png
-    website: https://techsummit.pl
+  - name: RMF FM
+    logo: https://pl.wikipedia.org/wiki/RMF_FM#/media/Plik:RMF_FM_logotyp_2022.png
+    website: ""
   - name: Galeria Sztuki Współczesnej
     logo: /images/clients/galeria-logo.png
     website: https://galeria-sztuki.pl
