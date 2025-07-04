@@ -91,42 +91,42 @@ const clientsData = {
           <!-- Fallback hardcoded logos if no CMS data -->
           <div class="carousel-track" data-direction="left">
             <!-- Tier 1 - Premium clients -->
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
             </div>
             
             <!-- Duplicated for seamless loop -->
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
             </div>
-            <div class="client-logo premium">
+            <div class="client-logo">
               <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
             </div>
           </div>
@@ -334,6 +334,7 @@ const clientsData = {
     position: relative;
     margin: 4rem 0;
     overflow: hidden;
+    padding: 15px 0;
   }
 
   .clients-carousel {
@@ -349,6 +350,7 @@ const clientsData = {
     animation-duration: 30s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    padding: 0 15px;
   }
 
   .carousel-track[data-direction="left"] {
@@ -396,14 +398,18 @@ const clientsData = {
     border-radius: 12px;
     padding: 0;
     transition: var(--transition-fast);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: visible;
+    position: relative;
+    z-index: 1;
   }
 
   .client-logo:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(0, 169, 255, 0.3);
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    z-index: 10;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   }
 
   .client-logo.premium {
@@ -417,6 +423,7 @@ const clientsData = {
     object-fit: contain;
     filter: brightness(1);
     transition: var(--transition-fast);
+    border-radius: 10px;
   }
 
   .client-logo:hover img {
@@ -427,11 +434,11 @@ const clientsData = {
   /* Carousel gradients */
   .carousel-gradient {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 15px;
+    bottom: 15px;
     width: 100px;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
   }
 
   .carousel-gradient-left {
