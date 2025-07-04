@@ -14,10 +14,10 @@ stats:
     label: Lat na rynku
 client_logos:
   - name: RMF FM
-    logo: https://pl.wikipedia.org/wiki/RMF_FM#/media/Plik:RMF_FM_logotyp_2022.png
+    logo: /images/rmf_fm_logotyp_2022.png
     website: ""
-  - name: Galeria Sztuki Współczesnej
-    logo: /images/clients/galeria-logo.png
+  - name: Stowarzyszenie Europejski Instytut Mobilności Pracy
+    logo: /images/elmi_logo_rgb_word.jpg
     website: https://galeria-sztuki.pl
   - name: Festiwal Muzyczny Kraków
     logo: /images/clients/festiwal-logo.png
