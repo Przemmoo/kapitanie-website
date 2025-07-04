@@ -5,8 +5,10 @@ company_name: "kapitanie"
 email: "kontakt@kapitanie.pl"
 phone: "501181703"
 address: "Wieliczka 32-020, ul. Różana 54B/1"
+nip: "123-456-78-90"
 social_media:
   show_social_media: true
   facebook: ""
   instagram: ""
   linkedin: ""
+  youtube: ""

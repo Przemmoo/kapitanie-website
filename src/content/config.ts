@@ -27,11 +27,13 @@ const ustawienia = defineCollection({
     email: z.string(),
     phone: z.string(),
     address: z.string(),
+    nip: z.string().optional(),
     social_media: z.object({
       show_social_media: z.boolean().optional(),
       facebook: z.string().optional(),
       instagram: z.string().optional(),
       linkedin: z.string().optional(),
+      youtube: z.string().optional(),
     }).optional(),
   }),
 });
