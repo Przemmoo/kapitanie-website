@@ -1,8 +1,8 @@
 ---
-name: "Eventy Korporacyjne"
-slug: "eventy-korporacyjne"
-description: "Spotkania biznesowe, zespołowe i integracyjne"
-order: 4
+name: Eventy Firmowe
+slug: eventy-firmowe
+description: Spotkania biznesowe, zespołowe i integracyjne
+order: 1
 color: "#10B981"
 active: true
 ---
