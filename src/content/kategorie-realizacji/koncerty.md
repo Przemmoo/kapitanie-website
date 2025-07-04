@@ -1,8 +1,8 @@
 ---
-name: "Koncerty"
-slug: "koncerty"
-description: "Koncerty, występy i wydarzenia kulturalne"
-order: 3
+name: Targi/Wystawy
+slug: targi-wystawy
+description: Targi i wystawy
+order: 4
 color: "#EC4899"
 active: true
 ---
