@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 export interface Props {
   data?: {
     company_name?: string;
+    company_description?: string;
     email?: string;
     phone?: string;
     address?: string;
@@ -34,6 +35,7 @@ try {
 // Fallback values jeśli brak danych z CMS
 const footerData = {
   company_name: data?.company_name || siteSettings?.company_name || "kapitanie",
+  company_description: data?.company_description || siteSettings?.company_description || "Kompleksowa obsługa multimedialna eventów, koncertów i konferencji. Twoje wydarzenie w najlepszym świetle.",
   email: data?.email || siteSettings?.email || "kontakt@kapitanie.pl",
   phone: data?.phone || siteSettings?.phone || "501181703",
   address: data?.address || siteSettings?.address || "ul. Różana 54B/1, 32-020 Wieliczka",
@@ -63,8 +65,7 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
         </div>
         
         <p class="company-description">
-          Kompleksowa obsługa multimedialna eventów, koncertów i konferencji. 
-          Twoje wydarzenie w najlepszym świetle.
+          {footerData.company_description}
         </p>
 
         <div class="company-details">

@@ -24,6 +24,7 @@ const ustawienia = defineCollection({
     site_name: z.string(),
     site_description: z.string(),
     company_name: z.string(),
+    company_description: z.string().optional(),
     email: z.string(),
     phone: z.string(),
     address: z.string(),

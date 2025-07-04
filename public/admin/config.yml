@@ -263,6 +263,12 @@ collections:
               hint: "Oficjalna nazwa firmy"
             }
           - { 
+              label: "Opis firmy", 
+              name: "company_description", 
+              widget: "text",
+              hint: "Krótki opis firmy wyświetlany w footerze"
+            }
+          - { 
               label: "Email", 
               name: "email", 
               widget: "string", 
