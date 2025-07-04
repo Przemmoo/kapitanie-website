@@ -65,23 +65,6 @@ collections:
               ]
             }
 
-  # Kategorie Realizacji
-  - name: "kategorie-realizacji"
-    label: "Kategorie Realizacji"
-    label_singular: "Kategoria"
-    folder: "src/content/kategorie-realizacji"
-    create: true
-    slug: "{{slug}}"
-    summary: "{{name}}"
-    sortable_fields: ["name", "order"]
-    fields:
-      - { label: "Nazwa", name: "name", widget: "string", hint: "Nazwa kategorii (np. 'Konferencje')" }
-      - { label: "Slug", name: "slug", widget: "string", hint: "Unikalny identyfikator (np. 'konferencje')" }
-      - { label: "Opis", name: "description", widget: "text", required: false, hint: "Krótki opis kategorii" }
-      - { label: "Kolejność", name: "order", widget: "number", default: 0, hint: "Im niższa liczba, tym wyżej na liście" }
-      - { label: "Kolor", name: "color", widget: "color", required: false, hint: "Kolor przycisku kategorii" }
-      - { label: "Aktywna", name: "active", widget: "boolean", default: true, hint: "Czy kategoria jest aktywna" }
-
   - name: "realizacje"
     label: "Sekcja Realizacje"
     label_singular: "Realizacja"
@@ -91,9 +74,18 @@ collections:
     summary: "{{title}} - {{client}}"
     sortable_fields: ["date", "title", "client"]
     view_filters:
-      - label: "Wszystkie"
+      - label: "Konferencje"
         field: category
-        pattern: ""
+        pattern: "Konferencja"
+      - label: "Gale"
+        field: category
+        pattern: "Gala"
+      - label: "Koncerty"
+        field: category
+        pattern: "Koncert"
+      - label: "Eventy Firmowe"
+        field: category
+        pattern: "Event Firmowy"
     fields:
       - { label: "Tytuł", name: "title", widget: "string", hint: "Nazwa wydarzenia lub projektu" }
       - { label: "Klient", name: "client", widget: "string", hint: "Nazwa firmy lub organizatora" }
@@ -101,12 +93,9 @@ collections:
       - { 
           label: "Kategoria", 
           name: "category", 
-          widget: "relation",
-          collection: "kategorie-realizacji",
-          search_fields: ["name"],
-          value_field: "slug",
-          display_fields: ["name"],
-          hint: "Wybierz kategorię wydarzenia"
+          widget: "select", 
+          options: ["Konferencja", "Gala", "Koncert", "Event Firmowy"],
+          hint: "Typ wydarzenia"
         }
       - { 
           label: "Zdjęcie główne", 

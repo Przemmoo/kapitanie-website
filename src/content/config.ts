@@ -1,24 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 
-const kategorieRealizacji = defineCollection({
-  type: 'content',
-  schema: z.object({
-    name: z.string(),
-    slug: z.string().optional(),
-    description: z.string().optional(),
-    order: z.number().default(0),
-    color: z.string().optional(),
-    active: z.boolean().default(true),
-  }),
-});
-
 const realizacje = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     client: z.string(),
     date: z.date(),
-    category: z.string(), // Teraz to jest slug kategorii
+    category: z.enum(['Konferencja', 'Gala', 'Koncert', 'Event Firmowy']),
     featured_image: z.string().optional(),
     gallery: z.array(z.object({
       image: z.string(),
@@ -132,7 +120,6 @@ const podstrony = defineCollection({
 });
 
 export const collections = {
-  'kategorie-realizacji': kategorieRealizacji,
   'realizacje': realizacje,
   'ustawienia': ustawienia,
   'sekcje': sekcje,

@@ -74,72 +74,59 @@ const clientsData = {
     <div class="clients-carousel-container">
       <div class="clients-carousel">
         {clientsData.client_logos.length > 0 ? (
-          <>
-            {/* Pierwsza linia logotypów */}
-            <div class="carousel-track" data-direction="left">
-              {/* Potrójna duplikacja dla płynnego loop */}
-              {Array(4).fill(null).map((_, setIndex) => 
-                clientsData.client_logos.map((client, index) => (
-                  <div class="client-logo">
-                    <img src={client.logo} alt={client.name} loading="lazy" />
-                  </div>
-                ))
-              )}
-            </div>
-            
-            {/* Druga linia logotypów (jeśli więcej niż 3 logotypy) */}
-            {clientsData.client_logos.length > 3 && (
-              <div class="carousel-track" data-direction="right">
-                {Array(4).fill(null).map((_, setIndex) => 
-                  clientsData.client_logos.map((client, index) => (
-                    <div class="client-logo">
-                      <img src={client.logo} alt={client.name} loading="lazy" />
-                    </div>
-                  ))
-                )}
+          <div class="carousel-track" data-direction="left">
+            {clientsData.client_logos.map((client, index) => (
+              <div class="client-logo">
+                <img src={client.logo} alt={client.name} loading="lazy" />
               </div>
-            )}
-          </>
+            ))}
+            <!-- Duplicated for seamless loop -->
+            {clientsData.client_logos.map((client, index) => (
+              <div class="client-logo">
+                <img src={client.logo} alt={client.name} loading="lazy" />
+              </div>
+            ))}
+          </div>
         ) : (
           <!-- Fallback hardcoded logos if no CMS data -->
           <div class="carousel-track" data-direction="left">
             <!-- Tier 1 - Premium clients -->
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
             </div>
             
             <!-- Duplicated for seamless loop -->
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/microsoft.svg" alt="Microsoft" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/google.svg" alt="Google" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/apple.svg" alt="Apple" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/meta.svg" alt="Meta" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/amazon.svg" alt="Amazon" loading="lazy" />
             </div>
-            <div class="client-logo">
+            <div class="client-logo premium">
               <img src="/images/clients/netflix.svg" alt="Netflix" loading="lazy" />
             </div>
           </div>
@@ -360,21 +347,26 @@ const clientsData = {
     display: flex;
     gap: 3rem;
     align-items: center;
-    animation-duration: 40s;
+    animation-duration: 30s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     padding: 0 15px;
-    will-change: transform;
   }
 
   .carousel-track[data-direction="left"] {
     animation-name: scrollLeft;
-    animation-duration: 50s;
   }
 
   .carousel-track[data-direction="right"] {
     animation-name: scrollRight;
-    animation-duration: 50s;
+  }
+
+  .carousel-track:nth-child(2) {
+    animation-duration: 35s;
+  }
+
+  .carousel-track:nth-child(3) {
+    animation-duration: 25s;
   }
 
   @keyframes scrollLeft {
@@ -406,7 +398,7 @@ const clientsData = {
     border-radius: 12px;
     padding: 0;
     transition: var(--transition-fast);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     overflow: visible;
     position: relative;
     z-index: 1;
@@ -431,7 +423,6 @@ const clientsData = {
     object-fit: contain;
     filter: brightness(1);
     transition: var(--transition-fast);
-    border-radius: 10px;
   }
 
   .client-logo:hover img {
