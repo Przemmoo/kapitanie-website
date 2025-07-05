@@ -1,7 +1,7 @@
 ---
-title: Konferencja Tech Summit 2025
-client: TechCorp
-date: 2024-06-15
+title: VII edycja Europejskiego Kongresu Mobilności Pracy
+client: Stowarzyszenie Europejski Instytut Mobilności Pracy
+date: 2023-04-24T00:00:00.000Z
 category: Konferencja
 featured_image: /images/fot.-storymakers.pl-elmc-0417-scaled.jpg
 gallery:
