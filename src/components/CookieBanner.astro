@@ -466,11 +466,16 @@
   }
 
   .toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute;
-    pointer-events: none;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 1;
+    cursor: pointer;
   }
 
   .toggle-slider {
