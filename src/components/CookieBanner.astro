@@ -708,7 +708,21 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  // Cookie preference interface
+  interface CookiePreferences {
+    necessary: boolean;
+    analytics: boolean;
+    marketing: boolean;
+    functional: boolean;
+    timestamp: string;
+  }
+
+  // Global type declarations
+  declare var gtag: any;
+  declare var clarity: any;
+  declare var fbq: any;
+
+  document.addEventListener('DOMContentLoaded', (): void => {
     // Cookie consent functionality
     const COOKIE_NAME = 'cookie-consent';
     const COOKIE_EXPIRY = 365; // days
@@ -718,7 +732,7 @@
     const cookieIndicator = document.getElementById('cookie-indicator');
 
     // Check if user has already given consent
-    const checkCookieConsent = () => {
+    const checkCookieConsent = (): void => {
       const consent = getCookie(COOKIE_NAME);
       if (!consent) {
         showCookieBanner();
@@ -729,7 +743,7 @@
     };
 
     // Show cookie banner
-    const showCookieBanner = () => {
+    const showCookieBanner = (): void => {
       if (cookieBanner) {
         cookieBanner.classList.add('show');
         cookieBanner.setAttribute('aria-hidden', 'false');
@@ -738,7 +752,7 @@
     };
 
     // Hide cookie banner
-    const hideCookieBanner = () => {
+    const hideCookieBanner = (): void => {
       if (cookieBanner) {
         cookieBanner.classList.remove('show');
         cookieBanner.setAttribute('aria-hidden', 'true');
@@ -747,7 +761,7 @@
     };
 
     // Show cookie indicator
-    const showCookieIndicator = () => {
+    const showCookieIndicator = (): void => {
       if (cookieIndicator) {
         setTimeout(() => {
           cookieIndicator.classList.add('show');
@@ -756,7 +770,7 @@
     };
 
     // Show cookie modal
-    const showCookieModal = () => {
+    const showCookieModal = (): void => {
       if (cookieModal) {
         cookieModal.classList.add('show');
         cookieModal.setAttribute('aria-hidden', 'false');
@@ -768,7 +782,7 @@
     };
 
     // Hide cookie modal
-    const hideCookieModal = () => {
+    const hideCookieModal = (): void => {
       if (cookieModal) {
         cookieModal.classList.remove('show');
         cookieModal.setAttribute('aria-hidden', 'true');
@@ -777,7 +791,7 @@
     };
 
     // Load current preferences into modal
-    const loadCurrentPreferences = () => {
+    const loadCurrentPreferences = (): void => {
       const consent = getCookie(COOKIE_NAME);
       const preferences = consent ? JSON.parse(consent) : {
         necessary: true,
@@ -793,7 +807,7 @@
     };
 
     // Get current preferences from modal
-    const getCurrentPreferences = () => {
+    const getCurrentPreferences = (): CookiePreferences => {
       return {
         necessary: getToggleState('necessary'),
         analytics: getToggleState('analytics'),
@@ -804,19 +818,19 @@
     };
 
     // Toggle state management
-    const setToggleState = (category, checked) => {
+    const setToggleState = (category: string, checked: boolean): void => {
       const toggle = document.querySelector(`[data-category="${category}"]`);
       if (toggle) {
         toggle.setAttribute('data-checked', checked.toString());
       }
     };
 
-    const getToggleState = (category) => {
+    const getToggleState = (category: string): boolean => {
       const toggle = document.querySelector(`[data-category="${category}"]`);
       return toggle ? toggle.getAttribute('data-checked') === 'true' : false;
     };
 
-    const toggleState = (category) => {
+    const toggleState = (category: string): void => {
       const toggle = document.querySelector(`[data-category="${category}"]`);
       if (toggle && toggle.getAttribute('data-disabled') !== 'true') {
         const currentState = toggle.getAttribute('data-checked') === 'true';
@@ -825,7 +839,7 @@
     };
 
     // Save cookie preferences
-    const saveCookiePreferences = (preferences) => {
+    const saveCookiePreferences = (preferences: CookiePreferences): void => {
       setCookie(COOKIE_NAME, JSON.stringify(preferences), COOKIE_EXPIRY);
       applyCookieSettings(preferences);
       hideCookieBanner();
@@ -834,7 +848,7 @@
     };
 
     // Apply cookie settings
-    const applyCookieSettings = (preferences) => {
+    const applyCookieSettings = (preferences: CookiePreferences): void => {
       // Analytics cookies (Google Analytics, Microsoft Clarity)
       if (preferences.analytics) {
         loadAnalyticsCookies();
@@ -863,13 +877,13 @@
     };
 
     // Cookie utility functions
-    const setCookie = (name, value, days) => {
+    const setCookie = (name: string, value: string, days: number): void => {
       const expires = new Date();
       expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
       document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
     };
 
-    const getCookie = (name) => {
+    const getCookie = (name: string): string | null => {
       const nameEQ = name + "=";
       const ca = document.cookie.split(';');
       for (let i = 0; i < ca.length; i++) {
@@ -880,12 +894,12 @@
       return null;
     };
 
-    const deleteCookie = (name) => {
+    const deleteCookie = (name: string): void => {
       document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
     };
 
     // Load specific cookie types
-    const loadAnalyticsCookies = () => {
+    const loadAnalyticsCookies = (): void => {
       // Google Analytics
       if (typeof gtag !== 'undefined') {
         gtag('consent', 'update', {
@@ -899,7 +913,7 @@
       }
     };
 
-    const removeAnalyticsCookies = () => {
+    const removeAnalyticsCookies = (): void => {
       if (typeof gtag !== 'undefined') {
         gtag('consent', 'update', {
           'analytics_storage': 'denied'
@@ -912,7 +926,7 @@
       deleteCookie('_gid');
     };
 
-    const loadMarketingCookies = () => {
+    const loadMarketingCookies = (): void => {
       if (typeof gtag !== 'undefined') {
         gtag('consent', 'update', {
           'ad_storage': 'granted'
@@ -924,7 +938,7 @@
       }
     };
 
-    const removeMarketingCookies = () => {
+    const removeMarketingCookies = (): void => {
       if (typeof gtag !== 'undefined') {
         gtag('consent', 'update', {
           'ad_storage': 'denied'
@@ -936,12 +950,12 @@
       deleteCookie('_fbc');
     };
 
-    const loadFunctionalCookies = () => {
+    const loadFunctionalCookies = (): void => {
       // Enable YouTube, Maps, etc.
       console.log('Functional cookies enabled');
     };
 
-    const removeFunctionalCookies = () => {
+    const removeFunctionalCookies = (): void => {
       // Disable functional cookies
       console.log('Functional cookies disabled');
     };
@@ -1027,9 +1041,9 @@
     });
 
     // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e: KeyboardEvent): void => {
       if (e.key === 'Escape') {
-        if (cookieModal.classList.contains('show')) {
+        if (cookieModal && cookieModal.classList.contains('show')) {
           hideCookieModal();
         }
       }
