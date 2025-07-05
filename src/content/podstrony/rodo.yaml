@@ -1,5 +1,6 @@
 title: RODO/GDPR
-description: Szczegółowe informacje o przetwarzaniu danych osobowych zgodnie z RODO/GDPR - kapitanie
+description: Szczegółowe informacje o przetwarzaniu danych osobowych zgodnie z
+  RODO/GDPR - kapitanie
 last_updated: 2024-12-19T00:00:00.000Z
 content: >-
   # RODO/GDPR - Szczegółowe Postanowienia
@@ -8,7 +9,7 @@ content: >-
   ## Administrator danych
 
 
-  **Nazwa:** kapitanie
+  **Nazwa:** kapitanie/n
 
   **Adres:** Wieliczka 32-020; ul Różana 54B/1
 
@@ -38,15 +39,15 @@ content: >-
   Przetwarzamy następujące kategorie danych osobowych:
 
 
-  - Dane identyfikacyjne (imię, nazwisko, nazwa firmy)
+  * Dane identyfikacyjne (imię, nazwisko, nazwa firmy)
 
-  - Dane kontaktowe (email, telefon, adres)
+  * Dane kontaktowe (email, telefon, adres)
 
-  - Dane techniczne (adres IP, informacje o przeglądarce)
+  * Dane techniczne (adres IP, informacje o przeglądarce)
 
-  - Dane z formularzy kontaktowych i briefów
+  * Dane z formularzy kontaktowych i briefów
 
-  - Dane dotyczące preferencji komunikacyjnych
+  * Dane dotyczące preferencji komunikacyjnych
 
 
   ## Prawa użytkownika
@@ -55,17 +56,17 @@ content: >-
   Zgodnie z RODO, przysługują Ci następujące prawa:
 
 
-  - **Dostęp do danych** - prawo do uzyskania kopii swoich danych osobowych
+  * **Dostęp do danych** - prawo do uzyskania kopii swoich danych osobowych
 
-  - **Sprostowanie** - prawo do poprawienia błędnych lub niepełnych danych
+  * **Sprostowanie** - prawo do poprawienia błędnych lub niepełnych danych
 
-  - **Usunięcie** - prawo do "bycia zapomnianym" (gdy dane nie są już potrzebne)
+  * **Usunięcie** - prawo do "bycia zapomnianym" (gdy dane nie są już potrzebne)
 
-  - **Ograniczenie przetwarzania** - czasowe wstrzymanie przetwarzania danych
+  * **Ograniczenie przetwarzania** - czasowe wstrzymanie przetwarzania danych
 
-  - **Przenośność** - prawo do otrzymania danych w formacie strukturalnym
+  * **Przenośność** - prawo do otrzymania danych w formacie strukturalnym
 
-  - **Sprzeciw** - prawo do wyrażenia sprzeciwu wobec przetwarzania
+  * **Sprzeciw** - prawo do wyrażenia sprzeciwu wobec przetwarzania
 
 
   ## Okres przechowywania danych
@@ -74,11 +75,11 @@ content: >-
   Dane osobowe przechowywane są:
 
 
-  - **Dane kontraktowe** - przez okres obowiązywania umowy + 6 lat (zgodnie z prawem podatkowym)
+  * **Dane kontraktowe** - przez okres obowiązywania umowy + 6 lat (zgodnie z prawem podatkowym)
 
-  - **Dane marketingowe** - do momentu wycofania zgody lub wyrażenia sprzeciwu
+  * **Dane marketingowe** - do momentu wycofania zgody lub wyrażenia sprzeciwu
 
-  - **Dane techniczne** - maksymalnie 24 miesiące
+  * **Dane techniczne** - maksymalnie 24 miesiące
 
 
   ## Odbiorcy danych
@@ -87,11 +88,11 @@ content: >-
   Dane osobowe mogą być przekazywane następującym kategoriom odbiorców:
 
 
-  - Podmioty świadczące usługi techniczne (hosting, analityka)
+  * Podmioty świadczące usługi techniczne (hosting, analityka)
 
-  - Podmioty świadczące usługi księgowe i prawne
+  * Podmioty świadczące usługi księgowe i prawne
 
-  - Organy publiczne (w zakresie wymaganym prawem)
+  * Organy publiczne (w zakresie wymaganym prawem)
 
 
   ## Bezpieczeństwo danych
@@ -100,13 +101,13 @@ content: >-
   Stosujemy odpowiednie środki techniczne i organizacyjne w celu ochrony danych osobowych, w tym:
 
 
-  - Szyfrowanie transmisji danych (SSL/TLS)
+  * Szyfrowanie transmisji danych (SSL/TLS)
 
-  - Regularne kopie zapasowe
+  * Regularne kopie zapasowe
 
-  - Ograniczony dostęp do danych
+  * Ograniczony dostęp do danych
 
-  - Monitoring bezpieczeństwa
+  * Monitoring bezpieczeństwa
 
 
   ## Prawo do wniesienia skargi
@@ -128,7 +129,7 @@ content: >-
   **Adres:** kapitanie, ul. Różana 54B/1, 32-020 Wieliczka
 
 
-  ---
+  - - -
 
 
   *Ostatnia aktualizacja: 19 grudnia 2024*
