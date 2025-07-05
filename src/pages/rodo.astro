@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
+import { marked } from 'marked';
 
 // Pobieramy dane RODO z CMS
 const rodoData = await getCollection('podstrony').then(entries => 
@@ -11,23 +12,33 @@ const rodoData = await getCollection('podstrony').then(entries =>
 
 const pageTitle = rodoData?.data.title || "RODO - kapitanie";
 const pageDescription = rodoData?.data.description || "Informacje RODO/GDPR - kapitanie. Szczegółowe informacje o przetwarzaniu danych osobowych zgodnie z RODO.";
+
+// Konwertuj markdown na HTML
+const contentHtml = rodoData?.data.content ? marked(rodoData.data.content) : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
   <Header />
   
-  <main class="legal-page">
+  <!-- Hero section dla podstron prawnych -->
+  <section class="legal-hero section">
     <div class="container">
-      <h1 set:html={rodoData?.data.title || "RODO/GDPR"}></h1>
-      
-      {rodoData?.data.last_updated && (
-        <p class="last-updated">
-          Ostatnia aktualizacja: {new Date(rodoData.data.last_updated).toLocaleDateString('pl-PL')}
-        </p>
-      )}
-      
-      <div class="legal-content" set:html={rodoData?.data.content || ''}>
-        <!-- Zawartość zostanie załadowana z CMS -->
+      <div class="hero-content">
+        <h1>{rodoData?.data.title || "RODO/GDPR"}</h1>
+        {rodoData?.data.last_updated && (
+          <p class="last-updated">
+            Ostatnia aktualizacja: {new Date(rodoData.data.last_updated).toLocaleDateString('pl-PL')}
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Treść dokumentu -->
+  <main class="legal-main section">
+    <div class="container">
+      <div class="legal-content">
+        <div class="content-wrapper" set:html={contentHtml}></div>
       </div>
     </div>
   </main>
@@ -36,41 +47,82 @@ const pageDescription = rodoData?.data.description || "Informacje RODO/GDPR - ka
 </Layout>
 
 <style>
-  .legal-page {
-    min-height: 100vh;
-    padding: 100px 0 50px;
+  /* Hero section dla podstron prawnych */
+  .legal-hero {
     background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-secondary) 100%);
+    padding-top: 120px;
+    padding-bottom: 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
+  .legal-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 169, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
   }
 
-  h1 {
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .legal-hero h1 {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     color: var(--text-main);
     margin-bottom: 1rem;
-    text-align: center;
+    background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .last-updated {
-    text-align: center;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 3rem;
+    font-size: 1rem;
     font-style: italic;
+    margin-top: 1rem;
+  }
+
+  /* Główna treść */
+  .legal-main {
+    background-color: var(--bg-main);
+    min-height: 50vh;
   }
 
   .legal-content {
-    color: var(--text-main);
-    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .legal-content h2 {
+  .content-wrapper {
+    background: rgba(31, 31, 31, 0.5);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 169, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Stylizacja treści markdown */
+  .content-wrapper :global(h1) {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-blue);
+    margin: 2rem 0 1.5rem;
+    text-align: center;
+  }
+
+  .content-wrapper :global(h2) {
     font-family: var(--font-heading);
     font-size: 1.8rem;
     font-weight: 700;
@@ -78,9 +130,20 @@ const pageDescription = rodoData?.data.description || "Informacje RODO/GDPR - ka
     margin: 2.5rem 0 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--accent-blue);
+    position: relative;
   }
 
-  .legal-content h3 {
+  .content-wrapper :global(h2::before) {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--text-main);
+  }
+
+  .content-wrapper :global(h3) {
     font-family: var(--font-heading);
     font-size: 1.4rem;
     font-weight: 600;
@@ -88,61 +151,93 @@ const pageDescription = rodoData?.data.description || "Informacje RODO/GDPR - ka
     margin: 2rem 0 1rem;
   }
 
-  .legal-content p {
-    margin-bottom: 1.2rem;
+  .content-wrapper :global(p) {
+    font-family: var(--font-body);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-main);
   }
 
-  .legal-content ul,
-  .legal-content ol {
-    margin: 1rem 0 1.5rem 2rem;
+  .content-wrapper :global(ul),
+  .content-wrapper :global(ol) {
+    margin: 1.5rem 0 2rem 2rem;
+    color: var(--text-main);
   }
 
-  .legal-content li {
-    margin-bottom: 0.5rem;
+  .content-wrapper :global(li) {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
   }
 
-  .legal-content strong {
+  .content-wrapper :global(strong) {
     color: var(--accent-blue);
     font-weight: 600;
   }
 
-  .legal-content .contact-info {
-    background: rgba(0, 169, 255, 0.1);
+  /* Style dla divów z klasą contact-info (z markdown) */
+  .content-wrapper :global(.contact-info) {
+    background: linear-gradient(135deg, rgba(0, 169, 255, 0.1) 0%, rgba(0, 169, 255, 0.05) 100%);
     padding: 1.5rem;
     border-radius: 12px;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
     border-left: 4px solid var(--accent-blue);
+    box-shadow: 0 4px 15px rgba(0, 169, 255, 0.1);
   }
 
-  .legal-content .contact-info p {
+  .content-wrapper :global(.contact-info p) {
     margin-bottom: 0.5rem;
   }
 
-  /* Mobile styles */
+  .content-wrapper :global(a) {
+    color: var(--accent-blue);
+    text-decoration: underline;
+    transition: var(--transition-fast);
+  }
+
+  .content-wrapper :global(a:hover) {
+    color: var(--text-main);
+    text-decoration: none;
+  }
+
+  /* Responsive design */
   @media (max-width: 768px) {
-    .legal-page {
-      padding: 80px 0 30px;
+    .legal-hero {
+      padding-top: 100px;
+      padding-bottom: 40px;
     }
 
-    .container {
-      padding: 0 1rem;
+    .content-wrapper {
+      padding: 2rem 1.5rem;
+      margin: 0 1rem;
     }
 
-    h1 {
+    .content-wrapper :global(h1) {
       font-size: 2rem;
     }
 
-    .legal-content h2 {
+    .content-wrapper :global(h2) {
       font-size: 1.5rem;
     }
 
-    .legal-content h3 {
+    .content-wrapper :global(h3) {
       font-size: 1.2rem;
     }
 
-    .legal-content ul,
-    .legal-content ol {
+    .content-wrapper :global(ul),
+    .content-wrapper :global(ol) {
       margin-left: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .legal-hero {
+      padding-top: 90px;
+      padding-bottom: 30px;
+    }
+
+    .content-wrapper {
+      padding: 1.5rem 1rem;
+      margin: 0 0.5rem;
     }
   }
 </style>

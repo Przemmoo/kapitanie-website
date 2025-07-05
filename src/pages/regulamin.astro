@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
+import { marked } from 'marked';
 
 // Pobieramy dane regulaminu z CMS
 const termsData = await getCollection('podstrony').then(entries => 
@@ -11,199 +12,34 @@ const termsData = await getCollection('podstrony').then(entries =>
 
 const pageTitle = termsData?.data.title || "Regulamin - kapitanie";
 const pageDescription = termsData?.data.description || "Regulamin świadczenia usług eventowych przez firmę kapitanie. Warunki współpracy, oświetlenie, nagłośnienie, multimedia.";
+
+// Konwertuj markdown na HTML
+const contentHtml = termsData?.data.content ? marked(termsData.data.content) : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
   <Header />
   
-  <main class="legal-page">
+  <!-- Hero section dla podstron prawnych -->
+  <section class="legal-hero section">
     <div class="container">
-      <h1 set:html={termsData?.data.title || "Regulamin"}></h1>
-      
-      {termsData?.data.last_updated && (
-        <p class="last-updated">
-          Ostatnia aktualizacja: {new Date(termsData.data.last_updated).toLocaleDateString('pl-PL')}
-        </p>
-      )}
-      
-      <div class="legal-content" set:html={termsData?.data.content || ''}>
-        <!-- Zawartość zostanie załadowana z CMS -->
+      <div class="hero-content">
+        <h1>{termsData?.data.title || "Regulamin"}</h1>
+        {termsData?.data.last_updated && (
+          <p class="last-updated">
+            Ostatnia aktualizacja: {new Date(termsData.data.last_updated).toLocaleDateString('pl-PL')}
+          </p>
+        )}
       </div>
     </div>
-  </main>
+  </section>
 
-  <Footer />
-</Layout>
-      
-      <section class="legal-section">
-        <h2>§1 Postanowienia ogólne</h2>
-        <ol>
-          <li>Niniejszy regulamin określa zasady świadczenia usług eventowych przez firmę "kapitanie" z siedzibą w Wieliczce (32-020), ul. Różana 54B/1.</li>
-          <li>Regulamin jest dostępny bezpłatnie na stronie internetowej kapitanie.pl i może być przesłany na żądanie Klienta.</li>
-          <li>Akceptacja regulaminu następuje poprzez złożenie zamówienia lub podpisanie umowy.</li>
-          <li>W przypadku sprzeczności między regulaminem a umową, pierwszeństwo mają postanowienia umowy.</li>
-        </ol>
-      </section>
-
-      <section class="legal-section">
-        <h2>§2 Zakres usług</h2>
-        <p>Firma "kapitanie" świadczy następujące usługi:</p>
-        
-        <h3>2.1 Oświetlenie sceniczne</h3>
-        <ul>
-          <li>Projektowanie systemów oświetleniowych</li>
-          <li>Realizacja oświetlenia na żywo</li>
-          <li>Oświetlenie architektoniczne</li>
-          <li>Efekty specjalne</li>
-        </ul>
-
-        <h3>2.2 Nagłośnienie</h3>
-        <ul>
-          <li>Kompleksowa obsługa audio eventów</li>
-          <li>Systemy PA i monitorowe</li>
-          <li>Transmisje i nagrania na żywo</li>
-          <li>Obsługa techniczna mikrofonów</li>
-        </ul>
-
-        <h3>2.3 Multimedia</h3>
-        <ul>
-          <li>Systemy wizualne i ekrany LED</li>
-          <li>Projekcje i mapping</li>
-          <li>Transmisje online</li>
-          <li>Grafika i animacje na żywo</li>
-        </ul>
-
-        <h3>2.4 Aplikacja eventowa</h3>
-        <ul>
-          <li>Autorskie rozwiązanie mobilne</li>
-          <li>Zarządzanie uczestnikami</li>
-          <li>Interaktywne funkcje</li>
-          <li>Analityka i raporty</li>
-        </ul>
-      </section>
-
-      <section class="legal-section">
-        <h2>§3 Warunki współpracy</h2>
-        
-        <h3>3.1 Wycena i zamówienia</h3>
-        <ul>
-          <li>Bezpłatna wycena po wypełnieniu szczegółowego briefu</li>
-          <li>Wycena ważna przez 30 dni od daty wystawienia</li>
-          <li>Ceny nie zawierają podatku VAT (dodawany zgodnie z przepisami)</li>
-          <li>Zamówienie uznaje się za złożone po akceptacji wyceny</li>
-        </ul>
-
-        <h3>3.2 Warunki płatności</h3>
-        <ul>
-          <li>Zaliczka 50% wartości zamówienia przed realizacją</li>
-          <li>Pozostała kwota płatna w terminie 14 dni od daty wystawienia faktury</li>
-          <li>Opóźnienie w płatności uprawnia do naliczenia odsetek ustawowych</li>
-          <li>Dopuszczalne formy płatności: przelew, gotówka</li>
-        </ul>
-
-        <h3>3.3 Ubezpieczenie</h3>
-        <ul>
-          <li>Pełne ubezpieczenie sprzętu od odpowiedzialności cywilnej</li>
-          <li>Ubezpieczenie obejmuje szkody do 1 mln PLN</li>
-          <li>Polisa dostępna do wglądu na życzenie Klienta</li>
-        </ul>
-      </section>
-
-      <section class="legal-section">
-        <h2>§4 Obowiązki stron</h2>
-        
-        <h3>4.1 Obowiązki kapitanie</h3>
-        <ul>
-          <li>Świadczenie usług zgodnie z umową i standardami branżowymi</li>
-          <li>Zapewnienie sprawnego sprzętu technicznego</li>
-          <li>Profesjonalna obsługa przez wykwalifikowany personel</li>
-          <li>Dotrzymanie uzgodnionych terminów</li>
-          <li>Zachowanie poufności informacji Klienta</li>
-        </ul>
-
-        <h3>4.2 Obowiązki Klienta</h3>
-        <ul>
-          <li>Przekazanie pełnych i prawdziwych informacji o evencie</li>
-          <li>Zapewnienie dostępu do miejsca realizacji</li>
-          <li>Terminowa płatność zgodnie z umową</li>
-          <li>Zapewnienie bezpiecznych warunków pracy</li>
-          <li>Informowanie o zmianach w trybie pilnym</li>
-        </ul>
-      </section>
-
-      <section class="legal-section">
-        <h2>§5 Odpowiedzialność</h2>
-        <ol>
-          <li>kapitanie ponosi odpowiedzialność za szkody wyrządzone z własnej winy do wysokości wartości umowy.</li>
-          <li>Wyłączona jest odpowiedzialność za szkody powstałe wskutek działania siły wyższej.</li>
-          <li>Klient ponosi odpowiedzialność za szkody w sprzęcie powstałe z jego winy.</li>
-          <li>Reklamacje należy zgłaszać w terminie 7 dni od zakończenia eventu.</li>
-        </ol>
-      </section>
-
-      <section class="legal-section">
-        <h2>§6 Siła wyższa</h2>
-        <p>Za przypadki siły wyższej uważa się zdarzenia niezależne od stron, takie jak:</p>
-        <ul>
-          <li>Klęski żywiołowe (powódź, burza, trzęsienie ziemi)</li>
-          <li>Decyzje władz publicznych</li>
-          <li>Strajki i niepokoje społeczne</li>
-          <li>Pandemia lub inne zagrożenia epidemiologiczne</li>
-          <li>Awarie infrastruktury miejskiej</li>
-        </ul>
-        <p>W przypadku wystąpienia siły wyższej, strony są zwolnione z odpowiedzialności za niewykonanie zobowiązań.</p>
-      </section>
-
-      <section class="legal-section">
-        <h2>§7 Anulowanie zamówienia</h2>
-        <table class="cancellation-table">
-          <tr>
-            <th>Termin anulowania</th>
-            <th>Koszt anulowania</th>
-          </tr>
-          <tr>
-            <td>Powyżej 30 dni przed eventem</td>
-            <td>0% wartości zamówienia</td>
-          </tr>
-          <tr>
-            <td>15-30 dni przed eventem</td>
-            <td>25% wartości zamówienia</td>
-          </tr>
-          <tr>
-            <td>7-14 dni przed eventem</td>
-            <td>50% wartości zamówienia</td>
-          </tr>
-          <tr>
-            <td>Mniej niż 7 dni przed eventem</td>
-            <td>100% wartości zamówienia</td>
-          </tr>
-        </table>
-      </section>
-
-      <section class="legal-section">
-        <h2>§8 Ochrona danych osobowych</h2>
-        <p>Szczegółowe informacje o przetwarzaniu danych osobowych znajdują się w <a href="/polityka-prywatnosci">Polityce Prywatności</a>.</p>
-      </section>
-
-      <section class="legal-section">
-        <h2>§9 Postanowienia końcowe</h2>
-        <ol>
-          <li>Regulamin może być zmieniany przez kapitanie. Zmiany wchodzą w życie po 14 dniach od opublikowania.</li>
-          <li>W sprawach nieuregulowanych regulaminem stosuje się przepisy Kodeksu Cywilnego.</li>
-          <li>Ewentualne spory rozstrzygane będą przez sąd właściwy dla siedziby kapitanie.</li>
-          <li>Regulamin obowiązuje od dnia 1 stycznia 2025 roku.</li>
-        </ol>
-      </section>
-
-      <section class="legal-section">
-        <h2>§10 Kontakt</h2>
-        <div class="contact-info">
-          <p><strong>kapitanie</strong></p>
-          <p><strong>Adres:</strong> Wieliczka 32-020, ul. Różana 54B/1</p>
-          <p><strong>Email:</strong> kontakt@kapitanie.pl</p>
-          <p><strong>Telefon:</strong> 501181703</p>
-        </div>
-      </section>
+  <!-- Treść dokumentu -->
+  <main class="legal-main section">
+    <div class="container">
+      <div class="legal-content">
+        <div class="content-wrapper" set:html={contentHtml}></div>
+      </div>
     </div>
   </main>
 
@@ -211,41 +47,79 @@ const pageDescription = termsData?.data.description || "Regulamin świadczenia u
 </Layout>
 
 <style>
-  .legal-page {
-    min-height: 100vh;
-    padding: 100px 0 50px;
-    background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-secondary) 100%);
+  .legal-hero {
+    background: var(--bg-secondary);
+    padding-top: 120px;
+    padding-bottom: 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
 
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
+  .legal-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 169, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
   }
 
-  h1 {
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .legal-hero h1 {
     font-family: var(--font-heading);
-    font-size: 2.5rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 800;
     color: var(--text-main);
     margin-bottom: 1rem;
-    text-align: center;
+    background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .last-updated {
-    text-align: center;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 3rem;
+    font-size: 1rem;
     font-style: italic;
+    margin-top: 1rem;
+  }
+
+  .legal-main {
+    background-color: var(--bg-main);
+    min-height: 50vh;
   }
 
   .legal-content {
-    color: var(--text-main);
-    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .legal-content h2 {
+  .content-wrapper {
+    background: rgba(31, 31, 31, 0.5);
+    border-radius: 20px;
+    padding: 3rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 169, 255, 0.1);
+    backdrop-filter: blur(10px);
+  }
+
+  .content-wrapper :global(h1) {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-blue);
+    margin: 2rem 0 1.5rem;
+    text-align: center;
+  }
+
+  .content-wrapper :global(h2) {
     font-family: var(--font-heading);
     font-size: 1.8rem;
     font-weight: 700;
@@ -253,9 +127,20 @@ const pageDescription = termsData?.data.description || "Regulamin świadczenia u
     margin: 2.5rem 0 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--accent-blue);
+    position: relative;
   }
 
-  .legal-content h3 {
+  .content-wrapper :global(h2::before) {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--text-main);
+  }
+
+  .content-wrapper :global(h3) {
     font-family: var(--font-heading);
     font-size: 1.4rem;
     font-weight: 600;
@@ -263,49 +148,122 @@ const pageDescription = termsData?.data.description || "Regulamin świadczenia u
     margin: 2rem 0 1rem;
   }
 
-  .legal-content p {
-    margin-bottom: 1.2rem;
+  .content-wrapper :global(p) {
+    font-family: var(--font-body);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-main);
   }
 
-  .legal-content ul,
-  .legal-content ol {
-    margin: 1rem 0 1.5rem 2rem;
+  .content-wrapper :global(ul),
+  .content-wrapper :global(ol) {
+    margin: 1.5rem 0 2rem 2rem;
+    color: var(--text-main);
   }
 
-  .legal-content li {
-    margin-bottom: 0.5rem;
+  .content-wrapper :global(li) {
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
   }
 
-  .legal-content strong {
+  .content-wrapper :global(strong) {
     color: var(--accent-blue);
     font-weight: 600;
   }
 
-  /* Mobile styles */
+  .content-wrapper :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: rgba(0, 169, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .content-wrapper :global(th),
+  .content-wrapper :global(td) {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 169, 255, 0.2);
+  }
+
+  .content-wrapper :global(th) {
+    background: rgba(0, 169, 255, 0.1);
+    color: var(--accent-blue);
+    font-weight: 600;
+  }
+
+  .content-wrapper :global(.contact-info) {
+    background: linear-gradient(135deg, rgba(0, 169, 255, 0.1) 0%, rgba(0, 169, 255, 0.05) 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    border-left: 4px solid var(--accent-blue);
+    box-shadow: 0 4px 15px rgba(0, 169, 255, 0.1);
+  }
+
+  .content-wrapper :global(.contact-info p) {
+    margin-bottom: 0.5rem;
+  }
+
+  .content-wrapper :global(a) {
+    color: var(--accent-blue);
+    text-decoration: underline;
+    transition: var(--transition-fast);
+  }
+
+  .content-wrapper :global(a:hover) {
+    color: var(--text-main);
+    text-decoration: none;
+  }
+
   @media (max-width: 768px) {
-    .legal-page {
-      padding: 80px 0 30px;
+    .legal-hero {
+      padding-top: 100px;
+      padding-bottom: 40px;
     }
 
-    .container {
-      padding: 0 1rem;
+    .content-wrapper {
+      padding: 2rem 1.5rem;
+      margin: 0 1rem;
     }
 
-    h1 {
+    .content-wrapper :global(h1) {
       font-size: 2rem;
     }
 
-    .legal-content h2 {
+    .content-wrapper :global(h2) {
       font-size: 1.5rem;
     }
 
-    .legal-content h3 {
+    .content-wrapper :global(h3) {
       font-size: 1.2rem;
     }
 
-    .legal-content ul,
-    .legal-content ol {
+    .content-wrapper :global(ul),
+    .content-wrapper :global(ol) {
       margin-left: 1rem;
+    }
+
+    .content-wrapper :global(table) {
+      font-size: 0.9rem;
+    }
+
+    .content-wrapper :global(th),
+    .content-wrapper :global(td) {
+      padding: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .legal-hero {
+      padding-top: 90px;
+      padding-bottom: 30px;
+    }
+
+    .content-wrapper {
+      padding: 1.5rem 1rem;
+      margin: 0 0.5rem;
     }
   }
 </style>
