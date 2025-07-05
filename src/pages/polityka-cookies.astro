@@ -16,11 +16,7 @@ const pageDescription = cookiesData?.data.description || "Szczegółowa polityka
 // Konwertuj markdown na HTML z poprawną konfiguracją
 const contentHtml = cookiesData?.data.content ? marked(cookiesData.data.content, {
   breaks: true, // Włącza interpretację pojedynczych nowych linii jako <br>
-  gfm: true, // GitHub Flavored Markdown
-  pedantic: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false
+  gfm: true // GitHub Flavored Markdown
 }) : '';
 ---
 
@@ -156,14 +152,14 @@ const contentHtml = cookiesData?.data.content ? marked(cookiesData.data.content,
 
   .content-wrapper :global(p) {
     font-family: var(--font-body);
-    line-height: 1.8;
-    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
     color: var(--text-main);
   }
 
   .content-wrapper :global(ul),
   .content-wrapper :global(ol) {
-    margin: 1.5rem 0 2rem 2rem;
+    margin: 0.5rem 0 2rem 2rem;
     color: var(--text-main);
   }
 
