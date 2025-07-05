@@ -5,33 +5,31 @@ date: 2024-06-15
 category: Konferencja
 featured_image: ""
 gallery: []
-description: Tech Summit 2024 to prestiżowa konferencja technologiczna, która
-  zgromadziła ponad 500 specjalistów IT z całego kraju. Event obejmował 3 dni
-  prezentacji, warsztatów i networkingu w nowoczesnym centrum konferencyjnym.
-challenge: Organizacja międzynarodowej konferencji dla 500+ uczestników z
-  jednoczesną transmisją online dla 2000+ widzów na całym świecie.
+description: W Centrum Kongresowym ICE w Krakowie odbyła się VII edycja
+  Europejskiego Kongresu Mobilności Pracy (European Labour Mobility Congress).
+  Wydarzenie to, jak co roku, przyciągnęło publiczność z Polski i Europy,
+  koncentrując się na zagadnieniach związanych z jednolitym rynkiem, mobilnością
+  pracowników oraz swobodą świadczenia usług.
+challenge: Organizacja Europejskiego Kongresu Mobilności Pracy dla 500+
+  uczestników z jednoczesną transmisją online dla 1000+ widzów na całym świecie.
 solution: Zastosowaliśmy hybrydowy model eventu z profesjonalną transmisją
   streaming, interaktywnymi sesjami Q&A oraz dedykowaną aplikacją mobilną dla
   uczestników.
-results: 95% zadowolenia uczestników, 100% wypełnienie miejsc, 2000+ widzów
-  online, 15+ partnerów mediowych
+results: 95% zadowolenia uczestników, 100% wypełnienie miejsc, 1000+ widzów
+  online, 11 partnerów mediowych
 ---
-
-Konferencja Tech Summit 2024 była jednym z najważniejszych wydarzeń branży technologicznej w Polsce. Przez 3 dni eksperci dzielili się najnowszymi trendami w obszarze sztucznej inteligencji, blockchain i cyberbezpieczeństwa.
+VII edycja Europejskiego Kongresu Mobilności Pracy była jednym z najważniejszych wydarzeń branży związanych z jednolitym rynkiem, mobilnością pracowników oraz swobodą świadczenia usług.
 
 ## Główne atrakcje eventu:
 
-- **Keynote speakers:** 8 uznanych ekspertów z całego świata
-- **Warsztaty praktyczne:** 12 sesji hands-on z najnowszymi technologiami  
-- **Networking Zone:** Dedykowana strefa do nawiązywania kontaktów biznesowych
-- **Innovation Showcase:** Prezentacja najnowszych rozwiązań technologicznych
+* **Keynote speakers:** 8 uznanych ekspertów z całego świata
+* **Warsztaty praktyczne:** 12 sesji hands-on z najnowszymi technologiami  
+* **Expert's Village:** Dedykowana strefa do nawiązywania kontaktów biznesowych
 
 ## Liczby, które mówią same za siebie:
 
-- 500+ uczestników stacjonarnych
-- 2000+ widzów transmisji online
-- 95% pozytywnych opinii
-- 15+ partnerów mediowych
-- 100% wypełnienie miejsc
-
-Event otrzymał uznanie branży i został wyróżniony jako "Konferencja Roku 2024" przez Polską Izbę Informatyki i Telekomunikacji.
+* 500+ uczestników stacjonarnych
+* 1000+ widzów transmisji online
+* 95% pozytywnych opinii
+* 11 partnerów mediowych
+* 100% wypełnienie miejsc
