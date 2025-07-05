@@ -1,44 +1,75 @@
 title: "Polityka Cookies"
-description: "Polityka wykorzystania plików cookies w serwisie kapitanie.pl"
-last_updated: 2024-01-15
+description: "Szczegółowa polityka wykorzystania plików cookies na stronie kapitanie.pl - informacje o rodzajach ciasteczek i zarządzaniu zgodą"
+last_updated: 2024-12-19T00:00:00.000Z
 content: |
   # Polityka Cookies
 
-  ## 1. Informacje ogólne
+  ## §1 Czym są pliki cookies?
 
-  Serwis kapitanie.pl używa plików cookies (ciasteczek) w celu zapewnienia prawidłowego funkcjonowania strony oraz poprawy jakości świadczonych usług.
+  Pliki cookies to małe pliki tekstowe zapisywane na Twoim urządzeniu podczas przeglądania stron internetowych. Umożliwiają one stronie "zapamiętanie" Twoich preferencji i akcji podczas aktualnej sesji lub w przyszłych wizytach.
 
-  ## 2. Czym są pliki cookies
+  ## §2 Rodzaje wykorzystywanych ciasteczek
 
-  Pliki cookies to małe pliki tekstowe wysyłane przez serwis internetowy i zapisywane na urządzeniu Użytkownika przez przeglądarkę internetową.
+  Na naszej stronie wykorzystujemy następujące rodzaje plików cookies:
 
-  ## 3. Rodzaje używanych plików cookies
+  ### Niezbędne (zawsze aktywne):
 
-  ### Cookies niezbędne
-  - Zapewniają podstawowe funkcjonalności strony
-  - Nie można ich wyłączyć bez wpływu na działanie serwisu
+  - **Sesja użytkownika** - utrzymanie stanu sesji podczas przeglądania
+  - **Bezpieczeństwo** - ochrona przed atakami CSRF
+  - **Zgodność z RODO** - zapamiętanie preferencji cookies
 
-  ### Cookies analityczne
-  - Pomagają zrozumieć jak Użytkownicy korzystają ze strony
-  - Wszystkie dane są anonimowe
+  ### Analityczne (opcjonalne):
 
-  ### Cookies marketingowe
-  - Używane do personalizacji reklam
-  - Można je wyłączyć w ustawieniach
+  - **Google Analytics** - analiza ruchu na stronie
+  - **Microsoft Clarity** - analiza zachowań użytkowników
+  - **Czas życia:** 24 miesiące
 
-  ## 4. Zarządzanie cookies
+  ### Marketingowe (opcjonalne):
 
-  Użytkownik może w każdej chwili zmienić ustawienia cookies:
-  - W przeglądarce internetowej
-  - Za pomocą bannera na stronie
-  - Kontaktując się z nami
+  - **Facebook Pixel** - remarketing i targetowanie
+  - **Google Ads** - śledzenie konwersji
+  - **Czas życia:** 12 miesięcy
 
-  ## 5. Zewnętrzne usługi
+  ### Funkcjonalne (opcjonalne):
 
-  Używamy następujących zewnętrznych usług:
-  - Google Analytics (analityka)
-  - Facebook Pixel (marketing)
+  - **Preferencje użytkownika** - zapamiętanie ustawień strony
+  - **Zawartość spersonalizowana** - dostosowanie treści do preferencji
+  - **Czas życia:** 6 miesięcy
 
-  ## 6. Kontakt
+  ## §3 Zarządzanie zgodą
 
-  W sprawach dotyczących cookies: kontakt@kapitanie.pl
+  Podczas pierwszej wizyty na naszej stronie pojawi się banner informacyjny o wykorzystywaniu plików cookies. Masz możliwość:
+
+  - **Akceptacji wszystkich** - zgoda na wszystkie rodzaje cookies
+  - **Wyboru tylko niezbędnych** - zgoda tylko na cookies techniczne
+  - **Personalizacji ustawień** - indywidualny wybór kategorii
+
+  Swoją zgodę możesz w każdej chwili zmienić lub wycofać poprzez:
+
+  - Zmianę ustawień w przeglądarce internetowej
+  - Skorzystanie z panelu zarządzania cookies (dostępnego w stopce strony)
+  - Kontakt z nami pod adresem kontakt@kapitanie.pl
+
+  ## §4 Zarządzanie cookies w przeglądarce
+
+  Możesz kontrolować i zarządzać plikami cookies poprzez ustawienia swojej przeglądarki:
+
+  **Chrome:** Ustawienia → Prywatność i bezpieczeństwo → Pliki cookie
+
+  **Firefox:** Ustawienia → Prywatność i bezpieczeństwo → Pliki cookie
+
+  **Safari:** Preferencje → Prywatność → Zarządzaj danymi stron
+
+  **Edge:** Ustawienia → Prywatność, wyszukiwanie i usługi → Pliki cookie
+
+  ## §5 Kontakt
+
+  W sprawach dotyczących polityki cookies możesz się skontaktować:
+
+  **Email:** kontakt@kapitanie.pl
+  **Telefon:** 501181703
+  **Adres:** kapitanie, ul. Różana 54B/1, 32-020 Wieliczka
+
+  ---
+
+  *Ostatnia aktualizacja: 19 grudnia 2024*

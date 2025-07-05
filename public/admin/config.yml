@@ -339,3 +339,12 @@ collections:
           - { label: "Opis SEO", name: "description", widget: "text" }
           - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
           - { label: "Treść", name: "content", widget: "markdown", hint: "Treść regulaminu" }
+
+      - label: "RODO/GDPR"
+        name: "rodo"
+        file: "src/content/podstrony/rodo.yaml"
+        fields:
+          - { label: "Tytuł", name: "title", widget: "string", default: "RODO/GDPR" }
+          - { label: "Opis SEO", name: "description", widget: "text" }
+          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
+          - { label: "Treść", name: "content", widget: "markdown", hint: "Treść przepisów RODO/GDPR" }
