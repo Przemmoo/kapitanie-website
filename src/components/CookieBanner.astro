@@ -453,6 +453,8 @@
   /* Toggle Switch */
   .category-toggle {
     position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .toggle-switch {
@@ -467,6 +469,8 @@
     opacity: 0;
     width: 0;
     height: 0;
+    position: absolute;
+    pointer-events: none;
   }
 
   .toggle-slider {
@@ -491,6 +495,7 @@
     background: white;
     transition: var(--transition-fast);
     border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   input:checked + .toggle-slider {
@@ -504,6 +509,11 @@
   input:disabled + .toggle-slider {
     opacity: 0.6;
     cursor: not-allowed;
+    background: var(--accent-blue);
+  }
+
+  input:disabled + .toggle-slider:before {
+    transform: translateX(26px);
   }
 
   .category-description {
