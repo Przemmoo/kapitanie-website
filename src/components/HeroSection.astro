@@ -334,7 +334,7 @@ const heroData = {
   // Hero section enhancements
   document.addEventListener('DOMContentLoaded', () => {
     const hero = document.querySelector('.hero');
-    const heroVideo = document.querySelector('.hero-video');
+    const heroVideo = document.querySelector('.hero-video') as HTMLVideoElement;
     const scrollIndicator = document.querySelector('.scroll-indicator');
 
     // Parallax effect for video
