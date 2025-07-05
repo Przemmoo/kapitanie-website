@@ -24,7 +24,7 @@ results: 95% zadowolenia uczestników, 100% wypełnienie miejsc, 1000+ widzów
 ---
 VII edycja Europejskiego Kongresu Mobilności Pracy była jednym z najważniejszych wydarzeń branży związanych z jednolitym rynkiem, mobilnością pracowników oraz swobodą świadczenia usług.
 
-## Główne atrakcje eventu:
+## Główne punkty kongresu:
 
 * **Keynote speakers:** 8 uznanych ekspertów z całego świata
 * **Warsztaty praktyczne:** 12 sesji hands-on z najnowszymi technologiami  
