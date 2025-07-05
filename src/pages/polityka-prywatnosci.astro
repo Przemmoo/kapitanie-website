@@ -25,11 +25,7 @@ const contentHtml = privacyData?.data.content ? marked(privacyData.data.content)
     <div class="container">
       <div class="hero-content">
         <h1>{privacyData?.data.title || "Polityka Prywatności"}</h1>
-        {privacyData?.data.last_updated && (
-          <p class="last-updated">
-            Ostatnia aktualizacja: {new Date(privacyData.data.last_updated).toLocaleDateString('pl-PL')}
-          </p>
-        )}
+  
       </div>
     </div>
   </section>
@@ -177,16 +173,34 @@ const contentHtml = privacyData?.data.content ? marked(privacyData.data.content)
 
   /* Style dla divów z klasą contact-info (z markdown) */
   .content-wrapper :global(.contact-info) {
-    background: linear-gradient(135deg, rgba(0, 169, 255, 0.1) 0%, rgba(0, 169, 255, 0.05) 100%);
-    padding: 1.5rem;
-    border-radius: 12px;
-    margin: 2rem 0;
-    border-left: 4px solid var(--accent-blue);
-    box-shadow: 0 4px 15px rgba(0, 169, 255, 0.1);
+    background: linear-gradient(135deg, rgba(0, 169, 255, 0.08) 0%, rgba(0, 169, 255, 0.03) 100%);
+    padding: 2rem;
+    border-radius: 16px;
+    margin: 2.5rem 0;
+    border: 1px solid rgba(0, 169, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 169, 255, 0.08);
+    backdrop-filter: blur(5px);
+    position: relative;
+  }
+
+  .content-wrapper :global(.contact-info::before) {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent-blue) 0%, rgba(0, 169, 255, 0.5) 100%);
+    border-radius: 0 0 0 16px;
   }
 
   .content-wrapper :global(.contact-info p) {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 500;
+  }
+
+  .content-wrapper :global(.contact-info p:last-child) {
+    margin-bottom: 0;
   }
 
   .content-wrapper :global(a) {
