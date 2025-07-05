@@ -3,8 +3,12 @@ title: Konferencja Tech Summit 2025
 client: TechCorp
 date: 2024-06-15
 category: Konferencja
-featured_image: ""
-gallery: []
+featured_image: /images/fot.-storymakers.pl-elmc-0417-scaled.jpg
+gallery:
+  - /images/fot.-storymakers.pl-elmc-0283-scaled.jpg
+  - /images/fot.-storymakers.pl-elmc-0202-scaled.jpg
+  - /images/fot.-storymakers.pl-elmc-0056-scaled.jpg
+  - /images/fot.-storymakers.pl-elmc-0007-scaled.jpg
 description: W Centrum Kongresowym ICE w Krakowie odbyła się VII edycja
   Europejskiego Kongresu Mobilności Pracy (European Labour Mobility Congress).
   Wydarzenie to, jak co roku, przyciągnęło publiczność z Polski i Europy,
