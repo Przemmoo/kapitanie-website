@@ -74,10 +74,11 @@
           <div class="category-header">
             <h3>Niezbędne pliki cookies</h3>
             <div class="category-toggle">
-              <input type="checkbox" id="necessary-cookies" checked disabled>
-              <label for="necessary-cookies" class="toggle-switch">
-                <span class="toggle-slider"></span>
-              </label>
+              <div class="custom-toggle" data-category="necessary" data-checked="true" data-disabled="true">
+                <div class="toggle-slider">
+                  <div class="toggle-knob"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="category-description">
@@ -97,10 +98,11 @@
           <div class="category-header">
             <h3>Analityczne pliki cookies</h3>
             <div class="category-toggle">
-              <input type="checkbox" id="analytics-cookies">
-              <label for="analytics-cookies" class="toggle-switch">
-                <span class="toggle-slider"></span>
-              </label>
+              <div class="custom-toggle" data-category="analytics" data-checked="false">
+                <div class="toggle-slider">
+                  <div class="toggle-knob"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="category-description">
@@ -120,10 +122,11 @@
           <div class="category-header">
             <h3>Marketingowe pliki cookies</h3>
             <div class="category-toggle">
-              <input type="checkbox" id="marketing-cookies">
-              <label for="marketing-cookies" class="toggle-switch">
-                <span class="toggle-slider"></span>
-              </label>
+              <div class="custom-toggle" data-category="marketing" data-checked="false">
+                <div class="toggle-slider">
+                  <div class="toggle-knob"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="category-description">
@@ -143,10 +146,11 @@
           <div class="category-header">
             <h3>Funkcjonalne pliki cookies</h3>
             <div class="category-toggle">
-              <input type="checkbox" id="functional-cookies">
-              <label for="functional-cookies" class="toggle-switch">
-                <span class="toggle-slider"></span>
-              </label>
+              <div class="custom-toggle" data-category="functional" data-checked="false">
+                <div class="toggle-slider">
+                  <div class="toggle-knob"></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="category-description">
@@ -450,75 +454,64 @@
     font-weight: 600;
   }
 
-  /* Toggle Switch */
+  /* Custom Toggle Switch */
   .category-toggle {
-    position: relative;
     display: flex;
     align-items: center;
   }
 
-  .toggle-switch {
+  .custom-toggle {
     position: relative;
-    display: inline-block;
     width: 50px;
     height: 24px;
     cursor: pointer;
+    transition: var(--transition-fast);
   }
 
-  .toggle-switch input {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    opacity: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    z-index: 1;
-    cursor: pointer;
+  .custom-toggle[data-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.7;
   }
 
   .toggle-slider {
     position: absolute;
-    cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.2);
-    transition: var(--transition-fast);
     border-radius: 12px;
+    transition: var(--transition-fast);
   }
 
-  .toggle-slider:before {
+  .toggle-knob {
     position: absolute;
-    content: "";
-    height: 18px;
     width: 18px;
-    left: 3px;
-    bottom: 3px;
+    height: 18px;
     background: white;
-    transition: var(--transition-fast);
     border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: var(--transition-fast);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
-  input:checked + .toggle-slider {
+  /* Checked state */
+  .custom-toggle[data-checked="true"] .toggle-slider {
     background: var(--accent-blue);
   }
 
-  input:checked + .toggle-slider:before {
+  .custom-toggle[data-checked="true"] .toggle-knob {
     transform: translateX(26px);
   }
 
-  input:disabled + .toggle-slider {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: var(--accent-blue);
+  /* Hover effects */
+  .custom-toggle:not([data-disabled="true"]):hover .toggle-slider {
+    background: rgba(255, 255, 255, 0.3);
   }
 
-  input:disabled + .toggle-slider:before {
-    transform: translateX(26px);
+  .custom-toggle[data-checked="true"]:not([data-disabled="true"]):hover .toggle-slider {
+    background: #0088CC;
   }
 
   .category-description {
@@ -793,21 +786,42 @@
         functional: false
       };
 
-      document.getElementById('necessary-cookies').checked = preferences.necessary;
-      document.getElementById('analytics-cookies').checked = preferences.analytics;
-      document.getElementById('marketing-cookies').checked = preferences.marketing;
-      document.getElementById('functional-cookies').checked = preferences.functional;
+      setToggleState('necessary', preferences.necessary);
+      setToggleState('analytics', preferences.analytics);
+      setToggleState('marketing', preferences.marketing);
+      setToggleState('functional', preferences.functional);
     };
 
     // Get current preferences from modal
     const getCurrentPreferences = () => {
       return {
-        necessary: document.getElementById('necessary-cookies').checked,
-        analytics: document.getElementById('analytics-cookies').checked,
-        marketing: document.getElementById('marketing-cookies').checked,
-        functional: document.getElementById('functional-cookies').checked,
+        necessary: getToggleState('necessary'),
+        analytics: getToggleState('analytics'),
+        marketing: getToggleState('marketing'),
+        functional: getToggleState('functional'),
         timestamp: new Date().toISOString()
       };
+    };
+
+    // Toggle state management
+    const setToggleState = (category, checked) => {
+      const toggle = document.querySelector(`[data-category="${category}"]`);
+      if (toggle) {
+        toggle.setAttribute('data-checked', checked.toString());
+      }
+    };
+
+    const getToggleState = (category) => {
+      const toggle = document.querySelector(`[data-category="${category}"]`);
+      return toggle ? toggle.getAttribute('data-checked') === 'true' : false;
+    };
+
+    const toggleState = (category) => {
+      const toggle = document.querySelector(`[data-category="${category}"]`);
+      if (toggle && toggle.getAttribute('data-disabled') !== 'true') {
+        const currentState = toggle.getAttribute('data-checked') === 'true';
+        toggle.setAttribute('data-checked', (!currentState).toString());
+      }
     };
 
     // Save cookie preferences
@@ -933,6 +947,17 @@
     };
 
     // Event listeners
+    
+    // Custom toggle click handlers
+    document.querySelectorAll('.custom-toggle').forEach(toggle => {
+      toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = toggle.getAttribute('data-category');
+        if (category) {
+          toggleState(category);
+        }
+      });
+    });
     
     // Accept all cookies
     document.getElementById('accept-all')?.addEventListener('click', () => {
