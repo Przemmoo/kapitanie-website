@@ -99,8 +99,9 @@ const contentHtml = cookiesData?.data.content ? marked(cookiesData.data.content)
   }
 
   .legal-content {
-    max-width: 900px;
+    max-width: var(--container-max-width);
     margin: 0 auto;
+    padding: 0 20px;
   }
 
   .content-wrapper {
