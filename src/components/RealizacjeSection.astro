@@ -190,6 +190,30 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     font-family: 'Lato', sans-serif;
     min-height: 100vh;
   }
+  :global(.realizacje-section),
+  :global(.realizacje-section *) {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--accent-blue) transparent !important;
+  }
+
+  /* Webkit (Chrome, Edge, Safari) */
+  :global(.realizacje-section)::-webkit-scrollbar,
+  :global(.realizacje-section *)::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px !important;
+    background: transparent !important;
+  }
+
+  :global(.realizacje-section)::-webkit-scrollbar-thumb,
+  :global(.realizacje-section *)::-webkit-scrollbar-thumb {
+    background: var(--accent-blue) !important;
+    border-radius: 2px !important;
+  }
+
+  :global(.realizacje-section)::-webkit-scrollbar-track,
+  :global(.realizacje-section *)::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
 
   .container {
     max-width: 1200px;
@@ -694,6 +718,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     overflow-x: auto;
     background: rgba(18, 18, 18, 0.8);
     border-top: 1px solid rgba(0, 169, 255, 0.1);
+  overflow-x: auto;
+  overflow-y: hidden;
   }
 
   @media (min-width: 768px) {
@@ -757,6 +783,7 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
 
   /* Lightbox Info - Case Study Structure according to kapitanie.md */
   .lightbox-info {
+    padding: 2.5rem;
     padding: 1.5rem;
     overflow-y: auto;
     background: var(--bg-secondary);
@@ -817,8 +844,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     line-height: 1.7;
     font-size: 1rem;
     font-weight: 400;
-    /* Ensure description is always visible */
-    min-height: 1em;
     opacity: 1;
   }
 
