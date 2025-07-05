@@ -2,13 +2,19 @@
 title: VII edycja Europejskiego Kongresu Mobilności Pracy
 client: Stowarzyszenie Europejski Instytut Mobilności Pracy
 date: 2023-04-24T00:00:00.000Z
-category: Konferencja
+category: Konferencje
+featured: true
+tags: 
+  - konferencja
+  - hybrid event
+  - streaming
+  - networking
 featured_image: /images/fot.-storymakers.pl-elmc-0417-scaled.jpg
 gallery:
-  - /images/fot.-storymakers.pl-elmc-0283-scaled.jpg
-  - /images/fot.-storymakers.pl-elmc-0202-scaled.jpg
-  - /images/fot.-storymakers.pl-elmc-0056-scaled.jpg
-  - /images/fot.-storymakers.pl-elmc-0007-scaled.jpg
+  - image: /images/fot.-storymakers.pl-elmc-0283-scaled.jpg
+  - image: /images/fot.-storymakers.pl-elmc-0202-scaled.jpg
+  - image: /images/fot.-storymakers.pl-elmc-0056-scaled.jpg
+  - image: /images/fot.-storymakers.pl-elmc-0007-scaled.jpg
 description: W Centrum Kongresowym ICE w Krakowie odbyła się VII edycja
   Europejskiego Kongresu Mobilności Pracy (European Labour Mobility Congress).
   Wydarzenie to, jak co roku, przyciągnęło publiczność z Polski i Europy,

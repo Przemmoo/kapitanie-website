@@ -65,6 +65,24 @@ collections:
               ]
             }
 
+  # Kategorie realizacji
+  - name: "kategorie-realizacji"
+    label: "Kategorie Realizacji"
+    label_singular: "Kategoria"
+    folder: "src/content/kategorie-realizacji"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{name}}"
+    sortable_fields: ["order", "name"]
+    fields:
+      - { label: "Nazwa", name: "name", widget: "string", hint: "Nazwa kategorii" }
+      - { label: "Opis", name: "description", widget: "text", hint: "Krótki opis kategorii" }
+      - { label: "Kolejność", name: "order", widget: "number", hint: "Kolejność wyświetlania (1, 2, 3...)" }
+      - { label: "Kolor", name: "color", widget: "color", required: false, hint: "Kolor przypisany do kategorii" }
+      - { label: "Ikona", name: "icon", widget: "string", required: false, hint: "Nazwa ikony (np. microphone, users)" }
+      - { label: "Aktywna", name: "active", widget: "boolean", default: true, hint: "Czy kategoria ma być widoczna na stronie" }
+      - { label: "Treść", name: "body", widget: "markdown", hint: "Szczegółowy opis kategorii" }
+
   - name: "realizacje"
     label: "Sekcja Realizacje"
     label_singular: "Realizacja"
@@ -72,20 +90,23 @@ collections:
     create: true
     slug: "{{slug}}"
     summary: "{{title}} - {{client}}"
-    sortable_fields: ["date", "title", "client"]
+    sortable_fields: ["date", "title", "client", "category"]
     view_filters:
       - label: "Konferencje"
         field: category
-        pattern: "Konferencja"
-      - label: "Gale"
+        pattern: "Konferencje"
+      - label: "Gale Firmowe"
         field: category
-        pattern: "Gala"
+        pattern: "Gale Firmowe"
       - label: "Koncerty"
         field: category
-        pattern: "Koncert"
-      - label: "Eventy Firmowe"
+        pattern: "Koncerty"
+      - label: "Eventy Korporacyjne"
         field: category
-        pattern: "Event Firmowy"
+        pattern: "Eventy Korporacyjne"
+      - label: "Wyróżnione"
+        field: featured
+        pattern: true
     fields:
       - { label: "Tytuł", name: "title", widget: "string", hint: "Nazwa wydarzenia lub projektu" }
       - { label: "Klient", name: "client", widget: "string", hint: "Nazwa firmy lub organizatora" }
@@ -93,9 +114,17 @@ collections:
       - { 
           label: "Kategoria", 
           name: "category", 
-          widget: "select", 
-          options: ["Konferencja", "Gala", "Koncert", "Event Firmowy"],
-          hint: "Typ wydarzenia"
+          widget: "select",
+          options: ["Konferencje", "Gale Firmowe", "Koncerty", "Eventy Korporacyjne"],
+          hint: "Wybierz kategorię z listy dostępnych"
+        }
+      - { label: "Wyróżniony projekt", name: "featured", widget: "boolean", required: false, default: false, hint: "Czy projekt ma być wyróżniony na stronie głównej" }
+      - { 
+          label: "Tagi", 
+          name: "tags", 
+          widget: "list",
+          required: false,
+          hint: "Słowa kluczowe opisujące projekt (np. streaming, oświetlenie LED, hybrid)"
         }
       - { 
           label: "Zdjęcie główne", 

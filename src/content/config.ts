@@ -6,7 +6,7 @@ const realizacje = defineCollection({
     title: z.string(),
     client: z.string(),
     date: z.date(),
-    category: z.enum(['Konferencja', 'Gala', 'Koncert', 'Event Firmowy']),
+    category: z.string(), // Zmienione z enum na string dla elastyczności
     featured_image: z.string().optional(),
     gallery: z.array(z.object({
       image: z.string(),
@@ -15,6 +15,20 @@ const realizacje = defineCollection({
     challenge: z.string(),
     solution: z.string(),
     results: z.string().optional(),
+    tags: z.array(z.string()).optional(), // Dodane tagowanie
+    featured: z.boolean().optional(), // Dodane wyróżnianie projektów
+  }),
+});
+
+const kategorieRealizacji = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    description: z.string(),
+    order: z.number(),
+    color: z.string().optional(),
+    active: z.boolean().default(true),
+    icon: z.string().optional(),
   }),
 });
 
@@ -120,6 +134,7 @@ const podstrony = defineCollection({
 
 export const collections = {
   'realizacje': realizacje,
+  'kategorie-realizacji': kategorieRealizacji,
   'ustawienia': ustawienia,
   'sekcje': sekcje,
   'podstrony': podstrony,
