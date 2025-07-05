@@ -13,8 +13,15 @@ const cookiesData = await getCollection('podstrony').then(entries =>
 const pageTitle = cookiesData?.data.title || "Polityka Cookies - kapitanie";
 const pageDescription = cookiesData?.data.description || "Szczegółowa polityka wykorzystania plików cookies na stronie kapitanie.pl. Informacje o rodzajach ciasteczek i zarządzaniu zgodą.";
 
-// Konwertuj markdown na HTML
-const contentHtml = cookiesData?.data.content ? marked(cookiesData.data.content) : '';
+// Konwertuj markdown na HTML z poprawną konfiguracją
+const contentHtml = cookiesData?.data.content ? marked(cookiesData.data.content, {
+  breaks: true, // Włącza interpretację pojedynczych nowych linii jako <br>
+  gfm: true, // GitHub Flavored Markdown
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+}) : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>

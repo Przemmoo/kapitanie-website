@@ -114,7 +114,6 @@ const podstrony = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    last_updated: z.date(),
     content: z.string(),
   }),
 });

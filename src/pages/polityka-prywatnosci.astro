@@ -13,8 +13,15 @@ const privacyData = await getCollection('podstrony').then(entries =>
 const pageTitle = privacyData?.data.title || "Polityka Prywatności - kapitanie";
 const pageDescription = privacyData?.data.description || "Polityka prywatności firmy kapitanie. Informacje o przetwarzaniu danych osobowych zgodnie z RODO/GDPR.";
 
-// Konwertuj markdown na HTML
-const contentHtml = privacyData?.data.content ? marked(privacyData.data.content) : '';
+// Konwertuj markdown na HTML z poprawną konfiguracją
+const contentHtml = privacyData?.data.content ? marked(privacyData.data.content, {
+  breaks: true, // Włącza interpretację pojedynczych nowych linii jako <br>
+  gfm: true, // GitHub Flavored Markdown
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+}) : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>

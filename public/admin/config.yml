@@ -319,7 +319,6 @@ collections:
         fields:
           - { label: "Tytuł", name: "title", widget: "string", default: "Polityka Prywatności" }
           - { label: "Opis SEO", name: "description", widget: "text" }
-          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
           - { label: "Treść", name: "content", widget: "markdown", hint: "Treść polityki prywatności" }
 
       - label: "Polityka Cookies"
@@ -328,7 +327,6 @@ collections:
         fields:
           - { label: "Tytuł", name: "title", widget: "string", default: "Polityka Cookies" }
           - { label: "Opis SEO", name: "description", widget: "text" }
-          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
           - { label: "Treść", name: "content", widget: "markdown", hint: "Treść polityki cookies" }
 
       - label: "Regulamin"
@@ -337,7 +335,6 @@ collections:
         fields:
           - { label: "Tytuł", name: "title", widget: "string", default: "Regulamin" }
           - { label: "Opis SEO", name: "description", widget: "text" }
-          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
           - { label: "Treść", name: "content", widget: "markdown", hint: "Treść regulaminu" }
 
       - label: "RODO/GDPR"
@@ -346,5 +343,4 @@ collections:
         fields:
           - { label: "Tytuł", name: "title", widget: "string", default: "RODO/GDPR" }
           - { label: "Opis SEO", name: "description", widget: "text" }
-          - { label: "Data ostatniej aktualizacji", name: "last_updated", widget: "datetime" }
           - { label: "Treść", name: "content", widget: "markdown", hint: "Treść przepisów RODO/GDPR" }

@@ -13,8 +13,15 @@ const termsData = await getCollection('podstrony').then(entries =>
 const pageTitle = termsData?.data.title || "Regulamin - kapitanie";
 const pageDescription = termsData?.data.description || "Regulamin świadczenia usług eventowych przez firmę kapitanie. Warunki współpracy, oświetlenie, nagłośnienie, multimedia.";
 
-// Konwertuj markdown na HTML
-const contentHtml = termsData?.data.content ? marked(termsData.data.content) : '';
+// Konwertuj markdown na HTML z poprawną konfiguracją
+const contentHtml = termsData?.data.content ? marked(termsData.data.content, {
+  breaks: true, // Włącza interpretację pojedynczych nowych linii jako <br>
+  gfm: true, // GitHub Flavored Markdown
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+}) : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>

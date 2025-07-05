@@ -13,8 +13,15 @@ const rodoData = await getCollection('podstrony').then(entries =>
 const pageTitle = rodoData?.data.title || "RODO - kapitanie";
 const pageDescription = rodoData?.data.description || "Informacje RODO/GDPR - kapitanie. Szczegółowe informacje o przetwarzaniu danych osobowych zgodnie z RODO.";
 
-// Konwertuj markdown na HTML
-const contentHtml = rodoData?.data.content ? marked(rodoData.data.content) : '';
+// Konwertuj markdown na HTML z poprawną konfiguracją
+const contentHtml = rodoData?.data.content ? marked(rodoData.data.content, {
+  breaks: true, // Włącza interpretację pojedynczych nowych linii jako <br>
+  gfm: true, // GitHub Flavored Markdown
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false
+}) : '';
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
