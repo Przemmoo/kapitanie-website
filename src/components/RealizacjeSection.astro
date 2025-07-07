@@ -519,24 +519,16 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     justify-content: center;
     visibility: hidden;
     opacity: 0;
-    transition: var(--transition);
+    pointer-events: none;
     background: rgba(18, 18, 18, 0.95);
     backdrop-filter: blur(8px);
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .lightbox-modal.open {
     visibility: visible;
     opacity: 1;
-  }
-
-  .lightbox-backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(5px);
+    pointer-events: auto;
   }
 
   .lightbox-content {
@@ -547,10 +539,11 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     background: var(--bg-secondary);
     border-radius: 25px;
     overflow: hidden;
-    transform: scale(0.8);
-    transition: var(--transition);
+    transform: scale(0.92);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(0, 169, 255, 0.2);
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    will-change: opacity, transform;
   }
 
   .lightbox-modal.open .lightbox-content {
@@ -646,6 +639,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     background: var(--bg-main);
     padding: 20px;
     min-height: 250px;
+    height: 70vh;
+    max-height: 70vh;
     overflow: hidden;
   }
 
@@ -656,16 +651,19 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
   }
 
   /* Główne zdjęcie w galerii - z wysoką specyficznością dla Astro */
-  :global(.lightbox-gallery .gallery-main .gallery-main-image) {
+  :global(.lightbox-gallery .gallery-main .gallery-main-image),
+  :global(.lightbox-gallery .gallery-main video) {
+    width: 100% !important;
+    height: 100% !important;
     max-width: 100% !important;
     max-height: 100% !important;
-    width: auto !important;
-    height: auto !important;
     object-fit: contain !important;
     border-radius: 10px !important;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
     transition: opacity 0.3s ease !important;
     background: transparent !important;
+    display: block;
+    margin: 0 auto;
   }
 
   .gallery-main-image.loading {
@@ -974,7 +972,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    console.log('RealizacjeSection script loaded');
     
     // Pobierz dane z globalnej zmiennej lub użyj mock danych
     const data = window.realizacjeData || { displayRealizacje: [], displayKategorie: [] };
@@ -986,7 +983,7 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
         category: 'Gale Firmowe',
         description: 'Elegancka gala jubileuszowa z udziałem 400 gości, która celebrowała 20 lat działalności Techpark Kraków. Event połączył historię z wizją przyszłości.',
         challenge: 'Stworzenie spektakularnej oprawy wizualnej, która opowie historię 20 lat firmy w nowoczesny i angażujący sposób dla różnorodnej publiczności.',
-        solution: 'Zastosowaliśmy technologię video mappingu na ścianach sali, tworząc immersyjną podróż przez historię firmy. System synchronizowany z oświetleniem LED i dźwiękiem 360°.',
+        solution: 'Zastosowaliśmy technologię video mappingu na ścianach sali, tworząc immersywną podróż przez historię firmy. System synchronizowany z oświetleniem LED i dźwiękiem 360°.',
         image: '/images/fot.-storymakers.pl-elmc-0417-scaled.jpg',
         gallery: [
           '/images/fot.-storymakers.pl-elmc-0417-scaled.jpg',
@@ -1031,7 +1028,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       }
     ];
     
-    console.log('displayRealizacje:', displayRealizacje);
     
     // DOM elements
     const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
@@ -1040,13 +1036,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     const projectsGrid = document.querySelector('.projects-grid') as HTMLElement | null;
     const allProjects = Array.from(document.querySelectorAll('.project-card')) as HTMLElement[];
     
-    console.log('DOM Elements found:', {
-      filterButtons: filterButtons.length,
-      projectCards: projectCards.length,
-      loadMoreBtn: !!loadMoreBtn,
-      projectsGrid: !!projectsGrid,
-      allProjects: allProjects.length
-    });
     
     // Load more state
     let visibleCount = 6;
@@ -1061,20 +1050,16 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
         filtered = allProjects.filter(project => {
           const category = project.dataset.category;
           const match = category === currentFilter;
-          console.log(`Project "${project.dataset.projectId}" category: "${category}", filter: "${currentFilter}", match: ${match}`);
           return match;
         });
       }
-      console.log(`getFilteredProjects() returning ${filtered.length} projects for filter "${currentFilter}"`);
       return filtered;
     };
     
     // Prosta, zawsze działająca logika filtrowania z animacją
     const updateProjectsVisibility = () => {
-      console.log('updateProjectsVisibility:', { visibleCount, currentFilter });
       
       const filteredProjects = getFilteredProjects();
-      console.log('Filtered projects:', filteredProjects.length);
       
       // KROK 1: Resetuj wszystkie projekty do stanu ukrytego
       allProjects.forEach(project => {
@@ -1097,7 +1082,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
               project.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
             }, index * 50);
             
-            console.log(`Animating project ${index}:`, project.dataset.projectId);
           }
         });
       });
@@ -1111,22 +1095,18 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       
       if (visibleCount >= totalFilteredCount) {
         loadMoreBtn.style.display = 'none';
-        console.log('Hide load more button - all filtered projects visible');
       } else {
         loadMoreBtn.style.display = 'block';
-        console.log('Show load more button - more projects available');
       }
     };
     
     // Inicjalizuj widoczność projektów
-    console.log('Initializing project visibility...');
     updateProjectsVisibility();
 
     // Filter functionality
     filterButtons.forEach(button => {
       button.addEventListener('click', () => {
         const filter = button.dataset.filter || 'all';
-        console.log('Filter clicked:', filter);
         
         // Zaktualizuj aktualny filtr
         currentFilter = filter;
@@ -1139,11 +1119,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
         visibleCount = 6;
         updateProjectsVisibility();
         
-        console.log('Filter applied successfully:', {
-          filter: currentFilter,
-          visibleCount,
-          filteredProjectsCount: getFilteredProjects().length
-        });
       });
     });
 
@@ -1151,13 +1126,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     if (loadMoreBtn) {
       loadMoreBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('Load more clicked!', { 
-          currentVisibleCount: visibleCount, 
-          currentFilter 
-        });
         
         const filteredProjects = getFilteredProjects();
-        console.log('Filtered projects available:', filteredProjects.length);
         
         // Zwiększ licznik widocznych projektów o 3
         const newVisibleCount = Math.min(visibleCount + 3, filteredProjects.length);
@@ -1180,7 +1150,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
               filteredProjects[i].style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
             }, delay);
             
-            console.log(`Showing additional project ${i}:`, filteredProjects[i].dataset.projectId);
           }
         }
         
@@ -1198,11 +1167,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
           }
         }, 100);
         
-        console.log('Load more completed:', {
-          newVisibleCount: visibleCount,
-          totalFiltered: filteredProjects.length,
-          loadMoreVisible: visibleCount < filteredProjects.length
-        });
       });
     } else {
       console.error('Load more button not found for event listener!');
@@ -1224,36 +1188,27 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     projectCards.forEach((card, cardIndex) => {
       const viewBtn = card.querySelector('.view-details-btn') as HTMLButtonElement | null;
       if (viewBtn) {
-        console.log(`Adding click listener to view button ${cardIndex}`);
         viewBtn.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
           
-          console.log('View details button clicked!', cardIndex);
           
           const projectId = (card as HTMLElement).dataset.projectId;
           const project = displayRealizacje.find((p: ProjectType) => p.id === projectId);
           
-          console.log('Project found:', project);
           
           if (project) {
             openLightbox(project);
-          } else {
-            console.error('Project not found for ID:', projectId);
-          }
+          } 
         });
-      } else {
-        console.error(`View button not found for card ${cardIndex}`);
       }
     });
 
     function openLightbox(project: ProjectType) {
-      console.log('Opening lightbox for project:', project);
       
       // Set project info with proper selectors - używamy bezpieczniejszego podejścia
       const lightboxModal = document.getElementById('lightbox-modal');
       if (!lightboxModal) {
-        console.error('Lightbox modal not found');
         return;
       }
       
@@ -1264,54 +1219,32 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       const challengeElement = lightboxModal.querySelector('.case-study-challenge') as HTMLElement;
       const solutionElement = lightboxModal.querySelector('.case-study-solution') as HTMLElement;
       
-      console.log('Found elements:', {
-        title: !!titleElement,
-        client: !!clientElement,
-        category: !!categoryElement,
-        description: !!descriptionElement,
-        challenge: !!challengeElement,
-        solution: !!solutionElement
-      });
       
-      console.log('Project data:', {
-        title: project.title,
-        client: project.client,
-        category: project.category,
-        description: project.description,
-        challenge: project.challenge,
-        solution: project.solution
-      });
+      
       
       if (titleElement && project.title) {
         titleElement.textContent = project.title;
-        console.log('Title set:', project.title);
       }
       if (clientElement && project.client) {
         clientElement.textContent = project.client;
-        console.log('Client set:', project.client);
       }
       if (categoryElement && project.category) {
         categoryElement.textContent = project.category;
-        console.log('Category set:', project.category);
       }
       if (descriptionElement && project.description) {
         descriptionElement.textContent = project.description;
-        console.log('Description set:', project.description);
       }
       if (challengeElement && project.challenge) {
         challengeElement.textContent = project.challenge;
-        console.log('Challenge set:', project.challenge);
       }
       if (solutionElement && project.solution) {
         solutionElement.textContent = project.solution;
-        console.log('Solution set:', project.solution);
       }
       
       // Set gallery
       currentGallery = project.gallery && project.gallery.length > 0 ? project.gallery : [project.image];
       currentImageIndex = 0;
       
-      console.log('Gallery set:', currentGallery);
       
       updateGallery();
       createThumbnails();
@@ -1319,34 +1252,31 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       // Show modal
       if (lightboxModal) {
         lightboxModal.setAttribute('aria-hidden', 'false');
-        lightboxModal.classList.add('open');
-        console.log('Modal opened and visible');
+        // Dodaj klasę open po krótkim opóźnieniu, by wymusić transition
+        requestAnimationFrame(() => {
+          lightboxModal.classList.add('open');
+        });
       }
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
-      console.log('Closing lightbox');
       if (lightboxModal) {
         // Remove focus first to avoid accessibility issues
-        const focusedElement = document.activeElement as HTMLElement;
-        if (focusedElement && lightboxModal.contains(focusedElement)) {
-          focusedElement.blur();
+        const focusedElement = document.activeElement;
+        if (focusedElement && lightboxModal.contains(focusedElement) && 'blur' in focusedElement && typeof (focusedElement as HTMLElement).blur === 'function') {
+          (focusedElement as HTMLElement).blur();
         }
-        
         // Start close animation
         lightboxModal.classList.remove('open');
-        
-        // Wait for animation before setting aria-hidden and cleaning up
         setTimeout(() => {
           lightboxModal.setAttribute('aria-hidden', 'true');
-        }, 300);
+        }, 350);
       }
       document.body.style.overflow = '';
     }
 
     function updateGallery() {
-      console.log('Updating gallery, currentImageIndex:', currentImageIndex);
       if (currentGallery[currentImageIndex] && mainImage) {
         mainImage.src = currentGallery[currentImageIndex];
         mainImage.alt = `Zdjęcie ${currentImageIndex + 1} z galerii`;
@@ -1359,14 +1289,11 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
           thumb.classList.toggle('active', index === currentImageIndex);
         });
         
-        console.log('Gallery updated with image:', currentGallery[currentImageIndex]);
       }
     }
 
     function createThumbnails() {
-      console.log('Creating thumbnails for gallery:', currentGallery);
       if (!galleryThumbs) {
-        console.error('Gallery thumbs container not found');
         return;
       }
       
@@ -1380,7 +1307,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
         thumb.innerHTML = `<img src="${image}" alt="Miniatura ${index + 1}" />`;
         
         thumb.addEventListener('click', () => {
-          console.log('Thumbnail clicked:', index);
           currentImageIndex = index;
           updateGallery();
         });
@@ -1388,7 +1314,6 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
         galleryThumbs.appendChild(thumb);
       });
       
-      console.log('Thumbnails created:', currentGallery.length);
     }
 
     // Navigation

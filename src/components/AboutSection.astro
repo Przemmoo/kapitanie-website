@@ -53,40 +53,45 @@ const aboutData = {
 
 <section id="o-nas" class="section about-section">
   <div class="container">
+    <!-- Nagłówek i opis główny - wycentrowane na całą szerokość -->
+    <div class="section-header">
+      <h2 class="section-title">
+        {aboutData.title}
+      </h2>
+      <p class="section-intro" set:html={aboutData.description.replace(/\n/g, '<br />')}>
+      </p>
+    </div>
+    <!-- Główna siatka: lewa zdjęcie/wideo, prawa filary i statystyki -->
     <div class="about-grid">
-      <!-- Lewa strona - zdjęcie zespołu -->
+      <!-- Lewa strona - zdjęcie lub wideo zespołu -->
       <div class="about-image">
-        <div class="image-container">
-          <img 
-            src={aboutData.team_image} 
-            alt="Zespół kapitanie w akcji - przy konsolecie na scenie"
-            class="team-photo"
-            loading="lazy"
-            width="800"
-            height="600"
-          />
-          <div class="image-overlay">
-            <div class="play-button" aria-label="Odtwórz wideo o zespole">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-          </div>
+        <div class="image-container" id="about-media-container">
+          {aboutData.team_image && aboutData.team_image.match(/\.(mp4|webm|ogg)$/i) ? (
+            <video 
+              src={aboutData.team_image} 
+              class="team-media" 
+              poster="/images/team-kapitanie.jpg"
+              width="800"
+              height="600"
+              preload="metadata"
+              playsinline
+              muted
+            />
+          ) : (
+            <img 
+              src={aboutData.team_image} 
+              alt="Zespół kapitanie w akcji - przy konsolecie na scenie"
+              class="team-photo team-media"
+              loading="lazy"
+              width="800"
+              height="600"
+            />
+          )}
+          <div class="image-overlay" id="about-image-overlay"></div>
         </div>
       </div>
-
-      <!-- Prawa strona - treść -->
+      <!-- Prawa strona - filary i statystyki -->
       <div class="about-content">
-        <h2 class="section-title">
-          {aboutData.title}
-        </h2>
-        
-        <div class="about-text">
-          <p class="lead" set:html={aboutData.description.replace(/\n/g, '<br />')}>
-          </p>
-        </div>
-
-        <!-- Główne filary oferty -->
         <div class="services-pillars">
           {aboutData.pillars.map((pillar) => (
             <div class="pillar">
@@ -98,8 +103,6 @@ const aboutData = {
             </div>
           ))}
         </div>
-
-        <!-- Statystyki -->
         <div class="stats">
           {aboutData.stats.map((stat) => (
             <div class="stat">
@@ -110,6 +113,19 @@ const aboutData = {
         </div>
       </div>
     </div>
+    <!-- Modal na zdjęcie/wideo -->
+    <div class="about-lightbox-modal" id="about-lightbox-modal" aria-hidden="true">
+      <div class="about-lightbox-backdrop"></div>
+      <div class="about-lightbox-content">
+        <button class="about-lightbox-close" id="about-lightbox-close" aria-label="Zamknij podgląd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="about-lightbox-body" id="about-lightbox-body"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -117,6 +133,27 @@ const aboutData = {
   .about-section {
     background-color: var(--bg-main);
     position: relative;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-title {
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+  }
+
+  .section-intro {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
   }
 
   .about-grid {
@@ -152,93 +189,52 @@ const aboutData = {
     transition: var(--transition-fast);
   }
 
+  .team-media {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: var(--transition-fast);
+  }
+
   .image-overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(0, 169, 255, 0.1) 0%,
-      rgba(0, 169, 255, 0.3) 100%
-    );
+    background: linear-gradient(135deg, rgba(18, 18, 18, 0.9) 0%, rgba(0, 169, 255, 0.85) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: var(--transition-fast);
+    transition: var(--transition);
+    cursor: pointer;
+    backdrop-filter: blur(2px);
   }
 
   .image-container:hover .image-overlay {
     opacity: 1;
   }
 
-  .play-button {
-    width: 80px;
-    height: 80px;
-    background-color: var(--accent-blue);
-    border-radius: 50%;
+  .image-overlay .play-button {
+    cursor: pointer;
+  }
+
+  .image-overlay .about-cursor-hand {
+    width: 48px;
+    height: 48px;
+    color: var(--accent-blue);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    transform: scale(0.8);
-  }
-
-  .image-container:hover .play-button {
-    transform: scale(1);
-  }
-
-  .play-button:hover {
-    background-color: #0088CC;
-    transform: scale(1.1);
-  }
-
-  .play-button svg {
-    width: 32px;
-    height: 32px;
-    margin-left: 4px;
+    background: none;
+    border: none;
+    pointer-events: none;
   }
 
   /* Content Section */
   .about-content {
     padding-left: 1rem;
-  }
-
-  .section-title {
-    color: var(--text-main);
-    margin-bottom: 1.5rem;
-    position: relative;
-  }
-
-  .section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent-blue), transparent);
-    border-radius: 2px;
-  }
-
-  .about-text {
-    margin-bottom: 2rem;
-  }
-
-  .lead {
-    font-size: 1.2rem;
-    color: var(--text-main);
-    font-weight: 500;
-    margin-bottom: 1rem;
-  }
-
-  .about-text p {
-    color: var(--text-secondary);
-    line-height: 1.7;
   }
 
   /* Services Pillars */
@@ -324,6 +320,130 @@ const aboutData = {
     font-size: 0.9rem;
     color: var(--text-secondary);
     font-weight: 500;
+  }
+
+  /* Modal Styles */
+  .about-lightbox-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(8px);
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .about-lightbox-modal.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .about-lightbox-content {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    max-height: 90%;
+    background: var(--bg-secondary);
+    border-radius: 25px;
+    overflow: hidden;
+    transform: scale(0.92);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 169, 255, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    will-change: opacity, transform;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .about-lightbox-modal.open .about-lightbox-content {
+    transform: scale(1);
+  }
+
+  .about-lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: rgba(18, 18, 18, 0.9);
+    border: 2px solid rgba(0, 169, 255, 0.3);
+    border-radius: 50%;
+    color: var(--text-main);
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) {
+    .about-lightbox-close {
+      top: 25px;
+      right: 25px;
+      width: 45px;
+      height: 45px;
+    }
+  }
+
+  .about-lightbox-close:hover {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    transform: scale(1.1);
+  }
+
+  .about-lightbox-close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .about-lightbox-close svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+
+  .about-lightbox-body {
+    width: 100%;
+    height: 80vh;
+    min-height: 300px;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-main);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .about-lightbox-body img, .about-lightbox-body video {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    border-radius: 10px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+    transition: opacity 0.3s ease !important;
+    background: transparent !important;
+    display: block;
+    margin: 0 auto;
   }
 
   /* Responsive */
@@ -461,11 +581,71 @@ const aboutData = {
       observer.observe(el);
     });
 
-    // Play button click handler (future video modal)
-    const playButton = document.querySelector('.play-button');
-    playButton?.addEventListener('click', () => {
-      // Future implementation: open video modal
-      console.log('Video modal would open here');
+    // Rozpoznawanie typu pliku (obraz/wideo) i obsługa modala
+    const aboutMediaContainer = document.getElementById('about-media-container');
+    const aboutImageOverlay = document.getElementById('about-image-overlay');
+    const aboutPlayButton = document.getElementById('about-play-button');
+    const aboutLightboxModal = document.getElementById('about-lightbox-modal');
+    const aboutLightboxClose = document.getElementById('about-lightbox-close');
+    const aboutLightboxBody = document.getElementById('about-lightbox-body');
+    const teamMedia = aboutMediaContainer?.querySelector('.team-media');
+    const isVideo = teamMedia && teamMedia.tagName === 'VIDEO';
+    // Ukryj przycisk play jeśli to nie wideo
+    if (!isVideo && aboutPlayButton) {
+      aboutPlayButton.style.display = 'none';
+    }
+    // Overlay: tylko kolor i kursor, bez ikon
+    if (aboutImageOverlay) {
+      aboutImageOverlay.style.cursor = 'pointer';
+      aboutImageOverlay.innerHTML = '';
+    }
+    // Kliknięcie w zdjęcie lub play na wideo
+    function openAboutModal() {
+      if (!aboutLightboxModal || !aboutLightboxBody) return;
+      aboutLightboxBody.innerHTML = '';
+      if (isVideo && teamMedia) {
+        // Wideo: odtwarzaj od razu
+        const video = document.createElement('video');
+        video.src = teamMedia.getAttribute('src') ?? '';
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.muted = false;
+        video.style.background = '#000';
+        video.style.maxWidth = '900px';
+        video.style.maxHeight = '80vh';
+        aboutLightboxBody.appendChild(video);
+      } else if (teamMedia) {
+        // Obraz: pokaż w modalu
+        const img = document.createElement('img');
+        img.src = teamMedia.getAttribute('src') ?? '';
+        img.alt = teamMedia.getAttribute('alt') ?? '';
+        img.style.background = '#000';
+        img.style.maxWidth = '900px';
+        img.style.maxHeight = '80vh';
+        aboutLightboxBody.appendChild(img);
+      }
+      aboutLightboxModal.setAttribute('aria-hidden', 'false');
+      requestAnimationFrame(() => {
+        aboutLightboxModal.classList.add('open');
+      });
+      document.body.style.overflow = 'hidden';
+    }
+    function closeAboutModal() {
+      if (!aboutLightboxModal) return;
+      aboutLightboxModal.classList.remove('open');
+      setTimeout(() => {
+        aboutLightboxModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (aboutLightboxBody) aboutLightboxBody.innerHTML = '';
+      }, 350);
+    }
+    aboutLightboxClose?.addEventListener('click', closeAboutModal);
+    aboutLightboxModal?.querySelector('.about-lightbox-backdrop')?.addEventListener('click', closeAboutModal);
+    document.addEventListener('keydown', (e) => {
+      if (aboutLightboxModal && aboutLightboxModal.classList.contains('open')) {
+        if (e.key === 'Escape') closeAboutModal();
+      }
     });
 
     // Parallax effect for image on desktop
@@ -485,6 +665,13 @@ const aboutData = {
       };
 
       window.addEventListener('scroll', handleScroll, { passive: true });
+    }
+    if (isVideo && aboutPlayButton) {
+      aboutPlayButton.style.display = '';
+      aboutPlayButton.addEventListener('click', openAboutModal);
+      if (aboutImageOverlay) aboutImageOverlay.style.cursor = 'pointer';
+    } else if (!isVideo && aboutImageOverlay) {
+      aboutImageOverlay.addEventListener('click', openAboutModal);
     }
   });
 </script>
