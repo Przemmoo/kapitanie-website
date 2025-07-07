@@ -1,0 +1,16 @@
+logo: "/favicon.svg"
+logo_text: "kapitanie"
+nav:
+  - label: "O nas"
+    link: "/#o-nas"
+  - label: "Realizacje"
+    link: "/#realizacje"
+  - label: "Aplikacja"
+    link: "/#aplikacja"
+  - label: "Klienci"
+    link: "/#klienci"
+  - label: "Kontakt"
+    link: "/#kontakt"
+show_cta: true
+cta_text: "Wyceń Projekt"
+cta_link: "/#kontakt"

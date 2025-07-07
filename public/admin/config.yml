@@ -380,7 +380,7 @@ collections:
     files:
       - label: "Ustawienia nagłówka (Header)"
         name: "header"
-        file: "src/content/ustawienia/header.yaml"
+        file: "src/content/header/header.yaml"
         fields:
           - { label: "Logotyp", name: "logo", widget: "image", required: false, hint: "Logo wyświetlane w nagłówku" }
           - { label: "Tekst logotypu", name: "logo_text", widget: "string", default: "kapitanie", hint: "Tekst obok logotypu" }
