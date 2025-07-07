@@ -2,7 +2,7 @@ backend:
   name: github
   repo: Przemmoo/kapitanie-website
   branch: main
-  base_url: https://kapitanie-website.pages.dev
+  base_url: https://kapitanie.com
   auth_endpoint: /api/auth
 
 # Uncomment for local development:
@@ -12,9 +12,9 @@ media_folder: "public/images"
 public_folder: "/images"
 
 # Site configuration
-site_url: https://kapitanie-website.pages.dev
-display_url: https://kapitanie-website.pages.dev
-logo_url: https://kapitanie-website.pages.dev/favicon.svg
+site_url: https://kapitanie.com
+display_url: https://kapitanie.com
+logo_url: https://kapitanie.com/favicon.svg
 
 collections:
   # Sekcje strony w kolejności wyświetlania
