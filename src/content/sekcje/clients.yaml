@@ -6,13 +6,13 @@ subtitle: Dobre partnerstwo to podstawa każdej udanej podróży. Jesteśmy dumn
   zaufanie jest dla nas największym wyróżnieniem i motywacją do dalszego
   podnoszenia poprzeczki.
 stats:
-  - number: 150+
-    label: Zadowolonych klientów
-  - number: 300+
+  - number: 200+
     label: Zrealizowanych projektów
+  - number: 50+
+    label: Zadowolonych klientów
   - number: 98%
     label: satysfakcji
-  - number: 10+
+  - number: 15+
     label: Lat na rynku
 client_logos:
   - name: RMF FM
