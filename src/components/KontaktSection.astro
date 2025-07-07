@@ -28,8 +28,8 @@ const fallbackContactMethods = [
   {
     icon: "mail",
     title: "Email",
-    value: "kontakt@kapitanie.pl",
-    link: "mailto:kontakt@kapitanie.pl"
+    value: "kontakt@kapitanie.com",
+    link: "mailto:kontakt@kapitanie.com"
   },
   {
     icon: "map-pin",
@@ -757,14 +757,15 @@ const contactData = {
 
     .contact-method {
       flex-direction: column;
-      text-align: center;
+      text-align: left;
       gap: 0.5rem;
     }
 
     .contact-icon {
       width: 36px;
       height: 36px;
-      margin: 0 auto;
+    }    
+    .contact-details {
     }
 
     .contact-value {
@@ -787,11 +788,27 @@ const contactData = {
   /* Date input styling */
   input[type="date"] {
     position: relative;
+    height: 44px;
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    box-sizing: border-box;
+    /* Wymuś szerokość jak inne inputy */
+    width: 100%;
+    background: var(--bg-main);
+    border: 2px solid rgba(255,255,255,0.1);
+    color: var(--text-main);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: var(--transition-fast);
   }
 
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    background: transparent;
-    color: var(--accent-blue);
+  input[type="date"]:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 169, 255, 0.1);
+    outline: none;
   }
 
   /* Select styling */
