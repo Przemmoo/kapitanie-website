@@ -180,6 +180,7 @@ collections:
         name: "app"
         file: "src/content/sekcje/app.yaml"
         fields:
+          - { label: "Widoczność sekcji", name: "visible", widget: "boolean", default: true }
           - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji aplikacji" }
           - { label: "Wprowadzenie", name: "intro", widget: "text", hint: "Krótki opis aplikacji" }
           - { label: "Mockup aplikacji", name: "mockup_image", widget: "image", required: false, hint: "Zdjęcie mockupu telefonu z aplikacją" }
