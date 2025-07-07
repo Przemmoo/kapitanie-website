@@ -1,17 +1,17 @@
 section_type: about
 title: O nas
-description: Jesteśmy zespołem pasjonatów technologii multimedialnej, dźwięku i
-  światła. Od ponad 10 lat realizujemy wydarzenia każdej skali - od kameralnych
-  spotkań po wielkie konferencje. Nasze doświadczenie i profesjonalizm
-  gwarantują sukces Twojego wydarzenia.
-team_image: /images/fot.-storymakers.pl-elmc-0056-scaled.jpg
+description: >-
+  W kapitanie. wierzymy, że za każdym udanym wydarzeniem stoją ludzie. Nasz
+  zespół to zgrana załoga ekspertów, w której kreatywni stratedzy eventowi
+  podają sobie rękę z inżynierami dźwięku i mistrzami oświetlenia.
+
+
+  Łączymy artystyczną wizję z techniczną precyzją, a od ponad 15 lat doświadczeń na wzburzonych wodach branży eventowej daje Ci gwarancję spokoju. Jesteśmy po to, byś Ty mógł skupić się na swoich gościach, a nie na logistyce.
+team_image: ""
 pillars:
   - icon: lightbulb
     title: Innowacyjność
     description: Wykorzystujemy najnowsze technologie i rozwiązania w branży eventowej
-  - icon: mic
-    title: Jakość dźwięku
-    description: Kristalicznie czysty dźwięk to nasza specjalność
   - icon: monitor
     title: Kompleksowość
     description: Od koncepcji po realizację - wszystko w jednym miejscu
@@ -20,5 +20,5 @@ stats:
     label: Zrealizowanych eventów
   - number: 50+
     label: Zadowolonych klientów
-  - number: "10"
+  - number: 15+
     label: Lat doświadczenia
