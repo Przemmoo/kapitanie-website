@@ -7,7 +7,7 @@ cta1_text: Zobacz nasze realizacje
 cta1_link: "#realizacje"
 cta2_text: Skontaktuj się z nami
 cta2_link: "#kontakt"
-video_mp4: /videos/hero-video.mp4
-video_webm: /videos/hero-video.webm
-poster_image: /images/hero-poster.jpg
+video_mp4: ""
+video_webm: ""
+poster_image: /images/logo_v1.svg
 section_type: hero
