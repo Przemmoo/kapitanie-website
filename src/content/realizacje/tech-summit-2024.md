@@ -1,10 +1,10 @@
 ---
-title: VII edycja Europejskiego Kongresu Mobilności Pracy
+title: Europejski Kongres Mobilności Pracy
 client: Stowarzyszenie Europejski Instytut Mobilności Pracy
 date: 2023-04-24T00:00:00.000Z
 category: Konferencje
-featured: true
-tags: 
+featured: false
+tags:
   - konferencja
   - hybrid event
   - streaming
@@ -15,11 +15,11 @@ gallery:
   - image: /images/fot.-storymakers.pl-elmc-0202-scaled.jpg
   - image: /images/fot.-storymakers.pl-elmc-0056-scaled.jpg
   - image: /images/fot.-storymakers.pl-elmc-0007-scaled.jpg
-description: W Centrum Kongresowym ICE w Krakowie odbyła się VII edycja
-  Europejskiego Kongresu Mobilności Pracy (European Labour Mobility Congress).
-  Wydarzenie to, jak co roku, przyciągnęło publiczność z Polski i Europy,
-  koncentrując się na zagadnieniach związanych z jednolitym rynkiem, mobilnością
-  pracowników oraz swobodą świadczenia usług.
+description: Mieliśmy przyjemności produkowania VI oraz  VII edycji
+  Europejskiego Kongresu Mobilności Pracy (European Labour Mobility Congress) W
+  Centrum Kongresowym ICE w Krakowie. Wydarzenie to, jak co roku, przyciągnęło
+  publiczność z Polski i Europy, koncentrując się na zagadnieniach związanych z
+  jednolitym rynkiem, mobilnością pracowników oraz swobodą świadczenia usług.
 challenge: Organizacja Europejskiego Kongresu Mobilności Pracy dla 500+
   uczestników z jednoczesną transmisją online dla 1000+ widzów na całym świecie.
 solution: Zastosowaliśmy hybrydowy model eventu z profesjonalną transmisją
@@ -28,7 +28,7 @@ solution: Zastosowaliśmy hybrydowy model eventu z profesjonalną transmisją
 results: 95% zadowolenia uczestników, 100% wypełnienie miejsc, 1000+ widzów
   online, 11 partnerów mediowych
 ---
-VII edycja Europejskiego Kongresu Mobilności Pracy była jednym z najważniejszych wydarzeń branży związanych z jednolitym rynkiem, mobilnością pracowników oraz swobodą świadczenia usług.
+VI oraz VII edycja Europejskiego Kongresu Mobilności Pracy była jednym z najważniejszych wydarzeń branży związanych z jednolitym rynkiem, mobilnością pracowników oraz swobodą świadczenia usług.
 
 ## Główne punkty kongresu:
 
