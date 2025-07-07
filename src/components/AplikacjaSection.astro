@@ -4,6 +4,7 @@ import LucideIcon from './LucideIcon.astro';
 
 export interface Props {
   data?: {
+    hidden?: boolean;
     title?: string;
     intro?: string;
     mockup_image?: string;
@@ -19,8 +20,14 @@ export interface Props {
 
 const { data } = Astro.props;
 
+// Jeśli sekcja jest ukryta, nie renderuj jej
+if (data?.hidden) {
+  return null;
+}
+
 // Fallback values jeśli brak danych z CMS
 const appData = {
+  hidden: data?.hidden || false,
   title: data?.title || "Centrum dowodzenia w kieszeni uczestnika",
   intro: data?.intro || "Wspieramy wydarzenia naszą autorską aplikacją mobilną, która zwiększa zaangażowanie i ułatwia komunikację. To więcej niż agenda – to kompletne centrum dowodzenia Twojego eventu.",
   mockup_image: data?.mockup_image || "/images/app-mockup.png",

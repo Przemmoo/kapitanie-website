@@ -180,7 +180,7 @@ collections:
         name: "app"
         file: "src/content/sekcje/app.yaml"
         fields:
-          - { label: "Widoczność sekcji", name: "visible", widget: "boolean", default: true }
+          - { label: "Ukryj sekcję", name: "hidden", widget: "boolean", default: false, hint: "Zaznacz aby ukryć całą sekcję" }
           - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji aplikacji" }
           - { label: "Wprowadzenie", name: "intro", widget: "text", hint: "Krótki opis aplikacji" }
           - { label: "Mockup aplikacji", name: "mockup_image", widget: "image", required: false, hint: "Zdjęcie mockupu telefonu z aplikacją" }
@@ -204,9 +204,9 @@ collections:
         name: "clients"
         file: "src/content/sekcje/clients.yaml"
         fields:
+          - { label: "Ukryj sekcję", name: "hidden", widget: "boolean", default: false, hint: "Zaznacz aby ukryć całą sekcję" }
           - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji klientów" }
           - { label: "Podtytuł", name: "subtitle", widget: "text", hint: "Opis pod tytułem sekcji", required: false }
-          - { label: "Ukryj sekcję", name: "hidden", widget: "boolean", default: false, hint: "Zaznacz aby ukryć całą sekcję" }
           - { 
               label: "Statystyki", 
               name: "stats", 

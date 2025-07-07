@@ -2,9 +2,9 @@
 // Sekcja "Zaufali Nam" z karuzelą klientów
 export interface Props {
   data?: {
+    hidden?: boolean;
     title?: string;
     subtitle?: string;
-    hidden?: boolean;
     hide_testimonials?: boolean;
     client_logos?: Array<{
       name: string;
@@ -35,9 +35,9 @@ if (data?.hidden) {
 
 // Fallback values jeśli brak danych z CMS
 const clientsData = {
+  hidden: data?.hidden || false,
   title: data?.title || "Cieszymy się zaufaniem najlepszych",
   subtitle: data?.subtitle || "Od startupsów po korporacje, od lokalnych eventów po międzynarodowe konferencje - każdego klienta traktujemy z równą pasją i zaangażowaniem.",
-  hidden: data?.hidden || false,
   hide_testimonials: data?.hide_testimonials || false,
   stats: data?.stats || [
     { number: "150+", label: "Zadowolonych klientów" },
