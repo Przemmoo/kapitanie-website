@@ -4,14 +4,16 @@ subtitle: |-
   Masz pomysł, planujesz event lub potrzebujesz wyceny?
   Wypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin.
 contact_methods:
-  - title: " "
-    value: Sonia
-    icon: venus
-  - title: " "
-    icon: mars
-    value: Przemo
+  - title: " Sonia"
+    value: "+48"
+    icon: phone
+    link: tel; +48
+  - title: " Email"
+    icon: mail
+    value: sonia@kapitanie.com
+    link: malto; sonia@kapitanie.com
   - icon: phone
-    title: Telefon
+    title: Przemo
     value: +48 501 181 703
     link: tel:+48501181703
   - icon: mail
