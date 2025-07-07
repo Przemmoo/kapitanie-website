@@ -4,14 +4,20 @@ subtitle: |-
   Masz pomysł, planujesz event lub potrzebujesz wyceny?
   Wypełnij formularz lub zadzwoń. Odpowiadamy w ciągu 24 godzin.
 contact_methods:
+  - title: " "
+    value: Sonia
+    icon: venus
+  - title: " "
+    icon: mars
+    value: Przemo
   - icon: phone
     title: Telefon
     value: +48 501 181 703
     link: tel:+48501181703
   - icon: mail
     title: Email
-    value: przemo@kilan.com.pl
-    link: mailto:przemo@kilan.com.pl
+    value: przemo@kapitanie.com
+    link: mailto:przemo@kapitanie.com
   - icon: map-pin
     title: Adres
     value: ul. Różana 54B/1, 32-020 Wieliczka
