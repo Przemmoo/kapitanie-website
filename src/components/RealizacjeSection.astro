@@ -289,8 +289,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     background: var(--bg-secondary);
     transition: var(--transition);
     cursor: pointer;
-    border: 1px solid rgba(0, 169, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid #FFD700;
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.25);
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUpStagger var(--transition) ease-out forwards;
@@ -303,16 +303,15 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
   .project-card:nth-child(6) { animation-delay: 1.0s; }
   .project-card:hover {
     transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 25px 50px rgba(0, 169, 255, 0.2), 0 10px 30px rgba(0, 0, 0, 0.4);
-    border-color: var(--accent-blue);
+    box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-color: #FFD700;
   }
   .project-card.featured {
-    border: 2px solid #FFD700;
-    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.25);
+    /* Dodatkowo dla wyróżnionych: badge, gradient, mocniejsza poświata */
     background: linear-gradient(145deg, var(--bg-secondary), rgba(255, 215, 0, 0.05));
   }
   .project-card.featured:hover {
-    box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3), 0 15px 35px rgba(0, 169, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(255, 215, 0, 0.4), 0 15px 35px rgba(0, 169, 255, 0.2);
   }
   .project-image {
     position: relative;
