@@ -132,10 +132,26 @@ const podstrony = defineCollection({
   }),
 });
 
+const header = defineCollection({
+  type: 'data',
+  schema: z.object({
+    logo: z.string().optional(),
+    logo_text: z.string().optional(),
+    nav: z.array(z.object({
+      label: z.string(),
+      link: z.string(),
+    })).optional(),
+    show_cta: z.boolean().optional(),
+    cta_text: z.string().optional(),
+    cta_link: z.string().optional(),
+  }),
+});
+
 export const collections = {
   'realizacje': realizacje,
   'kategorie-realizacji': kategorieRealizacji,
   'ustawienia': ustawienia,
   'sekcje': sekcje,
   'podstrony': podstrony,
+  'header': header,
 };

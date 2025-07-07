@@ -1,29 +1,40 @@
 ---
-// Header component z sticky navigation
+import { getEntry } from 'astro:content';
+const headerData = await getEntry('header', 'header');
+const logo = headerData?.data?.logo || '/favicon.svg';
+const logoText = headerData?.data?.logo_text || 'kapitanie';
+const nav = headerData?.data?.nav || [
+  { label: 'O nas', link: '/#o-nas' },
+  { label: 'Realizacje', link: '/#realizacje' },
+  { label: 'Aplikacja', link: '/#aplikacja' },
+  { label: 'Klienci', link: '/#klienci' },
+  { label: 'Kontakt', link: '/#kontakt' },
+];
+const showCta = headerData?.data?.show_cta !== false;
+const ctaText = headerData?.data?.cta_text || 'Wyceń Projekt';
+const ctaLink = headerData?.data?.cta_link || '/#kontakt';
 ---
 
 <header class="header" id="header">
   <div class="container">
     <div class="header-content">
-      <!-- Logo "wąsów" -->
+      <!-- Logo -->
       <div class="logo">
         <a href="/" aria-label="kapitanie - strona główna">
-          <img src="/favicon.svg" alt="kapitanie logo" class="logo-svg" />
-          <span class="logo-text">kapitanie</span>
+          <img src={logo} alt="kapitanie logo" class="logo-svg" />
+          <span class="logo-text">{logoText}</span>
         </a>
       </div>
-
       <!-- Menu nawigacyjne -->
       <nav class="nav" role="navigation" aria-label="Menu główne">
         <ul class="nav-list">
-          <li><a href="/#o-nas" class="nav-link">O nas</a></li>
-          <li><a href="/#realizacje" class="nav-link">Realizacje</a></li>
-          <li><a href="/#aplikacja" class="nav-link">Aplikacja</a></li>
-          <li><a href="/#klienci" class="nav-link">Klienci</a></li>
-          <li><a href="/#kontakt" class="nav-link">Kontakt</a></li>
-          <li><a href="/#kontakt" class="btn btn-primary cta-button">Wyceń Projekt</a></li>
+          {nav.map(item => (
+            <li><a href={item.link} class="nav-link">{item.label}</a></li>
+          ))}
+          {showCta && (
+            <li><a href={ctaLink} class="btn btn-primary cta-button">{ctaText}</a></li>
+          )}
         </ul>
-        
         <!-- Mobile menu button -->
         <button class="mobile-menu-btn" aria-label="Otwórz menu mobilne" aria-expanded="false">
           <span class="hamburger-line"></span>
