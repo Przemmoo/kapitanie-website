@@ -1,74 +1,70 @@
-title: "Polityka Cookies"
-description: "Szczegółowa polityka wykorzystania plików cookies na stronie kapitanie.pl - informacje o rodzajach ciasteczek i zarządzaniu zgodą"
-content: |
+title: Polityka Cookies
+description: Szczegółowa polityka wykorzystania plików cookies na stronie
+  kapitanie.com - informacje o rodzajach ciasteczek i zarządzaniu zgodą
+content: >-
+  # Polityka Plików Cookies Serwisu kapitanie.com
+
+
   ## §1 Czym są pliki cookies?
 
-  Pliki cookies to małe pliki tekstowe zapisywane na Twoim urządzeniu podczas przeglądania stron internetowych. Umożliwiają one stronie "zapamiętanie" Twoich preferencji i akcji podczas aktualnej sesji lub w przyszłych wizytach.
 
-  ## §2 Rodzaje wykorzystywanych ciasteczek
+  Pliki cookies (tzw. "ciasteczka") to niewielkie pliki tekstowe, które są zapisywane na Twoim urządzeniu końcowym (komputerze, tablecie, smartfonie) podczas odwiedzania naszego serwisu. Pozwalają nam one na prawidłowe działanie strony, a także na analizę i personalizację treści.
 
-  Na naszej stronie wykorzystujemy następujące rodzaje plików cookies:
 
-  ### Niezbędne (zawsze aktywne):
+  ## §2 Rodzaje Wykorzystywanych Plików Cookies
 
-  - **Sesja użytkownika** - utrzymanie stanu sesji podczas przeglądania
-  - **Bezpieczeństwo** - ochrona przed atakami CSRF
-  - **Zgodność z RODO** - zapamiętanie preferencji cookies
 
-  ### Analityczne (opcjonalne):
+  W naszym serwisie stosujemy następujące rodzaje plików cookies:
 
-  - **Google Analytics** - analiza ruchu na stronie
-  - **Microsoft Clarity** - analiza zachowań użytkowników
-  - **Czas życia:** 24 miesiące
 
-  ### Marketingowe (opcjonalne):
+  1.  **Niezbędne (zawsze aktywne):**
+      Są kluczowe dla prawidłowego funkcjonowania strony. Bez nich korzystanie z podstawowych funkcji, takich jak nawigacja czy utrzymanie sesji, byłoby niemożliwe.
+      * **Sesja użytkownika:** utrzymuje stan zalogowania i ciągłość wizyty.
+      * **Bezpieczeństwo:** chroni przed atakami (np. CSRF).
+      * **Zgoda na cookies:** zapamiętuje Twoje wybory dotyczące prywatności.
 
-  - **Facebook Pixel** - remarketing i targetowanie
-  - **Google Ads** - śledzenie konwersji
-  - **Czas życia:** 12 miesięcy
+  2.  **Analityczne (opcjonalne):**
+      Pozwalają nam zrozumieć, w jaki sposób użytkownicy korzystają z naszej strony, co jest popularne, a co wymaga poprawy. Wszystkie dane zbierane są w sposób zanonimizowany.
+      * **Google Analytics:** analiza statystyk ruchu na stronie.
+      * **Microsoft Clarity:** analiza zachowań użytkowników (mapy cieplne, nagrania sesji).
+      * **Czas życia:** do 24 miesięcy.
 
-  ### Funkcjonalne (opcjonalne):
+  3.  **Marketingowe (opcjonalne):**
+      Używane do prowadzenia działań marketingowych i remarketingowych, czyli wyświetlania Ci naszych reklam na innych stronach (np. w mediach społecznościowych).
+      * **Facebook Pixel:** remarketing i targetowanie reklam na platformach Meta.
+      * **Google Ads:** śledzenie konwersji i optymalizacja kampanii reklamowych.
+      * **Czas życia:** do 12 miesięcy.
 
-  - **Preferencje użytkownika** - zapamiętanie ustawień strony
-  - **Zawartość spersonalizowana** - dostosowanie treści do preferencji
-  - **Czas życia:** 6 miesięcy
+  4.  **Funkcjonalne (opcjonalne):**
+      Umożliwiają "zapamiętanie" Twoich indywidualnych ustawień i preferencji, np. języka czy regionu, aby dostosować treści do Twoich potrzeb.
+      * **Preferencje użytkownika:** zapamiętanie wybranych ustawień strony.
+      * **Czas życia:** do 6 miesięcy.
 
-  ## §3 Zarządzanie zgodą
+  ## §3 Zarządzanie Zgodą na Cookies
 
-  Podczas pierwszej wizyty na naszej stronie pojawi się banner informacyjny o wykorzystywaniu plików cookies. Masz możliwość:
 
-  - **Akceptacji wszystkich** - zgoda na wszystkie rodzaje cookies
-  - **Wyboru tylko niezbędnych** - zgoda tylko na cookies techniczne
-  - **Personalizacji ustawień** - indywidualny wybór kategorii
+  1.  Podczas Twojej pierwszej wizyty w serwisie wyświetlony zostanie baner, za pomocą którego możesz:
+      * **Zaakceptować wszystkie** pliki cookies.
+      * **Odrzucić wszystkie opcjonalne** pliki cookies.
+      * **Spersonalizować ustawienia**, wybierając, na które kategorie plików cookies wyrażasz zgodę.
+  2.  Swoją zgodę możesz w dowolnym momencie wycofać lub zmienić. Link do panelu zarządzania zgodami znajdziesz w stopce naszej strony internetowej.
 
-  Swoją zgodę możesz w każdej chwili zmienić lub wycofać poprzez:
 
-  - Zmianę ustawień w przeglądarce internetowej
-  - Skorzystanie z panelu zarządzania cookies (dostępnego w stopce strony)
-  - Kontakt z nami pod adresem kontakt@kapitanie.pl
+  ## §4 Zarządzanie Cookies z Poziomu Przeglądarki
 
-  ## §4 Zarządzanie cookies w przeglądarce
 
-  Możesz kontrolować i zarządzać plikami cookies poprzez ustawienia swojej przeglądarki:
+  Niezależnie od naszego serwisu, możesz zarządzać plikami cookies bezpośrednio w ustawieniach swojej przeglądarki internetowej. Poniżej znajdziesz odnośniki do instrukcji dla najpopularniejszych przeglądarek:
 
-  **Chrome:** Ustawienia → Prywatność i bezpieczeństwo → Pliki cookie
+  * **Google Chrome:** [Link do instrukcji](https://support.google.com/chrome/answer/95647)
 
-  **Firefox:** Ustawienia → Prywatność i bezpieczeństwo → Pliki cookie
+  * **Mozilla Firefox:** [Link do instrukcji](https://support.mozilla.org/pl/kb/ciasteczka)
 
-  **Safari:** Preferencje → Prywatność → Zarządzaj danymi stron
+  * **Microsoft Edge:** [Link do instrukcji](https://support.microsoft.com/pl-pl/microsoft-edge/usuwanie-plik%C3%B3w-cookie-w-przegl%C4%85darce-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09)
 
-  **Edge:** Ustawienia → Prywatność, wyszukiwanie i usługi → Pliki cookie
+  * **Safari:** [Link do instrukcji](https://support.apple.com/pl-pl/guide/safari/sfri11471/mac)
+
 
   ## §5 Kontakt
 
-  W sprawach dotyczących polityki cookies możesz się skontaktować:
 
-  <div class="contact-info">
-
-  **Email:** kontakt@kapitanie.pl
-
-  **Telefon:** 501181703
-
-  **Adres:** kapitanie, ul. Różana 54B/1, 32-020 Wieliczka
-
-  </div>
+  W sprawach dotyczących polityki cookies prosimy o kontakt pod adresem: `kontakt@kapitanie.com`.
