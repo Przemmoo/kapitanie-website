@@ -349,6 +349,15 @@ const ctaLink = headerData?.data?.cta_link || '/#kontakt';
         mobileMenuBtn?.setAttribute('aria-expanded', 'false');
       });
     });
+    // Zamknij menu także po kliknięciu w CTA (Wyceń Projekt)
+    const ctaButton = document.querySelector('.cta-button');
+    if (ctaButton) {
+      ctaButton.addEventListener('click', () => {
+        navList?.classList.remove('open');
+        mobileMenuBtn?.classList.remove('open');
+        mobileMenuBtn?.setAttribute('aria-expanded', 'false');
+      });
+    }
 
     // Active navigation highlighting
     const observerOptions = {
