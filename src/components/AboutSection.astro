@@ -659,21 +659,36 @@ const aboutData = {
 
     // Parallax effect for image on desktop
     if (window.innerWidth > 768) {
+      const aboutImage = document.querySelector('.about-image');
+      if (aboutImage) {
+        (aboutImage as HTMLElement).style.transform = 'translateY(0)'; // reset na starcie
+        (aboutImage as HTMLElement).style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+      }
       const handleScroll = () => {
-        const scrolled = window.pageYOffset;
         const aboutSection = document.querySelector('.about-section');
         const aboutImage = document.querySelector('.about-image') as HTMLElement;
-        
         if (aboutSection && aboutImage) {
           const rect = aboutSection.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > 0) {
-            const rate = scrolled * 0.1;
-            aboutImage.style.transform = `translateY(${rate}px)`;
+          const windowHeight = window.innerHeight;
+          // Parallax tylko gdy sekcja jest widoczna
+          if (rect.top < windowHeight && rect.bottom > 0) {
+            // Oblicz ile % sekcji jest przewinięte w oknie
+            const sectionHeight = rect.height || aboutSection.clientHeight;
+            const visible = Math.min(windowHeight, rect.bottom) - Math.max(0, rect.top);
+            const percentScrolled = rect.top < 0 ? Math.abs(rect.top) / (sectionHeight - windowHeight + rect.height) : 0;
+            // Parallax: przesuwaj max do 40px w dół
+            const maxParallax = 40;
+            const translateY = Math.max(0, Math.min(maxParallax, percentScrolled * maxParallax));
+            aboutImage.style.transform = `translateY(${translateY}px)`;
+          } else {
+            aboutImage.style.transform = 'translateY(0)';
           }
         }
       };
-
       window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleScroll);
+      // Wywołaj raz na starcie
+      handleScroll();
     }
     if (isVideo && aboutPlayButton) {
       aboutPlayButton.style.display = '';
