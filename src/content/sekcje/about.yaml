@@ -15,10 +15,4 @@ pillars:
   - icon: monitor
     title: Kompleksowość
     description: Od koncepcji po realizację - wszystko w jednym miejscu
-stats:
-  - number: 200+
-    label: Zrealizowanych eventów
-  - number: 50+
-    label: Zadowolonych klientów
-  - number: 15+
-    label: Lat doświadczenia
+stats: []
