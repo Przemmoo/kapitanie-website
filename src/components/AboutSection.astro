@@ -74,24 +74,30 @@ const aboutData = {
     <!-- Statystyki -->
     {aboutData.stats && aboutData.stats.length > 0 && (
       <div class="stats">
-        {aboutData.stats.map((stat, idx) => (
-          <div class="stat">
-            <span class="stat-number" data-count={stat.number.replace(/\D/g, '')}>{stat.number}</span>
-            <span class="stat-label">{stat.label}</span>
-          </div>
-        ))}
+        {aboutData.stats.map((stat) => {
+          // Wyodrębnij sufix (np. +, %, itp.)
+          const match = stat.number.match(/^(\d+)(\D*)$/);
+          const value = match ? match[1] : stat.number;
+          const suffix = match ? match[2] : '';
+          return (
+            <div class="stat">
+              <span class="stat-number" data-count={value} data-suffix={suffix}>{stat.number}</span>
+              <span class="stat-label">{stat.label}</span>
+            </div>
+          );
+        })}
       </div>
     )}
 </style>
 <script is:inline>
 document.addEventListener('DOMContentLoaded', () => {
-  // Counter animation
+  // Counter animation (mechanizm jak w KlienciSection.astro)
   const animateCounters = () => {
     const counters = document.querySelectorAll('.stats .stat-number');
     counters.forEach(counter => {
       const element = counter;
       const target = parseInt(element.dataset.count || '0');
-      const suffix = /%|\+/.test(element.textContent) ? element.textContent.replace(/\d+/g, '') : '';
+      const suffix = element.dataset.suffix || '';
       const duration = 2000;
       const step = target / (duration / 16);
       let current = 0;
