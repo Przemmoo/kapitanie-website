@@ -32,7 +32,6 @@ export default function PillarContentIsland({ pillars }) {
           grid-template-columns: 1fr 1fr;
           gap: 2rem;
           align-items: stretch;
-          min-height: 500px;
         }
         .about-content {
           width: 100%;
