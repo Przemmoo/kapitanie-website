@@ -946,6 +946,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
 </script>
 
 <script>
+  // Import biblioteki marked do konwersji markdown na HTML
+  import { marked } from 'marked';
   // Typowanie dla projektów i kategorii
   interface ProjectType {
     id: string;
@@ -1232,7 +1234,10 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
         categoryElement.textContent = project.category;
       }
       if (descriptionElement && project.description) {
-        descriptionElement.textContent = project.description;
+        // marked.parse zwraca Promise, więc użyj async/await
+        (async () => {
+          descriptionElement.innerHTML = await marked.parse(project.description);
+        })();
       }
       if (challengeElement && project.challenge) {
         challengeElement.textContent = project.challenge;
