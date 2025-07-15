@@ -34,6 +34,8 @@ description: >-
   * **Expert's Village:** Dedykowana strefa do nawiązywania kontaktów biznesowych
 
 
+  /n
+
   #### Liczby, które mówią same za siebie:
 
 
