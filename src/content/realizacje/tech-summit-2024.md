@@ -31,9 +31,10 @@ description: >-
 
   * **Warsztaty praktyczne:** 12 sesji hands-on z najnowszymi technologiami  
 
-  * **Expert's Village:** Dedykowana strefa do nawiązywania kontaktów biznesowych \n
+  * **Expert's Village:** Dedykowana strefa do nawiązywania kontaktów biznesowych
 
 
+  ####  
 
 
   #### Liczby, które mówią same za siebie:
