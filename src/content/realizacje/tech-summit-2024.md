@@ -36,7 +36,6 @@ description: >-
 
   /n
 
-
   #### Liczby, które mówią same za siebie:
 
 
