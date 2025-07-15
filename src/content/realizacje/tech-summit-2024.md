@@ -24,7 +24,7 @@ description: >-
   pracowników oraz swobodą świadczenia usług.
 
 
-  ## Główne punkty kongresu:
+  #### Główne punkty kongresu:
 
 
   * **Keynote speakers:** 8 uznanych ekspertów z całego świata
@@ -34,7 +34,7 @@ description: >-
   * **Expert's Village:** Dedykowana strefa do nawiązywania kontaktów biznesowych
 
 
-  ## Liczby, które mówią same za siebie:
+  #### Liczby, które mówią same za siebie:
 
 
   * 500+ uczestników stacjonarnych
