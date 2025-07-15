@@ -12,7 +12,19 @@ pillars:
   - icon: lightbulb
     title: Innowacyjność
     description: Wykorzystujemy najnowsze technologie i rozwiązania w branży eventowej
+    content: |
+      **Innowacyjność**
+      
+      - Nowoczesne technologie
+      - Kreatywne podejście do eventów
+      - Rozwiązania szyte na miarę
   - icon: monitor
     title: Kompleksowość
     description: Od koncepcji po realizację - wszystko w jednym miejscu
+    content: |
+      **Kompleksowość**
+      
+      - Pełna obsługa eventu
+      - Jeden zespół, wszystkie usługi
+      - Spokój i bezpieczeństwo dla klienta
 stats: []

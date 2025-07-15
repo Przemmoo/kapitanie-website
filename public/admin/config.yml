@@ -52,7 +52,8 @@ collections:
               fields: [
                 { label: "Ikona", name: "icon", widget: "string", hint: "Nazwa ikony z Lucide Icons (np. lightbulb, mic, monitor, audio-lines, heart, star, settings). Zobacz pełną listę: https://lucide.dev/icons/" },
                 { label: "Tytuł", name: "title", widget: "string" },
-                { label: "Opis", name: "description", widget: "text" }
+                { label: "Opis", name: "description", widget: "text" },
+                { label: "Treść (markdown)", name: "content", widget: "markdown", hint: "Szczegółowa treść filaru, obsługuje markdown. Wyświetlana po kliknięciu w filar." }
               ]
             }
           - { 
