@@ -45,6 +45,7 @@ collections:
           - { label: "Nagłówek", name: "title", widget: "string", hint: "Tytuł sekcji O Nas" }
           - { label: "Opis główny", name: "description", widget: "text", hint: "Główny opis firmy" }
           - { label: "Zdjęcie zespołu", name: "team_image", widget: "image", required: false, hint: "Zdjęcie zespołu lub założyciela" }
+          # Usunięto pole 'Zdjęcie zespołu' (team_image) jako niepotrzebne
           - { 
               label: "Filary oferty", 
               name: "pillars", 

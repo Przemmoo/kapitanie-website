@@ -2,8 +2,8 @@
 // Sekcja O Nas z dwukolumnowym layoutem
 import LucideIcon from './LucideIcon.astro';
 
-import { marked } from 'marked';
-marked.setOptions({ breaks: true });
+
+import PillarContentIsland from './PillarContentIsland.jsx';
 
 export interface Props {
   data?: {
@@ -30,10 +30,7 @@ const aboutData = {
   title: data?.title || "Kapitan na pokładzie Twojego eventu",
   description: data?.description || "Witaj na pokładzie! Nazywam się [Imię Założyciela] i jestem kapitanem, który od ponad 10 lat bezpiecznie prowadzi wydarzenia przez wszystkie, nawet najbardziej wzburzone, wody technicznych wyzwań.",
   team_image: data?.team_image || "/images/team-kapitanie.jpg",
-  pillars: data?.pillars?.map(p => ({
-    ...p,
-    content: p.content || '',
-  })) || [
+  pillars: data?.pillars || [
     {
       icon: "lightbulb",
       title: "Oświetlenie",
@@ -71,55 +68,9 @@ const aboutData = {
       <p class="section-intro" set:html={aboutData.description.replace(/\n/g, '<br />')}>
       </p>
     </div>
-    <!-- Główna siatka: lewa treść filaru, prawa filary i statystyki -->
-    <div class="about-grid">
-      <!-- Lewa strona - treść filaru -->
-      <div class="about-image about-pillar-content">
-        <div class="pillar-content-container" id="pillar-content-container">
-          <div class="pillar-content-markdown">
-            <h3>{aboutData.pillars[0].title}</h3>
-            {aboutData.pillars[0].content && (
-              <div set:html={await marked.parse(aboutData.pillars[0].content)}></div>
-            )}
-          </div>
-        </div>
-      </div>
-      <!-- Prawa strona - filary i statystyki -->
-      <div class="about-content">
-        <div class="services-pillars">
-          {aboutData.pillars.map((pillar, idx) => (
-            <div class="pillar" data-pillar-idx={idx} tabindex="0">
-              <div class="pillar-icon">
-                <LucideIcon name={pillar.icon} size={32} strokeWidth={2} />
-              </div>
-              <h3>{pillar.title}</h3>
-              <p set:html={pillar.description.replace(/\n/g, '<br />')}></p>
-            </div>
-          ))}
-        </div>
-        <div class="stats">
-          {aboutData.stats.map((stat) => (
-            <div class="stat">
-              <span class="stat-number" data-count={stat.number}>0</span>
-              <span class="stat-label">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-    <!-- Modal na zdjęcie/wideo -->
-    <div class="about-lightbox-modal" id="about-lightbox-modal" aria-hidden="true">
-      <div class="about-lightbox-backdrop"></div>
-      <div class="about-lightbox-content">
-        <button class="about-lightbox-close" id="about-lightbox-close" aria-label="Zamknij podgląd">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-        <div class="about-lightbox-body" id="about-lightbox-body"></div>
-      </div>
-    </div>
+    <!-- Główna siatka: dynamiczna wyspa React -->
+    <PillarContentIsland client:load pillars={aboutData.pillars} />
+    <!-- Modal i zdjęcia usunięte jako niepotrzebne -->
   </div>
 
 </section>

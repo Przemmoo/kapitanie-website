@@ -1,3 +1,4 @@
+
 section_type: about
 title: O nas
 description: >-
@@ -5,9 +6,7 @@ description: >-
   zespół to zgrana załoga ekspertów, w której kreatywni stratedzy eventowi
   podają sobie rękę z inżynierami dźwięku i mistrzami oświetlenia.
 
-
   Łączymy artystyczną wizję z techniczną precyzją, a od ponad 15 lat doświadczeń na wzburzonych wodach branży eventowej daje Ci gwarancję spokoju. Jesteśmy po to, byś Ty mógł skupić się na swoich gościach, a nie na logistyce.
-team_image: /images/logo_blue_v1_small.png
 pillars:
   - icon: lightbulb
     title: Innowacyjność
@@ -27,6 +26,23 @@ pillars:
       - Pełna obsługa eventu
       - Jeden zespół, wszystkie usługi
       - Spokój i bezpieczeństwo dla klienta
+  - icon: monitor
+    title: Kompleksowość 2
+    description: 2 Od koncepcji po realizację - wszystko w jednym miejscu
+    content: |
+      **Kompleksowość 2**
+      
+      - Pełna obsługa eventu 2
+      - Jeden zespół, wszystkie usługi 2
+      - Spokój i bezpieczeństwo dla klienta 2
+  - icon: monitor
+    title: Kompleksowość 3
+    description: 3 Od koncepcji po realizację - wszystko w jednym miejscu
+    content: ""
 stats:
-  - number: 15+
-    label: lat
+  - number: "150"
+    label: "Zrealizowanych eventów"
+  - number: "10"
+    label: "Lat doświadczenia"
+  - number: "50"
+    label: "Zadowolonych klientów"

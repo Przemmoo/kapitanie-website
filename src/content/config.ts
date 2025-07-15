@@ -78,6 +78,7 @@ const sekcje = defineCollection({
       icon: z.string(),
       title: z.string(),
       description: z.string(),
+      content: z.string().optional(),
     })).optional(),
     
     // App section fields
