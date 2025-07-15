@@ -7,7 +7,7 @@ description: >-
 
 
   Łączymy artystyczną wizję z techniczną precyzją, a od ponad 15 lat doświadczeń na wzburzonych wodach branży eventowej daje Ci gwarancję spokoju. Jesteśmy po to, byś Ty mógł skupić się na swoich gościach, a nie na logistyce.
-team_image: ""
+team_image: /images/logo_blue_v1_small.png
 pillars:
   - icon: lightbulb
     title: Innowacyjność
@@ -15,10 +15,4 @@ pillars:
   - icon: monitor
     title: Kompleksowość
     description: Od koncepcji po realizację - wszystko w jednym miejscu
-stats:
-  - number: 200+
-    label: Zrealizowanych eventów
-  - number: 50+
-    label: Zadowolonych klientów
-  - number: 15+
-    label: Lat doświadczenia
+stats: []
