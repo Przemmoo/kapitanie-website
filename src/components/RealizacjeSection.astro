@@ -948,6 +948,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
 <script>
   // Import biblioteki marked do konwersji markdown na HTML
   import { marked } from 'marked';
+  // Ustaw opcję breaks, aby \n w markdown był zamieniany na <br>
+  marked.setOptions({ breaks: true });
   // Typowanie dla projektów i kategorii
   interface ProjectType {
     id: string;
