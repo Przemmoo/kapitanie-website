@@ -29,7 +29,7 @@ const { data } = Astro.props;
 const aboutData = {
   title: data?.title || "Kapitan na pokładzie Twojego eventu",
   description: data?.description || "Witaj na pokładzie! Nazywam się [Imię Założyciela] i jestem kapitanem, który od ponad 10 lat bezpiecznie prowadzi wydarzenia przez wszystkie, nawet najbardziej wzburzone, wody technicznych wyzwań.",
-  team_image: data?.team_image || "/images/team-kapitanie.jpg",
+  // team_image usunięte, nie jest już używane
   pillars: data?.pillars || [
     {
       icon: "lightbulb",
@@ -70,6 +70,61 @@ const aboutData = {
     </div>
     <!-- Główna siatka: dynamiczna wyspa React -->
     <PillarContentIsland client:load pillars={aboutData.pillars} />
+
+    <!-- Statystyki -->
+    {aboutData.stats && aboutData.stats.length > 0 && (
+      <div class="stats">
+        {aboutData.stats.map((stat, idx) => (
+          <div class="stat">
+            <span class="stat-number" data-count={stat.number.replace(/\D/g, '')}>{stat.number}</span>
+            <span class="stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    )}
+</style>
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+  // Counter animation
+  const animateCounters = () => {
+    const counters = document.querySelectorAll('.stats .stat-number');
+    counters.forEach(counter => {
+      const element = counter;
+      const target = parseInt(element.dataset.count || '0');
+      const suffix = /%|\+/.test(element.textContent) ? element.textContent.replace(/\d+/g, '') : '';
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let current = 0;
+      const updateCounter = () => {
+        current += step;
+        if (current >= target) {
+          counter.textContent = target + suffix;
+        } else {
+          counter.textContent = Math.floor(current) + (current > target * 0.8 ? suffix : '');
+          requestAnimationFrame(updateCounter);
+        }
+      };
+      updateCounter();
+    });
+  };
+  // Intersection Observer for stats animation
+  const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+  };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.target.classList.contains('stats')) {
+        animateCounters();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+  document.querySelectorAll('.stats').forEach(el => {
+    observer.observe(el);
+  });
+});
+</script>
     <!-- Modal i zdjęcia usunięte jako niepotrzebne -->
   </div>
 
