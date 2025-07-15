@@ -1,4 +1,3 @@
-
 section_type: about
 title: O nas
 description: >-
@@ -26,23 +25,10 @@ pillars:
       - Pełna obsługa eventu
       - Jeden zespół, wszystkie usługi
       - Spokój i bezpieczeństwo dla klienta
-  - icon: monitor
-    title: Kompleksowość 2
-    description: 2 Od koncepcji po realizację - wszystko w jednym miejscu
-    content: |
-      **Kompleksowość 2**
-      
-      - Pełna obsługa eventu 2
-      - Jeden zespół, wszystkie usługi 2
-      - Spokój i bezpieczeństwo dla klienta 2
-  - icon: monitor
-    title: Kompleksowość 3
-    description: 3 Od koncepcji po realizację - wszystko w jednym miejscu
-    content: ""
 stats:
   - number: "150"
-    label: "Zrealizowanych eventów"
+    label: Zrealizowanych eventów
   - number: "10"
-    label: "Lat doświadczenia"
+    label: Lat doświadczenia
   - number: "50"
-    label: "Zadowolonych klientów"
+    label: Zadowolonych klientów
