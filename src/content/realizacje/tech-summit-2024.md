@@ -7,8 +7,7 @@ featured: false
 tags:
   - konferencja
   - hybrid event
-  - streaming
-  - networking
+  - streamin
 featured_image: /images/fot.-storymakers.pl-elmc-0417-scaled.jpg
 gallery:
   - image: /images/fot.-storymakers.pl-elmc-0283-scaled.jpg
