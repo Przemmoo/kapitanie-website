@@ -300,9 +300,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Statistics */
   .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .stat {
+    min-width: 180px;
+    flex: 1 1 180px;
+    max-width: 100%;
   }
 
   .stat {
