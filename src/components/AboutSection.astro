@@ -76,7 +76,12 @@ const aboutData = {
       <!-- Lewa strona - treść filaru -->
       <div class="about-image about-pillar-content">
         <div class="pillar-content-container" id="pillar-content-container">
-          <!-- Treść filaru wstawiana dynamicznie przez JS -->
+          <div class="pillar-content-markdown">
+            <h3>{aboutData.pillars[0].title}</h3>
+            {aboutData.pillars[0].content && (
+              <div set:html={await marked.parse(aboutData.pillars[0].content)}></div>
+            )}
+          </div>
         </div>
       </div>
       <!-- Prawa strona - filary i statystyki -->
@@ -116,6 +121,7 @@ const aboutData = {
       </div>
     </div>
   </div>
+
 </section>
 
 <style>
@@ -573,121 +579,6 @@ const aboutData = {
       font-size: 0.85rem;
     }
   }
-</style>
-
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Counter animation
-    const animateCounters = () => {
-      const counters = document.querySelectorAll('.stat-number');
-      counters.forEach(counter => {
-        const htmlCounter = counter as HTMLElement;
-        const target = parseInt((htmlCounter.dataset?.count as string) || '0');
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-        const updateCounter = () => {
-          current += step;
-          if (current >= target) {
-            htmlCounter.textContent = target + '+';
-          } else {
-            htmlCounter.textContent = Math.floor(current).toString();
-            requestAnimationFrame(updateCounter);
-          }
-        };
-        updateCounter();
-      });
-    };
-
-    // Intersection observer for animations
-    const observerOptions = {
-      threshold: 0.3,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in-up');
-          if (entry.target.classList.contains('stats')) {
-            animateCounters();
-          }
-        }
-      });
-    }, observerOptions);
-    document.querySelectorAll('.about-image, .about-content > *, .pillar, .stat').forEach(el => {
-      observer.observe(el);
-    });
-
-    // --- Nowa logika dla filarów ---
-    const pillars = JSON.parse(document.getElementById('about-section-pillars-data')?.textContent || '[]');
-    const pillarContentContainer = document.getElementById('pillar-content-container');
-    let currentPillarIdx: number = 0;
-    let pillarInterval: ReturnType<typeof setInterval> | null = null;
-    let userInteracted = false;
-
-    // @ts-ignore
-    const markedLib = window.marked || (typeof marked !== 'undefined' ? marked : null);
-
-    function renderPillarContent(idx: number) {
-      if (!pillarContentContainer) return;
-      const pillar = pillars[idx];
-      if (!pillar) return;
-      let html = '';
-      if (markedLib) {
-        html = markedLib.parse(pillar.content || '');
-      } else {
-        html = (pillar.content || '').replace(/\n/g, '<br />');
-      }
-      pillarContentContainer.innerHTML = `
-        <div class="pillar-content-markdown">
-          <h3>${pillar.title}</h3>
-          <div>${html}</div>
-        </div>
-      `;
-    }
-
-    function setPillar(idx: number) {
-      currentPillarIdx = idx;
-      renderPillarContent(idx);
-      // podświetl aktywny filar
-      document.querySelectorAll('.pillar').forEach((el, i) => {
-        (el as HTMLElement).classList.toggle('active', i === idx);
-      });
-    }
-
-    function nextPillar() {
-      let nextIdx = (currentPillarIdx + 1) % pillars.length;
-      setPillar(nextIdx);
-    }
-
-    // Rotacja co 30s
-    function startPillarRotation() {
-      if (pillarInterval) clearInterval(pillarInterval);
-      pillarInterval = setInterval(() => {
-        if (!userInteracted) nextPillar();
-      }, 30000);
-    }
-
-    // Obsługa kliknięcia filaru
-    document.querySelectorAll('.pillar').forEach((el, idx) => {
-      el.addEventListener('click', () => {
-        userInteracted = true;
-        setPillar(idx);
-      });
-      el.addEventListener('keydown', (e) => {
-        const event = e as KeyboardEvent;
-        if (event.key === 'Enter' || event.key === ' ') {
-          userInteracted = true;
-          setPillar(idx);
-        }
-      });
-    });
-
-    // Inicjalizacja
-    setPillar(0);
-    startPillarRotation();
-  });
-</script>
+ </style>
 <script type="application/json" id="about-section-pillars-data">{JSON.stringify(aboutData.pillars)}</script>
 </script>
