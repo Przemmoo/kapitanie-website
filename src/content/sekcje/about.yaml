@@ -26,9 +26,7 @@ pillars:
       - Jeden zespół, wszystkie usługi
       - Spokój i bezpieczeństwo dla klienta
 stats:
-  - number: 150+
+  - number: 160+
     label: Zrealizowanych eventów
   - number: 15+
     label: Lat doświadczenia
-  - number: 50+
-    label: Zadowolonych klientów
