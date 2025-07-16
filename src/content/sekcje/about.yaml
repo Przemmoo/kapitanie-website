@@ -27,23 +27,35 @@ pillars:
       - Spokój i bezpieczeństwo dla klienta
   - icon: mic
     title: Nagłośnienie
-    description: |
-      Nagłośnienie - element niezbędny na kazdym wydarzeniu
+    description: Nagłośnienie - element niezbędny na kazdym wydarzeniu
+    content: |-
+      Dostarczamy sprzęt nagłosnieniowy oraz obsługę.
+
+
 
 
 
       sa
+
       sad
+
       asd
+
       asd
+
       asd
+
       asd
+
       ads
+
       asd
+
       asd
+
       asd
+
       asd
-    content: Dostarczamy sprzęt nagłosnieniowy oraz obsługę.
 stats:
   - number: 160+
     label: Zrealizowanych eventów
