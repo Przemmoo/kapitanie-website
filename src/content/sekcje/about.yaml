@@ -10,52 +10,21 @@ pillars:
   - icon: lightbulb
     title: Innowacyjność
     description: Wykorzystujemy najnowsze technologie i rozwiązania w branży eventowej
-    content: |
-      **Innowacyjność**
-
-      - Nowoczesne technologie
-      - Kreatywne podejście do eventów
-      - Rozwiązania szyte na miarę
+    content: |-
+      * Nowoczesne technologie
+      * Kreatywne podejście do eventów
+      * Rozwiązania szyte na miarę
   - icon: monitor
     title: Kompleksowość
     description: Od koncepcji po realizację - wszystko w jednym miejscu
-    content: |
-      **Kompleksowość**
-
-      - Pełna obsługa eventu
-      - Jeden zespół, wszystkie usługi
-      - Spokój i bezpieczeństwo dla klienta
+    content: |-
+      * Pełna obsługa eventu
+      * Jeden zespół, wszystkie usługi
+      * Spokój i bezpieczeństwo dla klienta
   - icon: mic
     title: Nagłośnienie
     description: Nagłośnienie - element niezbędny na kazdym wydarzeniu
-    content: |-
-      Dostarczamy sprzęt nagłosnieniowy oraz obsługę.
-
-
-
-
-
-      sa
-
-      sad
-
-      asd
-
-      asd
-
-      asd
-
-      asd
-
-      ads
-
-      asd
-
-      asd
-
-      asd
-
-      asd
+    content: Dostarczamy sprzęt nagłosnieniowy oraz obsługę.
 stats:
   - number: 160+
     label: Zrealizowanych eventów
