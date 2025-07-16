@@ -25,6 +25,10 @@ pillars:
       - Pełna obsługa eventu
       - Jeden zespół, wszystkie usługi
       - Spokój i bezpieczeństwo dla klienta
+  - icon: audio-lines
+    title: Nagłośnienie
+    description: NAgłośnienie - element niezbędny na kazdym wydarzeniu
+    content: Dostarczamy sprzęt nagłosnieniowy oraz obsług
 stats:
   - number: 160+
     label: Zrealizowanych eventów
