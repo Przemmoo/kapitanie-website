@@ -87,8 +87,6 @@ export default function PillarContentIsland({ pillars }) {
           border-radius: 14px;
           color: #fff;
           box-shadow: 0 2px 16px 0 #0002;
-          margin-bottom: 1.5rem;
-          max-width: 600px;
           margin-left: auto;
           margin-right: auto;
         }
@@ -139,10 +137,10 @@ export default function PillarContentIsland({ pillars }) {
         }
       `}</style>
       <div className="about-grid">
-        <div className="about-image about-pillar-content">
+        <div className="about-pillar-content">
           <div className="pillar-content-container">
-            <div className="pillar-content-markdown" style={{ minHeight: '120px', background: '#181818', padding: '2rem 2.5rem', borderRadius: '14px', color: '#fff', boxShadow: '0 2px 16px 0 #0002', marginBottom: '1.5rem', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 700, marginBottom: '1.2rem', textAlign: 'center', letterSpacing: '0.01em' }}>{pillars[activeIdx].title}</h3>
+            <div className="pillar-content-markdown" style={{ minHeight: '120px', background: '#181818', padding: '2rem 2.5rem', borderRadius: '14px', color: '#fff', boxShadow: '0 2px 16px 0 #0002',  marginLeft: 'auto', marginRight: 'auto' }}>
+              <h3 style={{ fontSize: '1.35rem', fontWeight: 700, textAlign: 'center', letterSpacing: '0.01em' }}>{pillars[activeIdx].title}</h3>
               <div style={{ minHeight: '40px', fontSize: '1.08rem', lineHeight: 1.7 }}>
                 {pillars[activeIdx].content && pillars[activeIdx].content.trim() !== '' && (
                   <div

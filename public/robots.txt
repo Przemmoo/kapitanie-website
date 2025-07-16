@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /polityka-cookies
+Disallow: /polityka-prywatnosci
+Disallow: /regulamin
+Disallow: /rodo
+Allow: /
+Sitemap: https://kapitanie.com/sitemap.xml
