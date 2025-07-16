@@ -35,11 +35,11 @@ try {
 // Fallback values jeśli brak danych z CMS
 const footerData = {
   company_name: data?.company_name || siteSettings?.company_name || "kapitanie",
-  company_description: data?.company_description || siteSettings?.company_description || "Kompleksowa obsługa multimedialna eventów, koncertów i konferencji. Twoje wydarzenie w najlepszym świetle.",
-  email: data?.email || siteSettings?.email || "kontakt@kapitanie.pl",
-  phone: data?.phone || siteSettings?.phone || "501181703",
-  address: data?.address || siteSettings?.address || "ul. Różana 54B/1, 32-020 Wieliczka",
-  nip: data?.nip || siteSettings?.nip || "123-456-78-90",
+  company_description: data?.company_description || siteSettings?.company_description || "",
+  email: data?.email || siteSettings?.email || "",
+  phone: data?.phone || siteSettings?.phone || "",
+  address: data?.address || siteSettings?.address || "",
+  nip: data?.nip || siteSettings?.nip || "",
   social_media: {
     show_social_media: data?.social_media?.show_social_media ?? siteSettings?.social_media?.show_social_media ?? true,
     facebook: data?.social_media?.facebook || siteSettings?.social_media?.facebook || "",

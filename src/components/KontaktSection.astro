@@ -941,31 +941,37 @@ const contactData = {
           }
         }
 
-        // Simulate API call (replace with actual endpoint)
-        await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Success response
-        formResponse.innerHTML = `
-          <strong>Dziękujemy za wysłanie zapytania!</strong><br>
-          Odpowiemy w ciągu 24 godzin. Sprawdź swoją skrzynkę email.
-        `;
-        formResponse.className = 'form-response success';
-        formResponse.style.display = 'block';
-
-        // Reset form
-        form.reset();
-        
-        // Remove error classes
-        document.querySelectorAll('.form-group.error').forEach(group => {
-          group.classList.remove('error');
+        // Wysyłka do backendu
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
         });
+        const result = await response.json();
 
-        // Track conversion (analytics)
-        if (typeof (window as any).gtag !== 'undefined') {
-          (window as any).gtag('event', 'form_submit', {
-            event_category: 'Contact',
-            event_label: 'Contact Form'
+        if (result.success) {
+          formResponse.innerHTML = `
+            <strong>Dziękujemy za wysłanie zapytania!</strong><br>
+            Odpowiemy w ciągu 24 godzin. Sprawdź swoją skrzynkę email.
+          `;
+          formResponse.className = 'form-response success';
+          formResponse.style.display = 'block';
+          form.reset();
+          document.querySelectorAll('.form-group.error').forEach(group => {
+            group.classList.remove('error');
           });
+          // Track conversion (analytics)
+          if (typeof (window as any).gtag !== 'undefined') {
+            (window as any).gtag('event', 'form_submit', {
+              event_category: 'Contact',
+              event_label: 'Contact Form'
+            });
+          }
+        } else {
+          formResponse.innerHTML = `<strong>Błąd:</strong> ${result.message || 'Nie udało się wysłać wiadomości.'}`;
+          formResponse.className = 'form-response error';
+          formResponse.style.display = 'block';
         }
 
       } catch (error) {
