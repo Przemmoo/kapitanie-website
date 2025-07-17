@@ -74,19 +74,54 @@ const clientsData = {
     <div class="clients-carousel-container">
       <div class="clients-carousel">
         {clientsData.client_logos.length > 0 ? (
-          <div class="carousel-track" data-direction="left">
-            {clientsData.client_logos.map((client, index) => (
-              <div class="client-logo">
-                <img src={client.logo} alt={client.name} loading="lazy" />
-              </div>
-            ))}
-            <!-- Duplicated for seamless loop -->
-            {clientsData.client_logos.map((client, index) => (
-              <div class="client-logo">
-                <img src={client.logo} alt={client.name} loading="lazy" />
-              </div>
-            ))}
-          </div>
+          (() => {
+            const logos = clientsData.client_logos;
+            if (logos.length > 18) {
+              // 3 linie
+              const chunkSize = Math.ceil(logos.length / 3);
+              const lines = [
+                logos.slice(0, chunkSize),
+                logos.slice(chunkSize, chunkSize * 2),
+                logos.slice(chunkSize * 2)
+              ];
+              return lines.map((line, i) => (
+                <div class="carousel-track" data-direction={i % 2 === 0 ? 'left' : 'right'}>
+                  {[...line, ...line, ...line].map((client, index) => (
+                    <div class="client-logo">
+                      <img src={client.logo} alt={client.name} loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+              ));
+            } else if (logos.length > 12) {
+              // 2 linie
+              const chunkSize = Math.ceil(logos.length / 2);
+              const lines = [
+                logos.slice(0, chunkSize),
+                logos.slice(chunkSize)
+              ];
+              return lines.map((line, i) => (
+                <div class="carousel-track" data-direction={i % 2 === 0 ? 'left' : 'right'}>
+                  {[...line, ...line, ...line].map((client, index) => (
+                    <div class="client-logo">
+                      <img src={client.logo} alt={client.name} loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+              ));
+            } else {
+              // 1 linia
+              return (
+                <div class="carousel-track" data-direction="left">
+                  {[...logos, ...logos, ...logos].map((client, index) => (
+                    <div class="client-logo">
+                      <img src={client.logo} alt={client.name} loading="lazy" />
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+          })()
         ) : (
           <!-- Fallback hardcoded logos if no CMS data -->
           <div class="carousel-track" data-direction="left">
@@ -346,12 +381,12 @@ const clientsData = {
 
   .carousel-track {
     display: flex;
-    gap: 3rem;
-    align-items: center;
-    animation-duration: 20s;
+    gap: 2rem;
+    animation-duration: 80s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
-    padding: 0 15px;
+    padding: 0;
+    min-width: 200vw;
   }
 
   .carousel-track[data-direction="left"] {
@@ -362,26 +397,19 @@ const clientsData = {
     animation-name: scrollRight;
   }
 
-  .carousel-track:nth-child(2) {
-    animation-duration: 20s;
-  }
-
-  .carousel-track:nth-child(3) {
-    animation-duration: 20s;
-  }
 
   @keyframes scrollLeft {
     0% {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-100%);
+      transform: translateX(-50%);
     }
   }
 
   @keyframes scrollRight {
     0% {
-      transform: translateX(-100%);
+      transform: translateX(-50%);
     }
     100% {
       transform: translateX(0);
@@ -425,6 +453,9 @@ const clientsData = {
     border-radius: 12px;
     filter: brightness(1);
     transition: var(--transition-fast);
+    margin: 0;
+    padding: 0;
+    display: block;
   }
 
   .client-logo:hover img {
