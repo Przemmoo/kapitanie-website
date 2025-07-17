@@ -7,10 +7,10 @@ featured: true
 tags:
   - konfa
   - kraków
-featured_image: /images/RMF_MAXX_logo.svg
+featured_image: /images/fot.-storymakers.pl-elmc-0417-scaled.jpg
 gallery:
-  - /images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg
-  - /images/fot_piotrszalanski.pl_vi_ekmp_0245-1.jpg
+  - /images/fot.-storymakers.pl-elmc-0202-scaled.jpg
+  - /images/fot.-storymakers.pl-elmc-0007-scaled.jpg
 description: wwqq
 challenge: qwq
 solution: qweq
