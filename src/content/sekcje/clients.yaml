@@ -26,6 +26,8 @@ client_logos:
     website: ""
   - name: Automotive Sobiesław Zasada
     logo: /images/automotive_zasada.svg
+  - name: Polskie Toważystwo Flebologii
+    logo: /images/ptf.png
 hide_testimonials: true
 testimonials:
   - name: Anna Kowalska
