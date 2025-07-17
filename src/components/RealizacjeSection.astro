@@ -6,18 +6,20 @@ import { getCollection } from 'astro:content';
 const realizacje = await getCollection('realizacje');
 const kategorie = await getCollection('kategorie-realizacji');
 
-// Sortujemy kategorie według zdefiniowanej kolejności
-const sortedKategorie = kategorie
+
+// 1. Pobierz tylko aktywne kategorie i zbuduj mapę nazw
+const activeKategorie = kategorie
   .filter(kat => kat.data.active !== false)
   .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+const activeKategorieNames = activeKategorie.map(kat => kat.data.name);
 
-// Sortujemy realizacje od najnowszej do najstarszej
-const sortedRealizacje = realizacje
+// 2. Filtrowanie projektów tylko do tych z aktywnych kategorii
+const filteredRealizacje = realizacje
+  .filter(projekt => activeKategorieNames.includes(projekt.data.category))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
-// Przygotowujemy czyste dane dla skryptu klienta.
-// To minimalizuje ilość danych przesyłanych do przeglądarki.
-const realizacjeData = sortedRealizacje.map(projekt => ({
+// 3. Przygotuj dane do klienta (tylko projekty z aktywnych kategorii)
+const realizacjeData = filteredRealizacje.map(projekt => ({
   id: projekt.slug,
   title: projekt.data.title,
   client: projekt.data.client,
@@ -27,7 +29,9 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
   solution: projekt.data.solution,
   results: projekt.data.results || '',
   image: projekt.data.featured_image || '/images/placeholder-project.jpg',
-  gallery: projekt.data.gallery?.map(img => img.image) || [projekt.data.featured_image || '/images/placeholder-project.jpg'],
+  gallery: Array.isArray(projekt.data.gallery)
+    ? projekt.data.gallery.map(img => typeof img === 'string' ? img : img.image).filter(Boolean)
+    : [projekt.data.featured_image || '/images/placeholder-project.jpg'],
   tags: projekt.data.tags || [],
   featured: projekt.data.featured || false
 }));
@@ -47,21 +51,21 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     <!-- Filter Buttons -->
     <div class="filter-buttons">
       <button class="filter-btn active" data-filter="all">Wszystkie</button>
-      {sortedKategorie.map((kategoria) => (
+      {activeKategorie.map((kategoria: any) => (
         <button class="filter-btn" data-filter={kategoria.data.name}>{kategoria.data.name}</button>
       ))}
     </div>
 
     <!-- Projects Grid -->
     <div class="projects-grid">
-      {sortedRealizacje.map((projekt) => (
+      {realizacjeData.map((projekt) => (
         <div 
-          class={`project-card ${projekt.data.featured ? 'featured' : ''}`}
-          data-category={projekt.data.category}
-          data-project-id={projekt.slug}
+          class={`project-card ${projekt.featured ? 'featured' : ''}`}
+          data-category={projekt.category}
+          data-project-id={projekt.id}
         >
           <div class="project-image">
-            {projekt.data.featured && (
+            {projekt.featured && (
               <div class="featured-badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <polygon points="12,2 15.09,8.26 22,9 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9 8.91,8.26"/>
@@ -70,24 +74,24 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
               </div>
             )}
             <img 
-              src={projekt.data.featured_image || '/images/placeholder-project.jpg'} 
-              alt={`Realizacja: ${projekt.data.title}`}
+              src={projekt.image || '/images/placeholder-project.jpg'} 
+              alt={`Realizacja: ${projekt.title}`}
               loading="lazy"
               width="400"
               height="300"
             />
             <div class="project-overlay">
               <div class="project-info">
-                <h3 class="project-title">{projekt.data.title}</h3>
-                <p class="project-category">{projekt.data.category}</p>
-                {projekt.data.tags && projekt.data.tags.length > 0 && (
+                <h3 class="project-title">{projekt.title}</h3>
+                <p class="project-category">{projekt.category}</p>
+                {projekt.tags && projekt.tags.length > 0 && (
                   <div class="project-tags">
-                    {projekt.data.tags.slice(0, 3).map((tag) => (
+                    {projekt.tags.slice(0, 3).map((tag) => (
                       <span class="project-tag">{tag}</span>
                     ))}
                   </div>
                 )}
-                <button class="view-details-btn" aria-label={`Zobacz szczegóły projektu ${projekt.data.title}`}>
+                <button class="view-details-btn" aria-label={`Zobacz szczegóły projektu ${projekt.title}`}>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                     <circle cx="12" cy="12" r="3"/>
@@ -610,6 +614,12 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       display: grid;
       grid-template-columns: 1.6fr 1fr;
       grid-template-rows: 1fr;
+      min-width: 0;
+    }
+    .lightbox-gallery, .lightbox-info {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
     }
   }
 
@@ -621,6 +631,9 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     flex-direction: column;
     height: 50vh;
     min-height: 300px;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
   }
 
   @media (min-width: 768px) {
@@ -710,14 +723,17 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
   .gallery-thumbs {
     flex-shrink: 0;
     height: 100px;
+    width: 100%;
+    min-width: 0;
     display: flex;
     gap: 10px;
     padding: 15px;
     overflow-x: auto;
+    overflow-y: hidden;
     background: rgba(18, 18, 18, 0.8);
     border-top: 1px solid rgba(0, 169, 255, 0.1);
-  overflow-x: auto;
-  overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-scroll-behavior: smooth;
   }
 
   @media (min-width: 768px) {
@@ -725,6 +741,8 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       height: 120px;
       gap: 12px;
       padding: 20px;
+      scroll-behavior: smooth;
+      -webkit-scroll-behavior: smooth;
     }
   }
 
@@ -1182,6 +1200,23 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
     const lightboxBackdrop = document.querySelector('.lightbox-backdrop') as HTMLElement | null;
     const mainImage = document.querySelector('.gallery-main-image') as HTMLImageElement | null;
     const galleryThumbs = document.querySelector('.gallery-thumbs') as HTMLElement | null;
+
+    // Wymuś płynne przewijanie miniaturek nawet przy manualnym scrollu (wheel)
+    if (galleryThumbs) {
+      galleryThumbs.addEventListener('wheel', (e) => {
+        // Przewijaj tylko w poziomie, blokuj pion
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+          // domyślne przewijanie poziome, pozwól
+          return;
+        }
+        e.preventDefault();
+        // Przewiń w poziomie zamiast pionu
+        galleryThumbs.scrollBy({
+          left: e.deltaY,
+          behavior: 'smooth'
+        });
+      }, { passive: false });
+    }
     const prevBtn = document.querySelector('.gallery-prev') as HTMLButtonElement | null;
     const nextBtn = document.querySelector('.gallery-next') as HTMLButtonElement | null;
     
@@ -1287,15 +1322,18 @@ const realizacjeData = sortedRealizacje.map(projekt => ({
       if (currentGallery[currentImageIndex] && mainImage) {
         mainImage.src = currentGallery[currentImageIndex];
         mainImage.alt = `Zdjęcie ${currentImageIndex + 1} z galerii`;
-        
         // Remove loading skeleton
         mainImage.classList.remove('loading');
-        
         // Update active thumbnail
-        document.querySelectorAll('.gallery-thumb').forEach((thumb, index) => {
+        const thumbs = document.querySelectorAll('.gallery-thumb');
+        thumbs.forEach((thumb, index) => {
           thumb.classList.toggle('active', index === currentImageIndex);
         });
-        
+        // Scroll active thumb into view (centered if possible)
+        const activeThumb = thumbs[currentImageIndex];
+        if (activeThumb && typeof activeThumb.scrollIntoView === 'function') {
+          activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
       }
     }
 

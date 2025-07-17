@@ -10,8 +10,8 @@ tags:
   - multimedia
 featured_image: /images/fot.-storymakers.pl-elmc-0701-scaled.jpg
 gallery:
-  - /images/fot.-storymakers.pl-elmc-0599-scaled.jpg
-  - /images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg
+  - image: /images/fot.-storymakers.pl-elmc-0599-scaled.jpg
+  - image: /images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg
 description: Gala - Labor Mobilis
 challenge: Gala
 solution: Gala
