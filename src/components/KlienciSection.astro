@@ -692,11 +692,15 @@ const clientsData = {
     // Counter animation
     const animateCounters = () => {
       const counters = document.querySelectorAll('.client-stats .stat-number');
-      
       counters.forEach(counter => {
         const element = counter as HTMLElement;
-        const target = parseInt(element.dataset.count || '0');
-        const suffix = target === 98 ? '%' : '+';
+        // Odczytaj oryginalny tekst (np. "200+", "98%")
+        const original = element.textContent || '';
+        // Wyciągnij liczbę (ciąg cyfr)
+        const match = original.match(/^(\d+)/);
+        const target = match ? parseInt(match[1], 10) : 0;
+        // Wyciągnij suffix (wszystko po liczbie)
+        const suffix = original.replace(/^\d+/, '');
         const duration = 2000;
         const step = target / (duration / 16);
         let current = 0;
