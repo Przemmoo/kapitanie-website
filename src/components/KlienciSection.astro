@@ -348,7 +348,7 @@ const clientsData = {
     display: flex;
     gap: 3rem;
     align-items: center;
-    animation-duration: 30s;
+    animation-duration: 20s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     padding: 0 15px;
@@ -363,11 +363,11 @@ const clientsData = {
   }
 
   .carousel-track:nth-child(2) {
-    animation-duration: 35s;
+    animation-duration: 20s;
   }
 
   .carousel-track:nth-child(3) {
-    animation-duration: 25s;
+    animation-duration: 20s;
   }
 
   @keyframes scrollLeft {
@@ -375,13 +375,13 @@ const clientsData = {
       transform: translateX(0);
     }
     100% {
-      transform: translateX(-50%);
+      transform: translateX(-100%);
     }
   }
 
   @keyframes scrollRight {
     0% {
-      transform: translateX(-50%);
+      transform: translateX(-100%);
     }
     100% {
       transform: translateX(0);
@@ -422,6 +422,7 @@ const clientsData = {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    border-radius: 12px;
     filter: brightness(1);
     transition: var(--transition-fast);
   }
