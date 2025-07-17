@@ -5,7 +5,7 @@ const realizacje = defineCollection({
   schema: z.object({
     title: z.string(),
     client: z.string(),
-    date: z.date(),
+    date: z.string(),
     category: z.string(), // Zmienione z enum na string dla elastyczności
     featured_image: z.string().optional(),
     gallery: z.array(z.object({
