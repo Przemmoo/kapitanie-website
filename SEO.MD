@@ -23,7 +23,7 @@ Strona Kapitanie.com to wizytówka firmy eventowej z ponad 15-letnim doświadcze
 - Treści na stronie powinny być unikalne, eksperckie, nasycone frazami kluczowymi
 - Opisy realizacji: szczegółowe, z podkreśleniem wyzwań, rozwiązań, efektów
 - Sekcja "O nas": podkreślić doświadczenie, zespół, technologie, referencje
-- Sekcja usług: opisać każdy typ usługi (multimedia, oświetlenie, nagłośnienie, obsługa techniczna)
+- Sekcja "O nas" w Filarach: opisać każdy typ usługi (multimedia, oświetlenie, nagłośnienie, obsługa techniczna)
 
 ## 4. Linkowanie
 - Linkowanie wewnętrzne do kluczowych sekcji (realizacje, usługi, kontakt)

@@ -13,8 +13,8 @@ tags:
   - firma eventowa Kraków
 featured_image: /images/fot.-storymakers.pl-elmc-0701-scaled.jpg
 gallery:
-  - image: /images/fot.-storymakers.pl-elmc-0599-scaled.jpg
-  - image: /images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg
+  - "/images/fot.-storymakers.pl-elmc-0599-scaled.jpg"
+  - "/images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg"
 description: Gala Labor Mobilis to wyjątkowe wydarzenie firmowe zrealizowane
   przez Kapitanie.com. Odpowiadaliśmy za kompleksową produkcję, multimedia,
   oświetlenie, nagłośnienie i obsługę techniczną, zapewniając najwyższy standard
