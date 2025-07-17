@@ -11,10 +11,8 @@ import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import { getCollection, getEntry } from 'astro:content';
 
-// Pobierz dane z kolekcji content
 const realizacje = await getCollection('realizacje');
 
-// Pobierz dane z sekcji
 const heroData = await getEntry('sekcje', 'hero');
 const aboutData = await getEntry('sekcje', 'about');
 const appData = await getEntry('sekcje', 'app');
@@ -22,7 +20,6 @@ const clientsData = await getEntry('sekcje', 'clients');
 const contactData = await getEntry('sekcje', 'contact');
 const siteData = await getEntry('ustawienia', 'site');
 
-// Metadane strony głównej dla SEO
 const pageTitle = siteData?.data?.site_name ? `${siteData.data.site_name} - Organizacja Wydarzeń i Eventów` : "kapitanie - Organizacja Wydarzeń i Eventów";
 const pageDescription = siteData?.data?.site_description || "Profesjonalna organizacja wydarzeń biznesowych w Polsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z.";
 const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, imprezy biznesowe, event management, organizacja imprez, kapitanie";
@@ -33,28 +30,22 @@ const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, 
   description={pageDescription}
   keywords={pageKeywords}
 >
-  <!-- Sticky Header z nawigacją -->
   <Header />
 
   <main>
-    <!-- Hero Section z tłem wideo -->
     <HeroSection data={heroData?.data} />
 
-    <!-- Sekcja O Nas -->
     <AboutSection data={aboutData?.data} />
 
-    <!-- Sekcja Realizacje z portfoliem -->
     <RealizacjeSection realizacje={realizacje} />
 
-    <!-- Breadcrumbs (SEO) -->
-    <nav aria-label="Breadcrumb" class="breadcrumbs">
+    <nav aria-label="Breadcrumb" class="breadcrumbs" style="display:none">
       <ol>
         <li><a href="/">Strona główna</a></li>
         <li aria-current="page">Realizacje</li>
       </ol>
     </nav>
 
-    <!-- Dane strukturalne BreadcrumbList (JSON-LD) -->
     <script type="application/ld+json" is:inline>
       {JSON.stringify({
         "@context": "https://schema.org",
@@ -66,7 +57,6 @@ const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, 
       })}
     </script>
 
-   <!-- Dane strukturalne Event (przykład dla SEO) -->
    <script type="application/ld+json" is:inline>
      {JSON.stringify({
        "@context": "https://schema.org",
@@ -97,20 +87,15 @@ const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, 
      })}
    </script>
 
-    <!-- Sekcja Aplikacja Eventowa -->
     <AplikacjaSection data={appData?.data} />
 
-    <!-- Sekcja Klienci z karuzelą -->
     <KlienciSection data={clientsData?.data} />
 
-    <!-- Sekcja Kontakt z formularzem -->
     <KontaktSection data={contactData?.data} />
   </main>
 
-  <!-- Footer -->
   <Footer data={siteData?.data} />
 
-  <!-- Banner Cookies/RODO -->
   <CookieBanner />
 </Layout>
 
