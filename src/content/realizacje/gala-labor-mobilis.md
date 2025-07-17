@@ -1,6 +1,6 @@
 ---
 title: Gala - Labor Mobilis
-client: Stowa
+client: Stowarzyszenie Europejski Instytut Mobilności Pracy
 date: 2023-07-17T18:00:00.000+02:00
 category: Gale Firmowe
 featured: false
