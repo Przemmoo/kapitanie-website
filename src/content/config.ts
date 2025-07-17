@@ -11,9 +11,9 @@ const realizacje = defineCollection({
     gallery: z.array(z.object({
       image: z.string(),
     })).optional(),
-    description: z.string(),
-    challenge: z.string(),
-    solution: z.string(),
+    description: z.string().optional(),
+    challenge: z.string().optional(),
+    solution: z.string().optional(),
     results: z.string().optional(),
     tags: z.array(z.string()).optional(), // Dodane tagowanie
     featured: z.boolean().optional(), // Dodane wyróżnianie projektów
