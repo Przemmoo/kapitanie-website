@@ -8,9 +8,12 @@ const realizacje = defineCollection({
     date: z.coerce.string(),
     category: z.string(), // Zmienione z enum na string dla elastyczności
     featured_image: z.string().optional(),
-    gallery: z.array(z.object({
-      image: z.string(),
-    })).optional(),
+    gallery: z.array(
+      z.union([
+        z.object({ image: z.string() }),
+        z.string()
+      ])
+    ).optional(),
     description: z.string().optional(),
     challenge: z.string().optional(),
     solution: z.string().optional(),
