@@ -1,0 +1,16 @@
+{
+  "name": "kapitanie",
+  "short_name": "kapitanie",
+  "description": "Kompleksowa produkcja eventów, konferencji, kongresów, wydarzeń firmowych i multimedialnych.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#00A9FF",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

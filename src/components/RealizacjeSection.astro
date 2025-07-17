@@ -1,8 +1,106 @@
 ---
 // Krok 1: Pobieranie i przygotowywanie danych po stronie serwera (w czasie budowania)
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import img_0417 from '../assets/images/fot.-storymakers.pl-elmc-0417-scaled.jpg';
+import img_0283 from '../assets/images/fot.-storymakers.pl-elmc-0283-scaled.jpg';
+import img_0202 from '../assets/images/fot.-storymakers.pl-elmc-0202-scaled.jpg';
+import img_0056 from '../assets/images/fot.-storymakers.pl-elmc-0056-scaled.jpg';
+import img_0007 from '../assets/images/fot.-storymakers.pl-elmc-0007-scaled.jpg';
+import img_05742 from '../assets/images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg';
+import img_0599 from '../assets/images/fot.-storymakers.pl-elmc-0599-scaled.jpg';
+import img_0701 from '../assets/images/fot.-storymakers.pl-elmc-0701-scaled.jpg';
+import img_ekmp_0041 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0041-1.jpg';
+import img_ekmp_0262 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0262-1.jpg';
+import img_ekmp_0431 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0431-1.jpg';
+import img_ekmp_0388 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0388-1.jpg';
+import img_ekmp_0405 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0405-1-1.jpg';
+import img_ekmp_0005 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0005.jpg';
+import img_ekmp_0245 from '../assets/images/fot_piotrszalanski.pl_vi_ekmp_0245-1.jpg';
+// Dodaj kolejne importy jeśli pojawią się nowe pliki jpg
 
-// Pobieramy kolekcje z CMS
+const imageMap = {
+  '/images/fot.-storymakers.pl-elmc-0417-scaled.jpg': img_0417,
+  '/images/fot.-storymakers.pl-elmc-0283-scaled.jpg': img_0283,
+  '/images/fot.-storymakers.pl-elmc-0202-scaled.jpg': img_0202,
+  '/images/fot.-storymakers.pl-elmc-0056-scaled.jpg': img_0056,
+  '/images/fot.-storymakers.pl-elmc-0007-scaled.jpg': img_0007,
+  '/images/fot.-storymakers.pl-elmc-05742-1-scaled.jpg': img_05742,
+  '/images/fot.-storymakers.pl-elmc-0599-scaled.jpg': img_0599,
+  '/images/fot.-storymakers.pl-elmc-0701-scaled.jpg': img_0701,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0041-1.jpg': img_ekmp_0041,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0262-1.jpg': img_ekmp_0262,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0431-1.jpg': img_ekmp_0431,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0388-1.jpg': img_ekmp_0388,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0405-1-1.jpg': img_ekmp_0405,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0005.jpg': img_ekmp_0005,
+  '/images/fot_piotrszalanski.pl_vi_ekmp_0245-1.jpg': img_ekmp_0245,
+};
+
+const realizacje = await getCollection('realizacje');
+const kategorie = await getCollection('kategorie-realizacji');
+
+const activeKategorie = kategorie
+  .filter(kat => kat.data.active !== false)
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+const activeKategorieNames = activeKategorie.map(kat => kat.data.name);
+
+const filteredRealizacje = realizacje
+  .filter(projekt => activeKategorieNames.includes(projekt.data.category))
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+const realizacjeData = filteredRealizacje.map(projekt => ({
+  id: projekt.slug,
+  title: projekt.data.title,
+  client: projekt.data.client,
+  category: projekt.data.category,
+  description: projekt.data.description,
+  challenge: projekt.data.challenge,
+  solution: projekt.data.solution,
+  results: projekt.data.results || '',
+  date: projekt.data.date || '',
+  image: projekt.data.featured_image || '/images/placeholder-project.jpg',
+  gallery: Array.isArray(projekt.data.gallery)
+    ? projekt.data.gallery.map(img => typeof img === 'string' ? img : img.image).filter(Boolean)
+    : [projekt.data.featured_image || '/images/placeholder-project.jpg'],
+  tags: projekt.data.tags || [],
+  featured: projekt.data.featured || false
+}));
+---
+
+<!-- SEO: JSON-LD Event i BreadcrumbList dla wszystkich realizacji -->
+<script type="application/ld+json" is:inline>
+  {JSON.stringify([
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Strona główna",
+          "item": "https://kapitanie.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Realizacje",
+          "item": "https://kapitanie.com/#realizacje"
+        }
+      ]
+    },
+    ...realizacjeData.map((projekt) => ({
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": projekt.title,
+      "description": projekt.description,
+      "startDate": projekt.date || undefined,
+      "location": {
+        "@type": "Place",
+        "name": projekt.client || "kapitanie",
+        "address": {
+          "@type": "PostalAddress",
+
 const realizacje = await getCollection('realizacje');
 const kategorie = await getCollection('kategorie-realizacji');
 
@@ -35,6 +133,32 @@ const realizacjeData = filteredRealizacje.map(projekt => ({
   tags: projekt.data.tags || [],
   featured: projekt.data.featured || false
 }));
+
+// WALIDACJA: sprawdź, które obrazy nie są zmapowane i nie istnieją w public/images
+if (import.meta.env.DEV) {
+  (async () => {
+    const fs = (await import('fs')).default;
+    const path = (await import('path')).default;
+    const publicDir = path.resolve(process.cwd(), 'public/images');
+    const notMapped = realizacjeData.filter(proj => {
+      const img = proj.image;
+      const mapped = Object.keys(imageMap).includes(img);
+      let exists = false;
+      if (!mapped && img.startsWith('/images/')) {
+        try {
+          exists = fs.existsSync(path.join(publicDir, img.replace('/images/', '')));
+        } catch {
+          exists = false;
+        }
+      }
+      return !mapped && !exists;
+    });
+    if (notMapped.length > 0) {
+      // eslint-disable-next-line no-console
+      console.warn('[RealizacjeSection] Brak importu i pliku publicznego dla obrazów:', notMapped.map(p => p.image));
+    }
+  })();
+}
 ---
 
 <!-- Krok 2: Struktura HTML sekcji -->
@@ -73,13 +197,34 @@ const realizacjeData = filteredRealizacje.map(projekt => ({
                 Wyróżnione
               </div>
             )}
-            <img 
-              src={projekt.image || '/images/placeholder-project.jpg'} 
-              alt={`Realizacja: ${projekt.title}`}
-              loading="lazy"
-              width="400"
-              height="300"
-            />
+            {(() => {
+              const imgMeta = imageMap[projekt.image as keyof typeof imageMap];
+              if (imgMeta) {
+                return (
+                  <Image
+                    src={imgMeta}
+                    alt={`Realizacja: ${projekt.title} - ${projekt.client}`}
+                    loading="lazy"
+                    style="border-radius: 12px; object-fit: cover; width: 100%; height: 100%;"
+                  />
+                );
+              } else {
+                if (typeof window !== 'undefined') {
+                  // W dev zobaczysz w konsoli, które ścieżki nie mają importu
+                  console.warn('Brak importu dla obrazu:', projekt.image);
+                }
+                return (
+                  <img
+                    src={projekt.image}
+                    alt={`Realizacja: ${projekt.title} - ${projekt.client}`}
+                    width={400}
+                    height={300}
+                    loading="lazy"
+                    style="border-radius: 12px; object-fit: cover; width: 100%; height: 100%;"
+                  />
+                );
+              }
+            })()}
             <div class="project-overlay">
               <div class="project-info">
                 <h3 class="project-title">{projekt.title}</h3>
