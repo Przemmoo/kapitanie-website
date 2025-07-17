@@ -111,7 +111,6 @@ collections:
     fields:
       - { label: "Tytuł", name: "title", widget: "string", hint: "Nazwa wydarzenia lub projektu" }
       - { label: "Klient", name: "client", widget: "string", hint: "Nazwa firmy lub organizatora" }
-      - { label: "Data", name: "date", widget: "datetime", hint: "Data realizacji wydarzenia" }
       - { 
           label: "Kategoria", 
           name: "category", 
