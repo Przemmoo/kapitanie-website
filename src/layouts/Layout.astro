@@ -22,6 +22,7 @@ const {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="keywords" content={keywords} />
+		<meta name="robots" content="index, follow" />
 		
 		<!-- Google Fonts - Montserrat i Lato -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,9 +33,25 @@ const {
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
+		<meta property="og:image" content="/images/og-default.jpg" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content="/images/og-default.jpg" />
+		<link rel="canonical" href={Astro.url?.href || 'https://kapitanie.com'} />
+		<meta name="theme-color" content="#00A9FF" />
+		<link rel="manifest" href="/manifest.json" />
+
+		<!-- Google Analytics 4 -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-R4ML1FD38P"></script>
+		<script is:inline>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){window.dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'G-R4ML1FD38P');
+		</script>
+
+		<!-- Google Search Console weryfikacja -->
 		
 		<!-- Schema.org JSON-LD -->
 		<script type="application/ld+json">
@@ -57,6 +74,15 @@ const {
 				"email": "kontakt@kapitanie.pl"
 			}
 		}
+		</script>
+		<!-- Monitoring Core Web Vitals -->
+		<script src="https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js"></script>
+		<script is:inline>
+		  webVitals.getCLS(console.log);
+		  webVitals.getFID(console.log);
+		  webVitals.getLCP(console.log);
+		  webVitals.getFCP(console.log);
+		  webVitals.getTTFB(console.log);
 		</script>
 	</head>
 	<body>
@@ -284,4 +310,35 @@ const {
 	.fade-in-up {
 		animation: fadeInUp 0.6s ease-out;
 	}
-</style>
+  /* Breadcrumbs SEO */
+  .breadcrumbs {
+	margin: 1.5rem 0 2rem 0;
+	font-size: 0.95rem;
+	color: var(--text-secondary);
+  }
+  .breadcrumbs ol {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+  }
+  .breadcrumbs li {
+	display: flex;
+	align-items: center;
+  }
+  .breadcrumbs li:not(:last-child)::after {
+	content: "/";
+	margin: 0 0.5rem;
+	color: var(--accent-blue);
+  }
+  .breadcrumbs a {
+	color: var(--accent-blue);
+	text-decoration: underline;
+	transition: color 0.2s;
+  }
+  .breadcrumbs a:hover {
+	color: var(--text-main);
+  }
+
