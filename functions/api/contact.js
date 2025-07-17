@@ -45,10 +45,10 @@ export async function onRequestPost(context) {
     <div style="margin-top: 18px;"><b>Akceptacja polityki:</b> ${body.privacy ? 'TAK' : 'NIE'}</div>
   </div>
   <div style="border-top:1px solid #eee; margin: 32px 0 0 0; padding-top: 18px; display: flex; align-items: center; gap: 12px;">
-    <img src='https://kapitanie.com/favicon.svg' alt='kapitanie logo' style='height:28px; vertical-align:middle;'/>
-    <span style="font-family: 'Montserrat', Arial, sans-serif; font-weight: 900; font-style: normal; font-size: 18px; letter-spacing: 1px; color: #222;">kapitanie.com</span>
+    <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:28px; vertical-align:middle;'/>
+    <span style="font-family: 'Montserrat', Arial, sans-serif; font-weight: 900; font-style: normal; font-size: 18px; letter-spacing: 1px;">kapitanie.com</span>
   </div>
-  <div style="margin-top: 4px; font-size: 14px; color: #444; white-space: pre-line;">
+  <div style="font-size: 9px;">
     tel. +48 501 181 703<br>
     ul. Różana 54b/1<br>
     32-020 Wieliczka<br>
@@ -72,13 +72,12 @@ export async function onRequestPost(context) {
   <div><b>Liczba gości:</b> ${body.guestCount || '-'}</div>
   <div><b>Usługi:</b> ${(body.services && Array.isArray(body.services)) ? body.services.join(', ') : '-'}</div>
   <div style="margin-top: 18px;"><b>Opis wydarzenia:</b><br>${body.message}</div>
-  <div style="margin-top: 18px;"><b>Akceptacja polityki:</b> ${body.privacy ? 'TAK' : 'NIE'}</div>
   <div style="margin-top: 32px; color: #888; font-size: 14px;">---<br>To jest automatyczne potwierdzenie. Prosimy nie odpowiadać na tę wiadomość.</div>
   <div style="border-top:1px solid #eee; margin: 32px 0 0 0; padding-top: 18px; display: flex; align-items: center; gap: 12px;">
-    <img src='https://kapitanie.com/favicon.svg' alt='kapitanie logo' style='height:28px; vertical-align:middle;'/>
+    <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:28px; vertical-align:middle;'/>
     <span style="font-family: 'Montserrat', Arial, sans-serif; font-weight: 900; font-style: normal; font-size: 18px; letter-spacing: 1px; color: #222;">kapitanie.com</span>
   </div>
-  <div style="margin-top: 4px; font-size: 14px; color: #444; white-space: pre-line;">
+  <div style="margin-top: 4px; font-size: 9px;">
     tel. +48 501 181 703<br>
     ul. Różana 54b/1<br>
     32-020 Wieliczka<br>
