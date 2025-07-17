@@ -1,7 +1,7 @@
 ---
 title: Gala - Labor Mobilis
 client: Stowarzyszenie Europejski Instytut Mobilności Pracy
-date: "2023-04-25"
+date: "2023-04-23"
 category: Gale Firmowe
 featured: false
 tags:
