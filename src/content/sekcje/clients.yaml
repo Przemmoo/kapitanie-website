@@ -28,6 +28,8 @@ client_logos:
     logo: /images/automotive_zasada.svg
   - name: Polskie Toważystwo Flebologii
     logo: /images/ptf.png
+  - name: Marcedes-Benz Polska
+    logo: /images/mercedes-benz.jpg
 hide_testimonials: true
 testimonials:
   - name: Anna Kowalska
