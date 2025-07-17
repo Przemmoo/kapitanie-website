@@ -39,5 +39,18 @@
     
     
   </script>
+
+  <script>
+    // Wymuś rejestrację widgetu 'date' jeśli CMS go nie widzi
+    if (window.CMS && typeof window.CMS.registerWidget === 'function') {
+      window.CMS.registerWidget('date');
+    } else {
+      window.addEventListener('DOMContentLoaded', function() {
+        if (window.CMS && typeof window.CMS.registerWidget === 'function') {
+          window.CMS.registerWidget('date');
+        }
+      });
+    }
+  </script>
 </body>
 </html>
