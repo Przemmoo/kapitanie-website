@@ -48,12 +48,13 @@ export async function onRequestPost(context) {
   </div>
   <div style="border-top:1px solid #eee; margin: 32px 0 0 0; padding-top: 18px; display: flex; align-items: center; gap: 12px;">
     <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:38px; vertical-align:middle;'/>
-    <span style="font-family: 'Montserrat', Arial, sans-serif;  font-style: normal; font-size: 30px;
+    <span style="font-family: 'Montserrat', Arial, sans-serif;  font-style: normal; font-size: 32px;
     font-weight: 900;
-    letter-spacing: -0.02em; ">kapitanie.com</span>
+    letter-spacing: -0.02em; ">kapitanie</span>
   </div>
   <div style="margin-top: 6px; font-style: normal; font-size: 13px;">
     tel. +48 501 181 703<br>
+    <br>
     Protech Przemysław Kilan<br>
     ul. Różana 54b/1<br>
     32-020 Wieliczka<br>
@@ -80,12 +81,13 @@ export async function onRequestPost(context) {
   <div style="margin-top: 32px; color: #888; font-size: 14px;">---<br>To jest automatyczne potwierdzenie. Prosimy nie odpowiadać na tę wiadomość.</div>
   <div style="border-top:1px solid #eee; margin: 32px 0 0 0; padding-top: 18px; display: flex; align-items: center; gap: 12px;">
     <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:38px; vertical-align:middle;'/>
-    <span style="font-family: 'Montserrat', Arial, sans-serif;  font-style: normal; font-size: 30px;
+    <span style="font-family: 'Montserrat', Arial, sans-serif;  font-style: normal; font-size: 32px;
     font-weight: 900;
-    letter-spacing: -0.02em; ">kapitanie.com</span>
+    letter-spacing: -0.02em; ">kapitanie</span>
   </div>
   <div style="margin-top: 6px; font-style: normal; font-size: 13px;">
     tel. +48 501 181 703<br>
+    <br>
     Protech Przemysław Kilan<br>
     ul. Różana 54b/1<br>
     32-020 Wieliczka<br>
