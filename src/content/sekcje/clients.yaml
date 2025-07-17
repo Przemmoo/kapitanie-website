@@ -9,11 +9,7 @@ stats:
   - number: 200+
     label: Zrealizowanych projektów
   - number: 50+
-    label: Zadowolonych klientów
-  - number: 98%
-    label: satysfakcji
-  - number: 15+
-    label: Lat na rynku
+    label: Klientów
 client_logos:
   - name: RMF FM
     logo: /images/rmf.svg
