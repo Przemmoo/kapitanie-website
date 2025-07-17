@@ -27,6 +27,9 @@ export async function onRequestPost(context) {
     }
 
 
+    // Zamiana znaków nowej linii na <br> w treści wiadomości
+    const formattedMessage = body.message.replace(/\r?\n/g, '<br>');
+
     // Przygotowanie treści maila do firmy (HTML)
     const mailHtml = `
 <div style="font-family: 'Montserrat', Arial, sans-serif; font-style: italic; font-weight: 400; color: #222; font-size: 16px;">
@@ -41,15 +44,17 @@ export async function onRequestPost(context) {
     <div><b>Data:</b> ${body.eventDate || '-'}</div>
     <div><b>Liczba gości:</b> ${body.guestCount || '-'}</div>
     <div><b>Usługi:</b> ${(body.services && Array.isArray(body.services)) ? body.services.join(', ') : '-'}</div>
-    <div style="margin-top: 18px;"><b>Opis wydarzenia:</b><br>${body.message}</div>
-    <div style="margin-top: 18px;"><b>Akceptacja polityki:</b> ${body.privacy ? 'TAK' : 'NIE'}</div>
+    <div style="margin-top: 18px;"><b>Opis wydarzenia:</b><br>${formattedMessage}</div>
   </div>
   <div style="border-top:1px solid #eee; margin: 32px 0 0 0; padding-top: 18px; display: flex; align-items: center; gap: 12px;">
-    <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:28px; vertical-align:middle;'/>
-    <span style="font-family: 'Montserrat', Arial, sans-serif; font-weight: 900; font-style: normal; font-size: 18px; letter-spacing: 1px;">kapitanie.com</span>
+    <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:38px; vertical-align:middle;'/>
+    <span style="font-family: 'Montserrat', Arial, sans-serif;  font-style: normal; font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.02em; ">kapitanie.com</span>
   </div>
-  <div style="font-size: 9px;">
+  <div style="margin-top: 6px; font-style: normal; font-size: 13px;">
     tel. +48 501 181 703<br>
+    Protech Przemysław Kilan<br>
     ul. Różana 54b/1<br>
     32-020 Wieliczka<br>
     NIP 5741597318
@@ -71,14 +76,17 @@ export async function onRequestPost(context) {
   <div><b>Data:</b> ${body.eventDate || '-'}</div>
   <div><b>Liczba gości:</b> ${body.guestCount || '-'}</div>
   <div><b>Usługi:</b> ${(body.services && Array.isArray(body.services)) ? body.services.join(', ') : '-'}</div>
-  <div style="margin-top: 18px;"><b>Opis wydarzenia:</b><br>${body.message}</div>
+  <div style="margin-top: 18px;"><b>Opis wydarzenia:</b><br>${formattedMessage}</div>
   <div style="margin-top: 32px; color: #888; font-size: 14px;">---<br>To jest automatyczne potwierdzenie. Prosimy nie odpowiadać na tę wiadomość.</div>
   <div style="border-top:1px solid #eee; margin: 32px 0 0 0; padding-top: 18px; display: flex; align-items: center; gap: 12px;">
-    <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:28px; vertical-align:middle;'/>
-    <span style="font-family: 'Montserrat', Arial, sans-serif; font-weight: 900; font-style: normal; font-size: 18px; letter-spacing: 1px; color: #222;">kapitanie.com</span>
+    <img src='https://kapitanie.com/images/logo_blue_v1_small.png' alt='kapitanie logo' style='height:38px; vertical-align:middle;'/>
+    <span style="font-family: 'Montserrat', Arial, sans-serif;  font-style: normal; font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.02em; ">kapitanie.com</span>
   </div>
-  <div style="margin-top: 4px; font-size: 9px;">
+  <div style="margin-top: 6px; font-style: normal; font-size: 13px;">
     tel. +48 501 181 703<br>
+    Protech Przemysław Kilan<br>
     ul. Różana 54b/1<br>
     32-020 Wieliczka<br>
     NIP 5741597318
