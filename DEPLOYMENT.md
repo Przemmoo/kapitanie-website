@@ -94,7 +94,26 @@ Edytuj `.github/workflows/deploy.yml` i zmień:
 projectName: kapitanie-website # Zmień na rzeczywistą nazwę projektu
 ```
 
-### 4. **Publikacja zmian**
+### 4. **Konfiguracja GitHub Secrets** ✅ GOTOWE
+
+**POTWIERDZONE DZIAŁAJĄCE DANE:**
+```
+CLOUDFLARE_API_TOKEN = gJy2Ho5Gu9Cz6B0185Cjv_DaejF4Ky5P-uPwTakD
+CLOUDFLARE_ACCOUNT_ID = 51265bf8c7892eb3425d9aec26821bb0
+```
+
+**Status weryfikacji:**
+- ✅ Token zweryfikowany - ma dostęp do konta i projektów
+- ✅ Account ID potwierdzony - 51265bf8c7892eb3425d9aec26821bb0
+- ✅ Projekt "kapitanie" istnieje w Cloudflare Pages
+- ✅ Połączenie z GitHub repo: Przemmoo/kapitanie-website
+
+**Jak dodać secrets w GitHub:**
+1. Przejdź do: `https://github.com/Przemmoo/kapitanie-website/settings/secrets/actions`
+2. Kliknij **New repository secret**
+3. Dodaj powyższe dwa secrets
+
+### 5. **Publikacja zmian**
 
 ```bash
 # 1. Dodaj wszystkie zmiany
