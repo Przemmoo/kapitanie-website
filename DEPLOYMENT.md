@@ -29,12 +29,37 @@ CLOUDFLARE_ACCOUNT_ID=your_account_id
 
 **Cloudflare API Token:**
 1. Cloudflare Dashboard > **My Profile** > **API Tokens**
-2. **Create Token** > **Use Custom token template**
-3. Uprawnienia:
-   - **Account**: `Cloudflare Pages:Edit`
-   - **Zone**: `Zone:Read` (jeśli używasz custom domain)
-4. **Account Resources**: Include your account
-5. **Zone Resources**: Include specific zone (twoja domena)
+2. **Create Token** > **Custom token**
+3. **Permissions** (dokładne nazwy w interfejsie):
+   - **Account** - `Cloudflare Pages:Edit` (lub **Account:Cloudflare Pages:Edit**)
+   - **Zone** - `Zone:Read` (tylko jeśli używasz custom domain)
+4. **Account Resources**: `Include - All accounts` (lub wybierz konkretny)
+5. **Zone Resources**: `Include - All zones` (lub konkretną domenę jeśli używasz custom domain)
+
+**Alternatywnie, jeśli nie widzisz "Account":**
+- Szukaj **Cloudflare Pages:Edit** bezpośrednio w liście uprawnień
+- Lub użyj gotowego template **"Custom token for Cloudflare Pages"** jeśli jest dostępny
+
+**Account ID:**
+1. Cloudflare Dashboard > **Right sidebar** > **Account ID**
+
+### 📝 **Alternatywne metody dla API Token:**
+
+**Metoda 1: Użyj gotowego template (jeśli dostępny)**
+1. W **API Tokens** szukaj **"Use template"**
+2. Wybierz **"Cloudflare Pages"** template
+3. Skonfiguruj zasoby i utwórz token
+
+**Metoda 2: Ręczne uprawnienia**
+Jeśli nie widzisz "Account" w permissions, dodaj:
+- **Cloudflare Pages:Edit** (gdzie tylko znajdziesz)
+- **Account:Read** (jeśli dostępne)
+- **Zone:Read** - tylko dla custom domain
+
+**Metoda 3: Sprawdź w nowym interfejsie**
+Czasami uprawnienia są pogrupowane inaczej:
+- **Zone permissions**: Zone:Read
+- **Account permissions**: Cloudflare Pages:Edit
 
 **Account ID:**
 1. Cloudflare Dashboard > **Right sidebar** > **Account ID**
@@ -73,7 +98,11 @@ git push origin main
 2. Dodaj sekrety:
    - `CLOUDFLARE_API_TOKEN` (z Cloudflare Dashboard > My Profile > API Tokens)
    - `CLOUDFLARE_ACCOUNT_ID` (z prawego panelu w Cloudflare Dashboard)
-3. Upewnij się, że API Token ma uprawnienia `Cloudflare Pages:Edit`
+3. **Uprawnienia API Token** - upewnij się, że ma:
+   - `Cloudflare Pages:Edit` (może być w sekcji Account lub bezpośrednio)
+   - `Zone:Read` (jeśli używasz custom domain)
+
+**Wskazówka**: Jeśli nie widzisz "Account" w permissions, szukaj bezpośrednio "Cloudflare Pages" w liście uprawnień.
 
 ### Problem: "Build failed"
 - Sprawdź logi w GitHub Actions
