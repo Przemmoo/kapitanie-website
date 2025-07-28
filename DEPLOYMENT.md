@@ -30,11 +30,14 @@ CLOUDFLARE_ACCOUNT_ID=your_account_id
 **Cloudflare API Token:**
 1. Cloudflare Dashboard > **My Profile** > **API Tokens**
 2. **Create Token** > **Custom token**
-3. **Permissions** (dokładne nazwy w interfejsie):
-   - **Account** - `Cloudflare Pages:Edit` (lub **Account:Cloudflare Pages:Edit**)
+3. **🚨 WAŻNE - Uprawnienia (DOKŁADNIE te nazwy):**
+   - **Account** - `Cloudflare Pages:Edit`
+   - **Account** - `Account:Read` ⚠️ **BEZ TEGO NIE BĘDZIE DZIAŁAĆ!**
    - **Zone** - `Zone:Read` (tylko jeśli używasz custom domain)
 4. **Account Resources**: `Include - All accounts` (lub wybierz konkretny)
 5. **Zone Resources**: `Include - All zones` (lub konkretną domenę jeśli używasz custom domain)
+
+**❗ UWAGA**: Token **MUSI** mieć uprawnienie `Account:Read`, inaczej GitHub Actions nie będzie mogło uzyskać informacji o koncie!
 
 **Alternatywnie, jeśli nie widzisz "Account":**
 - Szukaj **Cloudflare Pages:Edit** bezpośrednio w liście uprawnień
@@ -53,8 +56,13 @@ CLOUDFLARE_ACCOUNT_ID=your_account_id
 **Metoda 2: Ręczne uprawnienia**
 Jeśli nie widzisz "Account" w permissions, dodaj:
 - **Cloudflare Pages:Edit** (gdzie tylko znajdziesz)
-- **Account:Read** (jeśli dostępne)
+- **Account:Read** ⚠️ **KLUCZOWE UPRAWNIENIE!**
 - **Zone:Read** - tylko dla custom domain
+
+**🔍 Wskazówki do znajdowania uprawnień:**
+- Szukaj w wyszukiwarkę: "Account", "Pages", "Read"
+- Uprawnienia mogą być w różnych sekcjach
+- Account:Read może być w sekcji "Account permissions" lub "User permissions"
 
 **Metoda 3: Sprawdź w nowym interfejsie**
 Czasami uprawnienia są pogrupowane inaczej:
@@ -98,11 +106,17 @@ git push origin main
 2. Dodaj sekrety:
    - `CLOUDFLARE_API_TOKEN` (z Cloudflare Dashboard > My Profile > API Tokens)
    - `CLOUDFLARE_ACCOUNT_ID` (z prawego panelu w Cloudflare Dashboard)
-3. **Uprawnienia API Token** - upewnij się, że ma:
-   - `Cloudflare Pages:Edit` (może być w sekcji Account lub bezpośrednio)
-   - `Zone:Read` (jeśli używasz custom domain)
+3. **🚨 UPRAWNIENIA API TOKEN - upewnij się, że ma OBA:**
+   - ✅ `Cloudflare Pages:Edit` 
+   - ✅ `Account:Read` ⚠️ **BEZ TEGO NIE BĘDZIE DZIAŁAĆ!**
+   - ✅ `Zone:Read` (jeśli używasz custom domain)
 
-**Wskazówka**: Jeśli nie widzisz "Account" w permissions, szukaj bezpośrednio "Cloudflare Pages" w liście uprawnień.
+### Problem: "Token nie ma wystarczających uprawnień"
+**Objawy:** Puste listy kont, "Unauthorized" errors
+**Rozwiązanie:** 
+1. Utwórz NOWY token z uprawnieniem `Account:Read`
+2. Zastąp stary token w GitHub Secrets
+3. Token bez `Account:Read` **NIE BĘDZIE DZIAŁAĆ** z GitHub Actions!
 
 ### Problem: "Build failed"
 - Sprawdź logi w GitHub Actions
