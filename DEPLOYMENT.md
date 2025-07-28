@@ -67,6 +67,14 @@ git push origin main
 
 ## 🔧 Rozwiązywanie problemów
 
+### Problem: "Input required and not supplied: apiToken"
+**Rozwiązanie:**
+1. Przejdź do GitHub repo > **Settings** > **Secrets and variables** > **Actions**
+2. Dodaj sekrety:
+   - `CLOUDFLARE_API_TOKEN` (z Cloudflare Dashboard > My Profile > API Tokens)
+   - `CLOUDFLARE_ACCOUNT_ID` (z prawego panelu w Cloudflare Dashboard)
+3. Upewnij się, że API Token ma uprawnienia `Cloudflare Pages:Edit`
+
 ### Problem: "Build failed"
 - Sprawdź logi w GitHub Actions
 - Upewnij się, że `npm run build` działa lokalnie

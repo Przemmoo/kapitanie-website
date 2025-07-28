@@ -34,7 +34,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: kapitanie-website # Zmień na nazwę swojego projektu w Cloudflare
+          projectName: kapitanie-com # Zmień na rzeczywistą nazwę projektu z Cloudflare
           directory: dist
           # Optional: Enable comments on pull requests
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
