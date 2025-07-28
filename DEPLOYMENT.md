@@ -30,44 +30,59 @@ CLOUDFLARE_ACCOUNT_ID=your_account_id
 **Cloudflare API Token:**
 1. Cloudflare Dashboard > **My Profile** > **API Tokens**
 2. **Create Token** > **Custom token**
-3. **🚨 WAŻNE - Uprawnienia (DOKŁADNIE te nazwy):**
-   - **Account** - `Cloudflare Pages:Edit`
-   - **Account** - `Account:Read` ⚠️ **BEZ TEGO NIE BĘDZIE DZIAŁAĆ!**
-   - **Zone** - `Zone:Read` (tylko jeśli używasz custom domain)
+3. **🚨 UPRAWNIENIA - szukaj w liście (różne nazwy w interfejsie):**
+   
+   **Znajdź i dodaj TE uprawnienia:**
+   - ✅ **`Cloudflare Pages:Edit`** (może być w różnych sekcjach)
+   - ✅ **`Zone:Read`** (tylko jeśli używasz custom domain)
+   
+   **🔍 Jeśli nie widzisz "Account:Read" - ALTERNATYWY:**
+   - Szukaj **`User:Read`** 
+   - Szukaj **`Account Settings:Read`**
+   - Lub użyj **gotowego template "Cloudflare Pages"** (jeśli dostępny)
+
 4. **Account Resources**: `Include - All accounts` (lub wybierz konkretny)
 5. **Zone Resources**: `Include - All zones` (lub konkretną domenę jeśli używasz custom domain)
 
-**❗ UWAGA**: Token **MUSI** mieć uprawnienie `Account:Read`, inaczej GitHub Actions nie będzie mogło uzyskać informacji o koncie!
+**💡 WSKAZÓWKA**: Użyj wyszukiwarki w uprawnieniach - wpisz "Pages", "Read", "User"
 
-**Alternatywnie, jeśli nie widzisz "Account":**
-- Szukaj **Cloudflare Pages:Edit** bezpośrednio w liście uprawnień
-- Lub użyj gotowego template **"Custom token for Cloudflare Pages"** jeśli jest dostępny
+**Alternatywnie - NAJŁATWIEJSZE ROZWIĄZANIE:**
+- Szukaj **"Use template"** w API Tokens
+- Wybierz **"Cloudflare Pages"** template (jeśli dostępny)
+- Template automatycznie ustawi wszystkie potrzebne uprawnienia
+
+**Metoda 1: Template (REKOMENDOWANE)**
+1. W **API Tokens** kliknij **"Create Token"**
+2. Szukaj sekcji **"Use template"** lub **"Quick start"**
+3. Wybierz **"Cloudflare Pages"** jeśli dostępny
+4. Skonfiguruj zasoby i utwórz token
 
 **Account ID:**
 1. Cloudflare Dashboard > **Right sidebar** > **Account ID**
 
 ### 📝 **Alternatywne metody dla API Token:**
 
-**Metoda 1: Użyj gotowego template (jeśli dostępny)**
-1. W **API Tokens** szukaj **"Use template"**
-2. Wybierz **"Cloudflare Pages"** template
-3. Skonfiguruj zasoby i utwórz token
+**Metoda 1: Template (NAJŁATWIEJSZE) ⭐**
+1. W **API Tokens** kliknij **"Create Token"**
+2. Szukaj **"Use template"** lub gotowych opcji
+3. Wybierz **"Cloudflare Pages"** template
+4. Automatycznie ustawi potrzebne uprawnienia
 
-**Metoda 2: Ręczne uprawnienia**
-Jeśli nie widzisz "Account" w permissions, dodaj:
-- **Cloudflare Pages:Edit** (gdzie tylko znajdziesz)
-- **Account:Read** ⚠️ **KLUCZOWE UPRAWNIENIE!**
-- **Zone:Read** - tylko dla custom domain
+**Metoda 2: Ręczne uprawnienia (trudniejsze)**
+W **Custom token** szukaj w liście uprawnień:
+- **`Cloudflare Pages:Edit`** 
+- **`User:Read`** lub **`Account Settings:Read`** 
+- **`Zone:Read`** - tylko dla custom domain
 
 **🔍 Wskazówki do znajdowania uprawnień:**
-- Szukaj w wyszukiwarkę: "Account", "Pages", "Read"
-- Uprawnienia mogą być w różnych sekcjach
-- Account:Read może być w sekcji "Account permissions" lub "User permissions"
+- Użyj wyszukiwarki w permissions: "Pages", "User", "Read"
+- Uprawnienia mogą mieć różne nazwy: "User:Read", "Account Settings:Read"
+- Jeśli nie znajdziesz dokładnej nazwy, wybierz najbliższą
 
-**Metoda 3: Sprawdź w nowym interfejsie**
-Czasami uprawnienia są pogrupowane inaczej:
-- **Zone permissions**: Zone:Read
-- **Account permissions**: Cloudflare Pages:Edit
+**Metoda 3: Minimalne uprawnienia (last resort)**
+Jeśli nic nie znajdujesz:
+- Tylko **`Cloudflare Pages:Edit`** 
+- Podaj Account ID ręcznie (może zadziałać z ograniczeniami)
 
 **Account ID:**
 1. Cloudflare Dashboard > **Right sidebar** > **Account ID**
