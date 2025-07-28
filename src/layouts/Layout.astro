@@ -87,18 +87,24 @@ const {
 			}
 		}
 		</script>
-		<!-- Monitoring Core Web Vitals -->
-		<script src="https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js"></script>
-		<script is:inline>
-		  // Only log in development mode
-		  if (import.meta.env.MODE === 'development') {
-		    webVitals.getCLS(console.log);
-		    webVitals.getFID(console.log);
-		    webVitals.getLCP(console.log);
-		    webVitals.getFCP(console.log);
-		    webVitals.getTTFB(console.log);
-		  }
-		</script>
+		<!-- Monitoring Core Web Vitals - Only in development -->
+		{import.meta.env.DEV && (
+			<>
+				<script src="https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js"></script>
+				<script is:inline>
+				  // Web Vitals monitoring for development only
+				  window.addEventListener('load', function() {
+				    if (window.webVitals) {
+				      window.webVitals.getCLS(console.log);
+				      window.webVitals.getFID(console.log);
+				      window.webVitals.getLCP(console.log);
+				      window.webVitals.getFCP(console.log);
+				      window.webVitals.getTTFB(console.log);
+				    }
+				  });
+				</script>
+			</>
+		)}
 	</head>
 	<body>
 		<!-- Skip links for accessibility -->
