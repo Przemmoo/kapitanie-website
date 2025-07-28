@@ -517,11 +517,6 @@ const contactData = {
     animation: spin 1s linear infinite;
   }
 
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
   /* Error messages */
   .error-message {
     display: block;
@@ -828,7 +823,9 @@ const contactData = {
     const formResponse = document.getElementById('form-response') as HTMLDivElement;
 
     if (!form || !submitBtn || !formResponse) {
-      console.error('Required form elements not found');
+      if (import.meta.env.DEV) {
+        console.error('Required form elements not found');
+      }
       return;
     }
 
@@ -974,8 +971,10 @@ const contactData = {
           formResponse.style.display = 'block';
         }
 
-      } catch (error) {
-        console.error('Form submission error:', error);
+        } catch (error) {
+        if (import.meta.env.DEV) {
+          console.error('Form submission error:', error);
+        }
         formResponse.innerHTML = `
           <strong>Wystąpił błąd podczas wysyłania.</strong><br>
           Spróbuj ponownie lub skontaktuj się telefonicznie.

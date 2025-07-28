@@ -24,161 +24,203 @@ export default function PillarContentIsland({ pillars }) {
     setUserInteracted(true);
   };
 
+  if (!pillars || pillars.length === 0) return null;
+
   return (
-    <div>
+    <div className="pillars-layout">
       <style>{`
-        .about-grid {
+        .pillars-layout {
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .pillars-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 2rem;
-          align-items: stretch;
+          gap: 1rem;
+          align-items: start;
         }
-        .about-content {
-          width: 100%;
-        }
-        .services-pillars {
+
+        /* Prawa kolumna - nawigacja */
+        .pillars-nav {
           display: flex;
           flex-direction: column;
           gap: 1.5rem;
-          width: 100%;
+          grid-column: 2;
+          grid-row: 1;
         }
-        .pillar {
+
+        .pillar-nav-item {
           display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 1.25rem;
-          padding: 1.25rem 1rem;
-          background: rgba(31, 31, 31, 0.5);
-          border-radius: 12px;
+          align-items: flex-start;
+          gap: 1rem;
+          padding: 1.5rem;
+          background: rgba(0, 169, 255, 0.05);
           border: 1px solid rgba(0, 169, 255, 0.1);
-          transition: 0.2s;
-          width: 100%;
+          border-radius: 12px;
           cursor: pointer;
+          transition: all 0.3s ease;
         }
-        .pillar.active, .pillar:hover {
-          background: rgba(31, 31, 31, 0.8);
+
+        .pillar-nav-item:hover,
+        .pillar-nav-item.active {
+          background: rgba(0, 169, 255, 0.1);
           border-color: rgba(0, 169, 255, 0.3);
-          transform: translateY(-3px) scale(1.01);
+          transform: translateY(-2px);
         }
+
         .pillar-icon {
-          flex-shrink: 0;
           width: 48px;
           height: 48px;
-          background: linear-gradient(135deg, #00a9ff, #0088cc);
+          background: linear-gradient(135deg, var(--accent-blue), #0056b3);
           border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
+          flex-shrink: 0;
         }
-        .pillar h3 {
-          font-size: 1.1rem;
+
+        .pillar-text h3 {
+          color: var(--text-main);
+          margin: 0 0 0.5rem 0;
+          font-size: 1.25rem;
           font-weight: 600;
-          margin: 0 0 0.25rem 0;
         }
-        .pillar p {
-          font-size: 0.98rem;
+
+        .pillar-text p {
+          color: var(--text-secondary);
           margin: 0;
+          font-size: 0.95rem;
+          line-height: 1.5;
         }
-        .pillar-content-markdown {
-          min-height: 120px;
-          background: #181818;
-          padding: 2rem 2.5rem;
-          border-radius: 14px;
-          color: #fff;
-          box-shadow: 0 2px 16px 0 #0002;
-          margin-left: auto;
-          margin-right: auto;
+
+        /* Lewa kolumna - content */
+        .pillars-content {
+          grid-column: 1;
+          grid-row: 1;
         }
-        .pillar-content-markdown h3 {
-          font-size: 1.35rem;
-          font-weight: 700;
-          margin-bottom: 1.2rem;
-          text-align: center;
-          letter-spacing: 0.01em;
+
+        .pillar-content-display {
+          background: rgba(0, 169, 255, 0.05);
+          border-radius: 12px;
+          padding: 2rem;
+          border: 1px solid rgba(0, 169, 255, 0.1);
+          min-height: 300px;
         }
-        .pillar-content-markdown div {
-          min-height: 40px;
-          font-size: 1.08rem;
-          line-height: 1.7;
+
+        .pillar-content-title {
+          color: var(--text-main);
+          margin: 0 0 1.5rem 0;
+          font-size: 1.5rem;
+          font-weight: 600;
         }
-        .pillar-content-markdown ul {
-          margin: 1.2rem 0 1.5rem 0;
-          padding-left: 1.2em;
+
+        .pillar-content {
+          color: var(--text-secondary);
+          line-height: 1.6;
+          font-size: 1rem;
         }
-        .pillar-content-markdown li {
-          margin-bottom: 0.5em;
-          font-size: 1.05em;
+
+        .pillar-content strong {
+          color: var(--text-main);
         }
-        .pillar-content-markdown strong {
-          color: #00a9ff;
-          font-weight: 700;
-        }
-        @media (max-width: 900px) {
-          .about-grid {
+
+        @media (max-width: 768px) {
+          .pillars-grid {
             grid-template-columns: 1fr;
-            gap: 3rem;
-          }
-          .services-pillars {
+            gap: 2rem;
+            display: flex;
             flex-direction: column;
-            gap: 1rem;
-            align-items: stretch;
           }
-          .pillar {
-            flex-direction: column;
-            align-items: flex-start;
+
+          /* Na mobile: najpierw nawigacja (prawa kolumna) */
+          .pillars-nav {
+            order: 1;
+            grid-column: 1;
             width: 100%;
           }
-          .pillar-content-markdown ul {
-            columns: 1;
-            -webkit-columns: 1;
-            -moz-columns: 1;
+
+          /* Potem content (lewa kolumna) */
+          .pillars-content {
+            order: 2;
+            grid-column: 1;
+            width: 100%;
+          }
+
+          .pillar-nav-item {
+            padding: 1rem;
+            gap: 0.75rem;
+          }
+
+          .pillar-icon {
+            width: 40px;
+            height: 40px;
+          }
+
+          .pillar-text h3 {
+            font-size: 1.1rem;
+          }
+
+          .pillar-text p {
+            font-size: 0.9rem;
+          }
+
+          .pillar-content-display {
+            padding: 1.5rem;
+            min-height: 200px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .pillars-grid {
+            gap: 1.5rem;
+          }
+
+          .pillars-nav {
+            gap: 1rem;
+          }
+
+          .pillar-nav-item {
+            padding: 0.75rem;
+          }
+
+          .pillar-content-display {
+            padding: 1rem;
           }
         }
       `}</style>
-      <div className="about-grid">
-        <div className="about-pillar-content">
-          <div className="pillar-content-container">
-            <div className="pillar-content-markdown" style={{ minHeight: '120px', background: '#181818', padding: '2rem 2.5rem', borderRadius: '14px', color: '#fff', boxShadow: '0 2px 16px 0 #0002',  marginLeft: 'auto', marginRight: 'auto' }}>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 700, textAlign: 'center', letterSpacing: '0.01em' }}>{pillars[activeIdx].title}</h3>
-              <div style={{ minHeight: '40px', fontSize: '1.08rem', lineHeight: 1.7 }}>
-                {pillars[activeIdx].content && pillars[activeIdx].content.trim() !== '' && (
-                  <div
-                    style={{ textAlign: 'left' }}
-                    className="pillar-content-html"
-                    dangerouslySetInnerHTML={{ __html: marked.parse(pillars[activeIdx].content) }}
-                  />
-                )}
+      <div className="pillars-grid">
+        {/* Prawa kolumna - nawigacja (icon, title, description) */}
+        <div className="pillars-nav">
+          {pillars.map((pillar, index) => (
+            <div
+              key={index}
+              className={`pillar-nav-item ${index === activeIdx ? 'active' : ''}`}
+              onClick={() => setActiveIdx(index)}
+            >
+              <div className="pillar-icon">
+                <LucideIconIsland name={pillar.icon} size={32} strokeWidth={2} />
+              </div>
+              <div className="pillar-text">
+                <h3>{pillar.title}</h3>
+                <p>{pillar.description}</p>
               </div>
             </div>
-          </div>
+          ))}
         </div>
-        <div className="about-content">
-          <div className="services-pillars">
-            {pillars.map((pillar, idx) => (
-              <div
-                className={"pillar" + (idx === activeIdx ? " active" : "")}
-                data-pillar-idx={idx}
-                tabIndex={0}
-                key={pillar.title + '-' + idx}
-                onClick={() => handlePillarClick(idx)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") handlePillarClick(idx);
-                }}
-                style={{ width: '100%' }}
-              >
-                <div className="pillar-icon">
-                  <LucideIconIsland name={pillar.icon} size={32} strokeWidth={2} />
-                </div>
-                <div>
-                  <h3>{pillar.title}</h3>
-                  <p>{pillar.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="stats">
-            {/* Sekcja na statystyki, jak w Astro */}
+
+        {/* Lewa kolumna - content */}
+        <div className="pillars-content">
+          <div className="pillar-content-display">
+            <h4 className="pillar-content-title">{pillars[activeIdx]?.title}</h4>
+            <div
+              className="pillar-content"
+              dangerouslySetInnerHTML={{
+                __html: pillars[activeIdx]?.content?.replace(/\n/g, '<br/>') || ''
+              }}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 ---
 title: Gala Labor Mobilis – kompleksowa produkcja eventu firmowego
 client: Stowarzyszenie Europejski Instytut Mobilności Pracy
-date: 2023-04-23
+date: 2023-04-24
 category: Gale Firmowe
 featured: false
 tags:

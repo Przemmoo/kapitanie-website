@@ -1,0 +1,160 @@
+---
+// Reusable Card Component
+export interface Props {
+  variant?: 'default' | 'highlighted' | 'minimal' | 'interactive';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  shadow?: 'none' | 'sm' | 'md' | 'lg';
+  border?: boolean;
+  rounded?: 'none' | 'sm' | 'md' | 'lg';
+  hover?: boolean;
+  class?: string;
+  as?: string;
+}
+
+const {
+  variant = 'default',
+  padding = 'md',
+  shadow = 'md',
+  border = false,
+  rounded = 'md',
+  hover = false,
+  class: className = '',
+  as: Tag = 'div',
+  ...rest
+} = Astro.props;
+
+// Build classes
+const baseClasses = 'card';
+const variantClasses = `card--${variant}`;
+const paddingClasses = padding !== 'none' ? `card--padding-${padding}` : '';
+const shadowClasses = shadow !== 'none' ? `card--shadow-${shadow}` : '';
+const borderClasses = border ? 'card--border' : '';
+const roundedClasses = rounded !== 'none' ? `card--rounded-${rounded}` : '';
+const hoverClasses = hover ? 'card--hover' : '';
+
+const allClasses = [
+  baseClasses,
+  variantClasses,
+  paddingClasses,
+  shadowClasses,
+  borderClasses,
+  roundedClasses,
+  hoverClasses,
+  className
+].filter(Boolean).join(' ');
+---
+
+<Tag class={allClasses} {...rest}>
+  <slot />
+</Tag>
+
+<style>
+  .card {
+    background-color: var(--color-bg-secondary);
+    transition: all var(--duration-normal) var(--easing-ease);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Variants */
+  .card--default {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+  }
+
+  .card--highlighted {
+    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, rgba(0, 169, 255, 0.1) 100%);
+    border: 2px solid var(--color-primary);
+    color: var(--color-text-primary);
+  }
+
+  .card--minimal {
+    background-color: transparent;
+    color: var(--color-text-primary);
+  }
+
+  .card--interactive {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+  }
+
+  /* Padding */
+  .card--padding-sm {
+    padding: var(--space-sm);
+  }
+
+  .card--padding-md {
+    padding: var(--space-lg);
+  }
+
+  .card--padding-lg {
+    padding: var(--space-xl);
+  }
+
+  /* Shadows */
+  .card--shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card--shadow-md {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .card--shadow-lg {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Border */
+  .card--border {
+    border: 1px solid rgba(0, 169, 255, 0.1);
+  }
+
+  /* Rounded corners */
+  .card--rounded-sm {
+    border-radius: var(--border-radius-sm);
+  }
+
+  .card--rounded-md {
+    border-radius: var(--border-radius-md);
+  }
+
+  .card--rounded-lg {
+    border-radius: var(--border-radius-lg);
+  }
+
+  /* Hover effects */
+  .card--hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .card--interactive:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+  }
+
+  .card--highlighted:hover {
+    box-shadow: 0 12px 30px rgba(0, 169, 255, 0.25);
+  }
+
+  /* Focus styles for interactive cards */
+  .card--interactive:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Animations */
+  .card {
+    will-change: transform;
+  }
+
+  .card:hover {
+    will-change: transform;
+  }
+
+  /* Remove will-change after animation */
+  .card:not(:hover) {
+    will-change: auto;
+  }
+</style>

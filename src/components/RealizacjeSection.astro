@@ -1,258 +1,131 @@
 ---
-// Krok 1: Pobieranie i przygotowywanie danych po stronie serwera (w czasie budowania)
+// Minimalist RealizacjeSection
 import { getCollection } from 'astro:content';
+import ProjectLightbox from './ProjectLightbox.astro';
 
-// Pobieramy kolekcje z CMS
-const realizacje = await getCollection('realizacje');
-const kategorie = await getCollection('kategorie-realizacji');
+// Get all projects
+const allRealizacje = await getCollection('realizacje');
 
+// Get unique categories
+const uniqueCategories = [...new Set(allRealizacje.map(r => r.data?.category || 'inne'))];
+const categories = uniqueCategories;
 
-// 1. Pobierz tylko aktywne kategorie i zbuduj mapę nazw
-const activeKategorie = kategorie
-  .filter(kat => kat.data.active !== false)
-  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
-const activeKategorieNames = activeKategorie.map(kat => kat.data.name);
-
-// 2. Filtrowanie projektów tylko do tych z aktywnych kategorii
-const filteredRealizacje = realizacje
-  .filter(projekt => activeKategorieNames.includes(projekt.data.category))
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-
-// 3. Przygotuj dane do klienta (tylko projekty z aktywnych kategorii)
-const realizacjeData = filteredRealizacje.map(projekt => ({
-  id: projekt.slug,
-  title: projekt.data.title,
-  client: projekt.data.client,
-  category: projekt.data.category,
-  description: projekt.data.description,
-  challenge: projekt.data.challenge,
-  solution: projekt.data.solution,
-  results: projekt.data.results || '',
-  image: projekt.data.featured_image || '/images/placeholder-project.jpg',
-  gallery: Array.isArray(projekt.data.gallery)
-    ? projekt.data.gallery.map(img => typeof img === 'string' ? img : img.image).filter(Boolean)
-    : [projekt.data.featured_image || '/images/placeholder-project.jpg'],
-  tags: projekt.data.tags || [],
-  featured: projekt.data.featured || false
+// Prepare data for JavaScript
+const realizacjeData = allRealizacje.map(r => ({
+  slug: r.slug,
+  title: r.data?.title || '',
+  client: r.data?.client || '',
+  category: r.data?.category || 'inne',
+  date: r.data?.date || '',
+  featured_image: r.data?.featured_image || '',
+  gallery: r.data?.gallery || [],
+  description: r.data?.description || '',
+  challenge: r.data?.challenge || '',
+  solution: r.data?.solution || '',
+  tags: r.data?.tags || []
 }));
+
+// Pagination settings
+const PROJECTS_PER_PAGE = 3;
+const initialProjects = realizacjeData.slice(0, PROJECTS_PER_PAGE);
+const hasMoreProjects = realizacjeData.length > PROJECTS_PER_PAGE;
 ---
 
-<!-- Krok 2: Struktura HTML sekcji -->
-<section class="realizacje-section" id="realizacje">
+<!-- Minimal section design -->
+<section class="section realizacje-section" id="realizacje">
   <div class="container">
-    <!-- Section Header -->
+    <!-- Simple Header -->
     <div class="section-header">
-      <h2 class="section-title">Nasze Realizacje</h2>
-      <p class="section-subtitle">
-        Każdy projekt to unikalna historia sukcesu. Zobacz, jak przekuwamy wizje w rzeczywistość.
-      </p>
+      <h2 class="section-title">Realizacje</h2>
     </div>
 
-    <!-- Filter Buttons -->
-    <div class="filter-buttons">
-      <button class="filter-btn active" data-filter="all">Wszystkie</button>
-      {activeKategorie.map((kategoria: any) => (
-        <button class="filter-btn" data-filter={kategoria.data.name}>{kategoria.data.name}</button>
+    <!-- Simple Category Filters -->
+    <div class="category-filters">
+      <button class="filter-btn active" data-category="wszystkie">
+        Wszystkie
+      </button>
+      {categories.map(category => (
+        <button class="filter-btn" data-category={category}>
+          {category.charAt(0).toUpperCase() + category.slice(1)}
+        </button>
       ))}
     </div>
 
-    <!-- Projects Grid -->
-    <div class="projects-grid">
-      {realizacjeData.map((projekt) => (
-        <div 
-          class={`project-card ${projekt.featured ? 'featured' : ''}`}
+    <!-- Minimal Projects Grid -->
+    <div class="projects-grid" id="projects-grid">
+      {realizacjeData.map((projekt, index) => (
+        <article 
+          class={`project-card ${index < PROJECTS_PER_PAGE ? 'visible' : 'hidden'}`}
           data-category={projekt.category}
-          data-project-id={projekt.id}
+          data-slug={projekt.slug}
+          data-index={index}
+          style={`transition-delay: ${(index % PROJECTS_PER_PAGE) * 0.1}s`}
         >
           <div class="project-image">
-            {projekt.featured && (
-              <div class="featured-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polygon points="12,2 15.09,8.26 22,9 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9 8.91,8.26"/>
-                </svg>
-                Wyróżnione
-              </div>
-            )}
             <img 
-              src={projekt.image || '/images/placeholder-project.jpg'} 
-              alt={`Realizacja: ${projekt.title}`}
+              src={projekt.featured_image && projekt.featured_image.trim() ? projekt.featured_image : '/images/placeholder-project.jpg'} 
+              alt={projekt.title}
               loading="lazy"
-              width="400"
-              height="300"
             />
-            <div class="project-overlay">
-              <div class="project-info">
-                <h3 class="project-title">{projekt.title}</h3>
-                <p class="project-category">{projekt.category}</p>
-                {projekt.tags && projekt.tags.length > 0 && (
-                  <div class="project-tags">
-                    {projekt.tags.slice(0, 3).map((tag) => (
-                      <span class="project-tag">{tag}</span>
-                    ))}
-                  </div>
-                )}
-                <button class="view-details-btn" aria-label={`Zobacz szczegóły projektu ${projekt.title}`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                  Zobacz szczegóły
-                </button>
-              </div>
-            </div>
           </div>
-        </div>
+          <div class="project-info">
+            <h3 class="project-title">{projekt.title}</h3>
+            <p class="project-client">{projekt.client}</p>
+            <span class="project-category">{projekt.category}</span>
+          </div>
+        </article>
       ))}
     </div>
 
     <!-- Load More Button -->
-    <div class="load-more-container">
-      <button class="btn btn-secondary load-more-btn">
-        Pokaż więcej projektów
-      </button>
-    </div>
-  </div>
-
-  <!-- Lightbox Modal -->
-  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-labelledby="lightbox-title" aria-hidden="true">
-    <div class="lightbox-backdrop"></div>
-    <div class="lightbox-content">
-      <button class="lightbox-close" aria-label="Zamknij lightbox">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-      
-      <div class="lightbox-body">
-        <div class="lightbox-gallery">
-          <div class="gallery-main">
-            <img class="gallery-main-image" src="" alt="" />
-            <button class="gallery-prev" aria-label="Poprzednie zdjęcie">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="15,18 9,12 15,6"/>
-              </svg>
-            </button>
-            <button class="gallery-next" aria-label="Następne zdjęcie">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="9,18 15,12 9,6"/>
-              </svg>
-            </button>
-          </div>
-          <div class="gallery-thumbs"></div>
-        </div>
-        
-        <div class="lightbox-info">
-          <h3 id="lightbox-title" class="lightbox-project-title">Tytuł projektu</h3>
-          <div class="lightbox-meta">
-            <span class="lightbox-client">Klient</span>
-            <span class="lightbox-category">Kategoria</span>
-          </div>
-          <div class="lightbox-description">Opis projektu zostanie tutaj załadowany...</div>
-          <div class="lightbox-case-study">
-            <div class="case-study-section">
-              <h4>Wyzwanie</h4>
-              <p class="case-study-challenge">Wyzwanie projektu...</p>
-            </div>
-            <div class="case-study-section">
-              <h4>Rozwiązanie</h4>
-              <p class="case-study-solution">Rozwiązanie projektu...</p>
-            </div>
-          </div>
-        </div>
+    {hasMoreProjects && (
+      <div class="load-more-container">
+        <button class="load-more-btn" id="load-more-btn">
+          Pokaż więcej projektów
+        </button>
       </div>
-    </div>
+    )}
   </div>
 </section>
 
-<!-- Krok 3: Style CSS (bez zmian, ponieważ problem dotyczył logiki) -->
+<!-- Minimalist styles -->
 <style>
-  /* Import Google Fonts zgodnie z kapitanie.md */
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Lato:wght@400;700&display=swap');
-
-  /* CSS Custom Properties zgodnie z paletą kolorystyczną z kapitanie.md */
-  :root {
-    --bg-main: #121212;
-    --bg-secondary: #1F1F1F;
-    --accent-blue: #00A9FF;
-    --accent-gold: #FFD700;
-    --text-main: #F5F5F5;
-    --text-secondary: #B3B3B3;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --border-radius: 12px;
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    --container-padding: 2rem;
-  }
-
-  @media (min-width: 768px) { :root { --container-padding: 3rem; } }
-  @media (min-width: 1024px) { :root { --container-padding: 4rem; } }
-
-  /* Sekcja główna */
+  /* Minimal section - spójny z innymi sekcjami */
   .realizacje-section {
     background-color: var(--bg-main);
-    padding: 5rem 0;
-    font-family: 'Lato', sans-serif;
     min-height: 100vh;
+    position: relative;
+  }
+
+  /* Simple header */
+  .section-header { 
+    text-align: center; 
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
   }
   
-  :global(.realizacje-section),
-  :global(.realizacje-section *) {
-    scrollbar-width: thin !important;
-    scrollbar-color: var(--accent-blue) transparent !important;
-  }
-
-  /* Webkit (Chrome, Edge, Safari) */
-  :global(.realizacje-section)::-webkit-scrollbar,
-  :global(.realizacje-section *)::-webkit-scrollbar {
-    width: 2px !important;
-    height: 2px !important;
-    background: transparent !important;
-  }
-
-  :global(.realizacje-section)::-webkit-scrollbar-thumb,
-  :global(.realizacje-section *)::-webkit-scrollbar-thumb {
-    background: var(--accent-blue) !important;
-    border-radius: 2px !important;
-  }
-
-  :global(.realizacje-section)::-webkit-scrollbar-track,
-  :global(.realizacje-section *)::-webkit-scrollbar-track {
-    background: transparent !important;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
-  }
-
-  /* Nagłówek sekcji */
-  .section-header { text-align: center; margin-bottom: 4rem; }
   .section-title {
-    font-family: 'Montserrat', sans-serif;
+    font-family: var(--font-heading);
     font-weight: 700;
-    font-size: clamp(2rem, 5vw, 3rem);
+    font-size: 2.5rem;
     color: var(--text-main);
-    margin-bottom: 1rem;
-  }
-  .section-subtitle {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
+    margin: 0;
   }
 
-  /* Filtry */
-  .filter-buttons {
+  /* Minimal category filters */
+  .category-filters {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 3rem;
+    flex-wrap: wrap;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInUp 0.8s ease-out 0.2s forwards;
   }
+
   .filter-btn {
     padding: 12px 24px;
     background: var(--bg-secondary);
@@ -265,8 +138,8 @@ const realizacjeData = filteredRealizacje.map(projekt => ({
     font-weight: 600;
     font-size: 0.9rem;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
   }
+  
   .filter-btn:hover, .filter-btn.active {
     background: var(--accent-blue);
     border-color: var(--accent-blue);
@@ -275,648 +148,190 @@ const realizacjeData = filteredRealizacje.map(projekt => ({
     box-shadow: 0 8px 25px rgba(0, 169, 255, 0.3);
   }
 
-  /* Grid projektów */
+  /* Clean grid */
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     opacity: 0;
     animation: fadeInUp 0.8s ease-out 0.4s forwards;
   }
-  @media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } }
 
-  /* Karty projektów */
+  /* Minimal project cards */
   .project-card {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
     background: var(--bg-secondary);
-    transition: var(--transition);
-    cursor: pointer;
-    border: 2px solid #FFD700;
-    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.25);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUpStagger var(--transition) ease-out forwards;
-  }
-  .project-card:nth-child(1) { animation-delay: 0.5s; }
-  .project-card:nth-child(2) { animation-delay: 0.6s; }
-  .project-card:nth-child(3) { animation-delay: 0.7s; }
-  .project-card:nth-child(4) { animation-delay: 0.8s; }
-  .project-card:nth-child(5) { animation-delay: 0.9s; }
-  .project-card:nth-child(6) { animation-delay: 1.0s; }
-  .project-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.4);
-    border-color: #FFD700;
-  }
-  .project-card.featured {
-    /* Dodatkowo dla wyróżnionych: badge, gradient, mocniejsza poświata */
-    background: linear-gradient(145deg, var(--bg-secondary), rgba(255, 215, 0, 0.05));
-  }
-  .project-card.featured:hover {
-    box-shadow: 0 25px 50px rgba(255, 215, 0, 0.4), 0 15px 35px rgba(0, 169, 255, 0.2);
-  }
-  .project-image {
-    position: relative;
-    height: 280px;
+    border-radius: 8px;
     overflow: hidden;
-    background: var(--bg-main); /* Fallback background */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
+
+  .project-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-card.hidden {
+    display: none;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 169, 255, 0.15);
+  }
+
+  .project-card.visible:hover {
+    transform: translateY(-4px);
+  }
+
+  .project-image {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+
   .project-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-fast);
-    /* Error handling for broken images */
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23121212'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23B3B3B3' font-family='Montserrat' font-size='16'%3Ekapitanie%3C/text%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    transition: transform 0.3s ease;
   }
-  .project-card:hover .project-image img { 
-    transform: scale(1.1);
-    filter: brightness(1.1);
+
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
   }
-  .project-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(18, 18, 18, 0.9) 0%,
-      rgba(0, 169, 255, 0.85) 100%
-    );
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: var(--transition);
-    backdrop-filter: blur(2px);
+
+  .project-info {
+    padding: 1.5rem;
   }
-  .project-card:hover .project-overlay { opacity: 1; }
-  .project-info { 
-    text-align: center;
+
+  .project-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--text-main);
-    padding: 2rem;
-    transform: translateY(20px);
-    transition: var(--transition);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
   }
-  .project-card:hover .project-info {
+
+  .project-client {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .project-category {
+    display: inline-block;
+    background: rgba(0, 169, 255, 0.1);
+    color: var(--accent-blue);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  /* Load More Button */
+  .load-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+
+  .load-more-btn {
+    background: var(--accent-blue);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-body);
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .load-more-btn:hover {
+    background: color-mix(in srgb, var(--accent-blue) 85%, black);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 169, 255, 0.3);
+  }
+
+  .load-more-btn:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+  }
+
+  .load-more-btn:active {
     transform: translateY(0);
   }
-  .project-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    color: var(--text-main);
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-  }
-  .project-client {
-    color: var(--text-main);
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    font-size: 1rem;
-  }
-  .project-category {
-    margin-bottom: 1.5rem;
-    opacity: 0.9;
-    font-size: 0.9rem;
-    color: var(--text-main);
-    font-family: 'Lato', sans-serif;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+
+  .load-more-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
   }
 
-  /* Project tags */
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 1.2rem;
-    justify-content: center;
-  }
-  .project-tag {
-    background: rgba(245, 245, 245, 0.15);
-    color: var(--text-main);
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    border: 1px solid rgba(245, 245, 245, 0.2);
-    backdrop-filter: blur(5px);
-    transition: var(--transition);
-  }
-  .project-tag:hover {
-    background: rgba(0, 169, 255, 0.3);
-    border-color: var(--accent-blue);
-    transform: scale(1.05);
-  }
-  .view-details-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--text-main);
-    color: var(--accent-blue);
-    border: none;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    margin: 0 auto;
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
-  }
-  .view-details-btn:hover {
-    background: var(--accent-blue);
-    color: var(--text-main);
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 169, 255, 0.4);
-  }
-  .view-details-btn svg { 
-    width: 18px; 
-    height: 18px;
-    transition: var(--transition);
-  }
-  .view-details-btn:hover svg {
-    transform: scale(1.1);
-  }
+  /* Responsive */
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 2rem;
+    }
 
-  /* Featured badge */
-  .featured-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #FFD700, #FFA500);
-    color: #000;
-    padding: 10px 16px;
-    border-radius: 25px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .featured-badge svg {
-    width: 16px;
-    height: 16px;
-    fill: currentColor;
-    stroke: none;
-  }
+    .projects-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
 
-  /* Load More */
-  .load-more-container { 
-    text-align: center; 
-    margin-top: 3rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease-out 1.2s forwards;
-  }
-  .load-more-btn {
-    padding: 15px 40px;
-    font-size: 1.1rem;
-    background: var(--bg-secondary);
-    color: var(--accent-blue);
-    border: 2px solid var(--accent-blue);
-    border-radius: 30px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    transition: var(--transition);
-    cursor: pointer;
-  }
-  .load-more-btn:hover {
-    background: var(--accent-blue);
-    color: var(--text-main);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 169, 255, 0.3);
-  }
-  .load-more-btn.hidden { display: none; }
+    .category-filters {
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
 
-  /* Lightbox Modal */
-  .lightbox-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    background: rgba(18, 18, 18, 0.95);
-    backdrop-filter: blur(8px);
-    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .lightbox-modal.open {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .lightbox-content {
-    position: relative;
-    width: 90%;
-    max-width: 1200px;
-    max-height: 90%;
-    background: var(--bg-secondary);
-    border-radius: 25px;
-    overflow: hidden;
-    transform: scale(0.92);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0, 169, 255, 0.2);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-    will-change: opacity, transform;
-  }
-
-  .lightbox-modal.open .lightbox-content {
-    transform: scale(1);
-  }
-
-  .lightbox-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    background: rgba(18, 18, 18, 0.9);
-    border: 2px solid rgba(0, 169, 255, 0.3);
-    border-radius: 50%;
-    color: var(--text-main);
-    cursor: pointer;
-    z-index: 10;
-    transition: var(--transition);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-close {
-      top: 25px;
-      right: 25px;
-      width: 45px;
-      height: 45px;
+    .filter-btn {
+      white-space: nowrap;
     }
   }
 
-  .lightbox-close:hover {
-    background: var(--accent-blue);
-    border-color: var(--accent-blue);
-    transform: scale(1.1);
-  }
-
-  .lightbox-close svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-close svg {
-      width: 22px;
-      height: 22px;
-    }
-  }
-
-  .lightbox-body {
-    display: flex;
-    flex-direction: column;
-    height: 80vh;
-    min-height: 600px;
-    max-height: 85vh;
-    overflow: hidden;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-body {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      grid-template-rows: 1fr;
-      min-width: 0;
-    }
-    .lightbox-gallery, .lightbox-info {
-      min-width: 0;
-      max-width: 100%;
-      overflow: hidden;
-    }
-  }
-
-  /* Gallery */
-  .lightbox-gallery {
-    position: relative;
-    background: var(--bg-main);
-    display: flex;
-    flex-direction: column;
-    height: 50vh;
-    min-height: 300px;
-    min-width: 0;
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-gallery {
-      border-right: 1px solid rgba(0, 169, 255, 0.1);
-      height: 100%;
-    }
-  }
-
-  .gallery-main {
-    position: relative;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-main);
-    padding: 20px;
-    min-height: 250px;
-    height: 70vh;
-    max-height: 70vh;
-    overflow: hidden;
-  }
-
-  @media (min-width: 768px) {
-    .gallery-main {
-      min-height: 0;
-    }
-  }
-
-  /* Główne zdjęcie w galerii - z wysoką specyficznością dla Astro */
-  :global(.lightbox-gallery .gallery-main .gallery-main-image),
-  :global(.lightbox-gallery .gallery-main video) {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    object-fit: contain !important;
-    border-radius: 10px !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
-    transition: opacity 0.3s ease !important;
-    background: transparent !important;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .gallery-main-image.loading {
-    background: linear-gradient(90deg, var(--bg-secondary) 25%, rgba(0, 169, 255, 0.1) 50%, var(--bg-secondary) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    min-height: 200px;
-  }
-
-  .gallery-prev,
-  .gallery-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 55px;
-    height: 55px;
-    background: rgba(18, 18, 18, 0.8);
-    border: 2px solid rgba(0, 169, 255, 0.3);
-    border-radius: 50%;
-    color: var(--text-main);
-    cursor: pointer;
-    transition: var(--transition);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .gallery-prev {
-    left: 25px;
-  }
-
-  .gallery-next {
-    right: 25px;
-  }
-
-  .gallery-prev:hover,
-  .gallery-next:hover {
-    background: var(--accent-blue);
-    border-color: var(--accent-blue);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .gallery-thumbs {
-    flex-shrink: 0;
-    height: 100px;
-    width: 100%;
-    min-width: 0;
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    background: rgba(18, 18, 18, 0.8);
-    border-top: 1px solid rgba(0, 169, 255, 0.1);
-    scroll-behavior: smooth;
-    -webkit-scroll-behavior: smooth;
-  }
-
-  @media (min-width: 768px) {
-    .gallery-thumbs {
-      height: 120px;
-      gap: 12px;
-      padding: 20px;
-      scroll-behavior: smooth;
-      -webkit-scroll-behavior: smooth;
-    }
-  }
-
-  /* GLOBALNE style dla miniaturek - prawidłowe podejście Astro */
-  :global(.gallery-thumbs .gallery-thumb) {
-    flex-shrink: 0 !important;
-    width: 80px !important;
-    height: 50px !important;
-    border-radius: 8px !important;
-    overflow: hidden !important;
-    cursor: pointer !important;
-    border: 2px solid transparent !important;
-    transition: var(--transition) !important;
-    background: var(--bg-secondary) !important;
-    box-sizing: border-box !important;
-  }
-
-  @media (min-width: 768px) {
-    :global(.gallery-thumbs .gallery-thumb) {
-      height: 80px !important;
-      border-radius: 12px !important;
-    }
-  }
-
-  :global(.gallery-thumbs .gallery-thumb.active) {
-    border-color: var(--accent-blue) !important;
-    transform: scale(1.05) !important;
-    box-shadow: 0 4px 15px rgba(0, 169, 255, 0.3) !important;
-  }
-
-  :global(.gallery-thumbs .gallery-thumb img) {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    transition: var(--transition) !important;
-    display: block !important;
-    max-width: 80px !important;
-    max-height: 50px !important;
-    min-width: 80px !important;
-    min-height: 50px !important;
-    box-sizing: border-box !important;
-  }
-
-  @media (min-width: 768px) {
-    :global(.gallery-thumbs .gallery-thumb img) {
-      max-height: 80px !important;
-      min-height: 80px !important;
-    }
-  }
-
-  :global(.gallery-thumbs .gallery-thumb:hover img) {
-    transform: scale(1.1) !important;
-  }
-
-  /* Lightbox Info - Case Study Structure according to kapitanie.md */
-  .lightbox-info {
-    padding: 2.5rem;
-    padding: 1.5rem;
-    overflow-y: auto;
-    background: var(--bg-secondary);
-    font-family: 'Lato', sans-serif;
-    display: flex;
-    flex-direction: column;
-    height: auto;
-    flex: 1;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-info {
-      padding: 2.5rem;
-      height: 100%;
-      max-height: 80vh;
-    }
-  }
-
-  .lightbox-project-title {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    color: var(--text-main);
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-    line-height: 1.3;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-project-title {
+  @media (max-width: 480px) {
+    .section-title {
       font-size: 1.8rem;
     }
-  }
 
-  .lightbox-meta {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .lightbox-client,
-  .lightbox-category {
-    padding: 8px 16px;
-    background: var(--accent-blue);
-    color: var(--text-main);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    font-family: 'Montserrat', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 169, 255, 0.3);
-  }
-
-.lightbox-description {
-    margin-bottom: 2.5rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-size: 1rem;
-    font-weight: 400;
-    opacity: 1;
-  }
-
-  @media (min-width: 768px) {
-    .lightbox-description {
-      margin-bottom: 2.5rem;
+    .projects-grid {
+      gap: 1rem;
     }
-  }
 
-  .case-study-section {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: rgba(0, 169, 255, 0.05);
-    border-radius: 15px;
-    border-left: 4px solid var(--accent-blue);
-    /* Ensure sections are visible */
-    opacity: 1;
-    min-height: 3em;
-  }
+    .project-info {
+      padding: 1rem;
+    }
 
-  .case-study-section p {
-    color: var(--text-secondary);
-    line-height: 1.7;
-    font-size: 0.95rem;
-    margin: 0;
-    opacity: 1;
-    min-height: 1em;
-  }
+    .project-title {
+      font-size: 1.1rem;
+    }
 
-  .case-study-section h4 {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    color: var(--accent-blue);
-    margin-bottom: 0.8rem;
-    font-size: 1.1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
+    .project-client {
+      font-size: 0.9rem;
+    }
 
-  /* Case Study Icons */
-  .case-study-section h4::before {
-    content: '';
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    vertical-align: middle;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
+    .category-filters {
+      gap: 0.5rem;
+      padding: 0 0.5rem 0.5rem 0.5rem;
+    }
 
-  .case-study-section:first-of-type h4::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300A9FF' stroke-width='2'%3E%3Cpath d='M9 12l2 2 4-4'/%3E%3Cpath d='M21 12c.552 0 1-.448 1-1V5c0-.552-.448-1-1-1H3c-.552 0-1 .448-1 1v6c0 .552.448 1 1 1h9l4 4v-4h5z'/%3E%3C/svg%3E");
-  }
+    .filter-btn {
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+    }
 
-  .case-study-section:last-of-type h4::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300A9FF' stroke-width='2'%3E%3Cpolyline points='22,12 18,12 15,21 9,3 6,12 2,12'/%3E%3C/svg%3E");
+    .load-more-btn {
+      width: 100%;
+      max-width: 280px;
+      padding: 0.875rem 1.5rem;
+    }
   }
 
   /* Animacje */
@@ -930,467 +345,122 @@ const realizacjeData = filteredRealizacje.map(projekt => ({
       transform: translateY(0); 
     }
   }
-
-  @keyframes fadeInUpStagger {
-    from { 
-      opacity: 0; 
-      transform: translateY(30px) scale(0.95); 
-    }
-    to { 
-      opacity: 1; 
-      transform: translateY(0) scale(1); 
-    }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: -200% 0; }
-    100% { background-position: 200% 0; }
-  }
-
-  /* Section header animation */
-  .section-header {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease-out forwards;
-  }
 </style>
 
-<!-- Global script z danymi -->
-<script is:inline define:vars={{ realizacjeData }}>
-  window.realizacjeData = {
-    displayRealizacje: realizacjeData,
-    displayKategorie: []
-  };
+<!-- Simplified JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
+  const loadMoreBtn = document.getElementById('load-more-btn') as HTMLButtonElement;
+  const allCards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
+  
+  const PROJECTS_PER_PAGE = 3;
+  let currentPage = 1;
+  let currentCategory = 'wszystkie';
+
+  // Initialize - show first 3 cards
+  showCards();
+
+  // Set initial button visibility
+  if (loadMoreBtn) {
+    const allVisible = allCards.length;
+    const shown = Math.min(PROJECTS_PER_PAGE, allVisible);
+    if (shown >= allVisible) {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  // Category filtering
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const category = this.dataset.category || 'wszystkie';
+      currentCategory = category;
+      currentPage = 1;
+      
+      // Update active button
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Show filtered cards
+      showCards();
+    });
+  });
+
+  // Load more functionality
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      currentPage++;
+      showCards();
+    });
+  }
+
+  function showCards() {
+    // Get filtered cards
+    const filteredCards = Array.from(allCards).filter(card => {
+      return currentCategory === 'wszystkie' || card.dataset.category === currentCategory;
+    });
+
+    const totalFiltered = filteredCards.length;
+    const cardsToShow = currentPage * PROJECTS_PER_PAGE;
+
+    // Hide all cards first
+    allCards.forEach(card => {
+      card.classList.remove('visible');
+      card.classList.add('hidden');
+    });
+
+    // Show filtered cards with animation
+    filteredCards.slice(0, cardsToShow).forEach((card, index) => {
+      card.classList.remove('hidden');
+      
+      // Staggered animation
+      setTimeout(() => {
+        card.classList.add('visible');
+      }, (index % PROJECTS_PER_PAGE) * 100);
+    });
+
+    // Update load more button
+    updateLoadMoreButton(totalFiltered, Math.min(cardsToShow, totalFiltered));
+  }
+
+  function updateLoadMoreButton(totalFiltered: number, currentlyShown: number) {
+    if (!loadMoreBtn) return;
+    
+    if (currentlyShown >= totalFiltered) {
+      loadMoreBtn.style.display = 'none';
+    } else {
+      loadMoreBtn.style.display = 'block';
+      // Keep original text without counter to prevent layout jumps
+    }
+  }
+
+  // Add click listeners to all cards
+  allCards.forEach(card => {
+    card.addEventListener('click', function() {
+      const slug = this.dataset.slug;
+      if (slug) {
+        const lightboxEvent = new CustomEvent('openLightbox', { 
+          detail: { slug } 
+        });
+        document.dispatchEvent(lightboxEvent);
+      }
+    });
+  });
+});
 </script>
 
-<script>
-  // Import biblioteki marked do konwersji markdown na HTML
-  import { marked } from 'marked';
-  // Ustaw opcję breaks, aby \n w markdown był zamieniany na <br>
-  marked.setOptions({ breaks: true });
-  // Typowanie dla projektów i kategorii
-  interface ProjectType {
-    id: string;
-    title: string;
-    client: string;
-    category: string;
-    description: string;
-    challenge: string;
-    solution: string;
-    image: string;
-    gallery: string[];
-    tags: string[];
-    featured: boolean;
-  }
+<!-- Project Lightbox -->
+<ProjectLightbox />
 
-  // Rozszerz interfejs Window
-  declare global {
-    interface Window {
-      realizacjeData?: {
-        displayRealizacje: ProjectType[];
-        displayKategorie: any[];
-      };
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    
-    // Pobierz dane z globalnej zmiennej lub użyj mock danych
-    const data = window.realizacjeData || { displayRealizacje: [], displayKategorie: [] };
-    const displayRealizacje: ProjectType[] = data.displayRealizacje.length > 0 ? data.displayRealizacje : [
-      {
-        id: 'jubileusz-techpark',
-        title: 'Jubileusz 20-lecia Techpark',
-        client: 'Techpark Kraków',
-        category: 'Gale Firmowe',
-        description: 'Elegancka gala jubileuszowa z udziałem 400 gości, która celebrowała 20 lat działalności Techpark Kraków. Event połączył historię z wizją przyszłości.',
-        challenge: 'Stworzenie spektakularnej oprawy wizualnej, która opowie historię 20 lat firmy w nowoczesny i angażujący sposób dla różnorodnej publiczności.',
-        solution: 'Zastosowaliśmy technologię video mappingu na ścianach sali, tworząc immersywną podróż przez historię firmy. System synchronizowany z oświetleniem LED i dźwiękiem 360°.',
-        image: '/images/fot.-storymakers.pl-elmc-0417-scaled.jpg',
-        gallery: [
-          '/images/fot.-storymakers.pl-elmc-0417-scaled.jpg',
-          '/images/fot.-storymakers.pl-elmc-0283-scaled.jpg',
-          '/images/fot.-storymakers.pl-elmc-0202-scaled.jpg',
-          '/images/fot.-storymakers.pl-elmc-0056-scaled.jpg'
-        ],
-        tags: ['gala', 'jubileusz', 'mapping', 'oświetlenie LED'],
-        featured: true
-      },
-      {
-        id: 'koncert-pod-gwiazdami',
-        title: 'Koncert pod Gwiazdami',
-        client: 'Filharmonia Krakowska',
-        category: 'Koncerty',
-        description: 'Magiczny koncert symfoniczny pod gołym niebem z udziałem 1000 widzów w malowniczym otoczeniu Parku Jordana.',
-        challenge: 'Zapewnienie doskonałej akustyki w trudnych warunkach zewnętrznych przy zachowaniu naturalnego charakteru muzyki klasycznej.',
-        solution: 'Wdrożyliśmy system line array z precyzyjnym strojeniem akustycznym oraz systemy backup na wypadek zmian pogodowych.',
-        image: '/images/fot.-storymakers.pl-elmc-0007-scaled.jpg',
-        gallery: [
-          '/images/fot.-storymakers.pl-elmc-0007-scaled.jpg',
-          '/images/fot.-storymakers.pl-elmc-0056-scaled.jpg'
-        ],
-        tags: ['koncert', 'klasyka', 'outdoor', 'akustyka'],
-        featured: false
-      },
-      {
-        id: 'samsung-team-building',
-        title: 'Samsung Team Building',
-        client: 'Samsung Polska',
-        category: 'Eventy Korporacyjne',
-        description: 'Innowacyjny team building łączący technologię z zabawą dla 200 pracowników Samsung Polska.',
-        challenge: 'Stworzenie interaktywnego wydarzenia, które wykorzysta najnowsze technologie marki Samsung w edukacyjny sposób.',
-        solution: 'Opracowaliśmy aplikację AR wykorzystującą tablety Samsung oraz system gamifikacji z nagrodami rzeczywistymi.',
-        image: '/images/fot.-storymakers.pl-elmc-0202-scaled.jpg',
-        gallery: [
-          '/images/fot.-storymakers.pl-elmc-0202-scaled.jpg',
-          '/images/fot.-storymakers.pl-elmc-0283-scaled.jpg'
-        ],
-        tags: ['corporate', 'team building', 'AR', 'teknologia'],
-        featured: false
+<!-- Initialize lightbox with project data -->
+<script is:inline define:vars={{ realizacjeData }}>
+  // Initialize lightbox when DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add a small delay to ensure all scripts are loaded
+    setTimeout(function() {
+      if (window.initProjectLightbox) {
+        window.initProjectLightbox(realizacjeData);
       }
-    ];
-    
-    
-    // DOM elements
-    const filterButtons = document.querySelectorAll('.filter-btn') as NodeListOf<HTMLButtonElement>;
-    const projectCards = document.querySelectorAll('.project-card') as NodeListOf<HTMLElement>;
-    const loadMoreBtn = document.querySelector('.load-more-btn') as HTMLButtonElement | null;
-    const projectsGrid = document.querySelector('.projects-grid') as HTMLElement | null;
-    const allProjects = Array.from(document.querySelectorAll('.project-card')) as HTMLElement[];
-    
-    
-    // Load more state
-    let visibleCount = 6;
-    let currentFilter = 'all';
-    
-    // Pobierz projekty zgodne z aktualnym filtrem
-    const getFilteredProjects = () => {
-      let filtered;
-      if (currentFilter === 'all') {
-        filtered = allProjects;
-      } else {
-        filtered = allProjects.filter(project => {
-          const category = project.dataset.category;
-          const match = category === currentFilter;
-          return match;
-        });
-      }
-      return filtered;
-    };
-    
-    // Prosta, zawsze działająca logika filtrowania z animacją
-    const updateProjectsVisibility = () => {
-      
-      const filteredProjects = getFilteredProjects();
-      
-      // KROK 1: Resetuj wszystkie projekty do stanu ukrytego
-      allProjects.forEach(project => {
-        project.style.display = 'none';
-        project.style.opacity = '0';
-        project.style.transform = 'translateY(30px) scale(0.95)';
-        project.classList.remove('project-animate-in');
-      });
-      
-      // KROK 2: Pokaż odpowiednie projekty z animacją (po minimalnym delay)
-      requestAnimationFrame(() => {
-        filteredProjects.forEach((project, index) => {
-          if (index < visibleCount) {
-            project.style.display = 'block';
-            
-            // Użyj setTimeout z różnymi delay dla staggered effect
-            setTimeout(() => {
-              project.style.opacity = '1';
-              project.style.transform = 'translateY(0) scale(1)';
-              project.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-            }, index * 50);
-            
-          }
-        });
-      });
-      
-      updateLoadMoreButton(filteredProjects.length);
-    };
-    
-    // Zaktualizuj widoczność przycisku Load More
-    const updateLoadMoreButton = (totalFilteredCount: number) => {
-      if (!loadMoreBtn) return;
-      
-      if (visibleCount >= totalFilteredCount) {
-        loadMoreBtn.style.display = 'none';
-      } else {
-        loadMoreBtn.style.display = 'block';
-      }
-    };
-    
-    // Inicjalizuj widoczność projektów
-    updateProjectsVisibility();
-
-    // Filter functionality
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const filter = button.dataset.filter || 'all';
-        
-        // Zaktualizuj aktualny filtr
-        currentFilter = filter;
-        
-        // Zaktualizuj aktywny przycisk
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        
-        // Resetuj licznik widocznych projektów i zaktualizuj widoczność
-        visibleCount = 6;
-        updateProjectsVisibility();
-        
-      });
-    });
-
-    // Load more button handler
-    if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        const filteredProjects = getFilteredProjects();
-        
-        // Zwiększ licznik widocznych projektów o 3
-        const newVisibleCount = Math.min(visibleCount + 3, filteredProjects.length);
-        const previousVisibleCount = visibleCount;
-        visibleCount = newVisibleCount;
-        
-        // Pokaż nowe projekty z animacją
-        for (let i = previousVisibleCount; i < visibleCount; i++) {
-          if (filteredProjects[i]) {
-            filteredProjects[i].style.display = 'block';
-            filteredProjects[i].style.opacity = '0';
-            filteredProjects[i].style.transform = 'translateY(30px) scale(0.95)';
-            
-            // Staggered delay dla Load More
-            const delay = (i - previousVisibleCount) * 100;
-            
-            setTimeout(() => {
-              filteredProjects[i].style.opacity = '1';
-              filteredProjects[i].style.transform = 'translateY(0) scale(1)';
-              filteredProjects[i].style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-            }, delay);
-            
-          }
-        }
-        
-        // Zaktualizuj przycisk Load More
-        updateLoadMoreButton(filteredProjects.length);
-        
-        // Animuj scroll do nowych projektów
-        setTimeout(() => {
-          const lastVisibleProject = filteredProjects[visibleCount - 1];
-          if (lastVisibleProject) {
-            lastVisibleProject.scrollIntoView({ 
-              behavior: 'smooth', 
-              block: 'center' 
-            });
-          }
-        }, 100);
-        
-      });
-    } else {
-      console.error('Load more button not found for event listener!');
-    }
-
-    // Lightbox functionality
-    const lightboxModal = document.getElementById('lightbox-modal') as HTMLElement | null;
-    const lightboxClose = document.querySelector('.lightbox-close') as HTMLButtonElement | null;
-    const lightboxBackdrop = document.querySelector('.lightbox-backdrop') as HTMLElement | null;
-    const mainImage = document.querySelector('.gallery-main-image') as HTMLImageElement | null;
-    const galleryThumbs = document.querySelector('.gallery-thumbs') as HTMLElement | null;
-
-    // Wymuś płynne przewijanie miniaturek nawet przy manualnym scrollu (wheel)
-    if (galleryThumbs) {
-      galleryThumbs.addEventListener('wheel', (e) => {
-        // Przewijaj tylko w poziomie, blokuj pion
-        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-          // domyślne przewijanie poziome, pozwól
-          return;
-        }
-        e.preventDefault();
-        // Przewiń w poziomie zamiast pionu
-        galleryThumbs.scrollBy({
-          left: e.deltaY,
-          behavior: 'smooth'
-        });
-      }, { passive: false });
-    }
-    const prevBtn = document.querySelector('.gallery-prev') as HTMLButtonElement | null;
-    const nextBtn = document.querySelector('.gallery-next') as HTMLButtonElement | null;
-    
-    let currentGallery: string[] = [];
-    let currentImageIndex = 0;
-
-    // Open lightbox - nasłuchuj na przycisk, nie na cały card
-    projectCards.forEach((card, cardIndex) => {
-      const viewBtn = card.querySelector('.view-details-btn') as HTMLButtonElement | null;
-      if (viewBtn) {
-        viewBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          
-          const projectId = (card as HTMLElement).dataset.projectId;
-          const project = displayRealizacje.find((p: ProjectType) => p.id === projectId);
-          
-          
-          if (project) {
-            openLightbox(project);
-          } 
-        });
-      }
-    });
-
-    function openLightbox(project: ProjectType) {
-      
-      // Set project info with proper selectors - używamy bezpieczniejszego podejścia
-      const lightboxModal = document.getElementById('lightbox-modal');
-      if (!lightboxModal) {
-        return;
-      }
-      
-      const titleElement = lightboxModal.querySelector('#lightbox-title') as HTMLElement;
-      const clientElement = lightboxModal.querySelector('.lightbox-client') as HTMLElement;
-      const categoryElement = lightboxModal.querySelector('.lightbox-category') as HTMLElement;
-      const descriptionElement = lightboxModal.querySelector('.lightbox-description') as HTMLElement;
-      const challengeElement = lightboxModal.querySelector('.case-study-challenge') as HTMLElement;
-      const solutionElement = lightboxModal.querySelector('.case-study-solution') as HTMLElement;
-      
-      
-      
-      
-      if (titleElement && project.title) {
-        titleElement.textContent = project.title;
-      }
-      if (clientElement && project.client) {
-        clientElement.textContent = project.client;
-      }
-      if (categoryElement && project.category) {
-        categoryElement.textContent = project.category;
-      }
-      if (descriptionElement && project.description) {
-        // marked.parse zwraca Promise, więc użyj async/await
-        (async () => {
-          descriptionElement.innerHTML = await marked.parse(project.description);
-        })();
-      }
-      if (challengeElement && project.challenge) {
-        challengeElement.textContent = project.challenge;
-      }
-      if (solutionElement && project.solution) {
-        solutionElement.textContent = project.solution;
-      }
-      
-      // Set gallery
-      currentGallery = project.gallery && project.gallery.length > 0 ? project.gallery : [project.image];
-      currentImageIndex = 0;
-      
-      
-      updateGallery();
-      createThumbnails();
-      
-      // Show modal
-      if (lightboxModal) {
-        lightboxModal.setAttribute('aria-hidden', 'false');
-        // Dodaj klasę open po krótkim opóźnieniu, by wymusić transition
-        requestAnimationFrame(() => {
-          lightboxModal.classList.add('open');
-        });
-      }
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      if (lightboxModal) {
-        // Remove focus first to avoid accessibility issues
-        const focusedElement = document.activeElement;
-        if (focusedElement && lightboxModal.contains(focusedElement) && 'blur' in focusedElement && typeof (focusedElement as HTMLElement).blur === 'function') {
-          (focusedElement as HTMLElement).blur();
-        }
-        // Start close animation
-        lightboxModal.classList.remove('open');
-        setTimeout(() => {
-          lightboxModal.setAttribute('aria-hidden', 'true');
-        }, 350);
-      }
-      document.body.style.overflow = '';
-    }
-
-    function updateGallery() {
-      if (currentGallery[currentImageIndex] && mainImage) {
-        mainImage.src = currentGallery[currentImageIndex];
-        mainImage.alt = `Zdjęcie ${currentImageIndex + 1} z galerii`;
-        // Remove loading skeleton
-        mainImage.classList.remove('loading');
-        // Update active thumbnail
-        const thumbs = document.querySelectorAll('.gallery-thumb');
-        thumbs.forEach((thumb, index) => {
-          thumb.classList.toggle('active', index === currentImageIndex);
-        });
-        // Scroll active thumb into view (centered if possible)
-        const activeThumb = thumbs[currentImageIndex];
-        if (activeThumb && typeof activeThumb.scrollIntoView === 'function') {
-          activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
-      }
-    }
-
-    function createThumbnails() {
-      if (!galleryThumbs) {
-        return;
-      }
-      
-      galleryThumbs.innerHTML = '';
-      
-      currentGallery.forEach((image, index) => {
-        const thumb = document.createElement('div');
-        thumb.className = 'gallery-thumb';
-        if (index === 0) thumb.classList.add('active');
-        
-        thumb.innerHTML = `<img src="${image}" alt="Miniatura ${index + 1}" />`;
-        
-        thumb.addEventListener('click', () => {
-          currentImageIndex = index;
-          updateGallery();
-        });
-        
-        galleryThumbs.appendChild(thumb);
-      });
-      
-    }
-
-    // Navigation
-    prevBtn?.addEventListener('click', () => {
-      currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : currentGallery.length - 1;
-      updateGallery();
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      currentImageIndex = currentImageIndex < currentGallery.length - 1 ? currentImageIndex + 1 : 0;
-      updateGallery();
-    });
-
-    // Close lightbox
-    lightboxClose?.addEventListener('click', closeLightbox);
-    lightboxBackdrop?.addEventListener('click', closeLightbox);
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (lightboxModal && lightboxModal.classList.contains('open')) {
-        switch(e.key) {
-          case 'Escape':
-            closeLightbox();
-            break;
-          case 'ArrowLeft':
-            if (prevBtn) prevBtn.click();
-            break;
-          case 'ArrowRight':
-            if (nextBtn) nextBtn.click();
-            break;
-        }
-      }
-    });
+    }, 100);
   });
 </script>

@@ -20,8 +20,18 @@ const contentHtml = termsData?.data.content ? marked(termsData.data.content, {
 }) : '';
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} noindex={true}>
   <Header />
+  
+  <!-- Breadcrumbs -->
+  <nav aria-label="Breadcrumb" class="breadcrumbs" style="margin-top: 0rem; background: var(--bg-secondary);">
+    <div class="container">
+      <ol>
+        <li><a href="/">Strona główna</a></li>
+        <li aria-current="page">Regulamin</li>
+      </ol>
+    </div>
+  </nav>
   
   <!-- Hero section dla podstron prawnych -->
   <section class="legal-hero section">

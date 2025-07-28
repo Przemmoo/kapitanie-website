@@ -1,0 +1,844 @@
+---
+// Minimal lightbox for project details
+---
+
+<!-- Lightbox Modal -->
+<div id="project-lightbox" class="lightbox-overlay">
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Zamknij">&times;</button>
+    <div class="lightbox-body">
+      <div class="project-gallery">
+        <!-- Images will be loaded dynamically -->
+      </div>
+      <div class="project-details">
+        <h2 class="project-title"></h2>
+        <p class="project-client"></p>
+        <div class="project-description"></div>
+        
+        <!-- Additional sections -->
+        <div class="project-challenge section-block">
+          <h3>Wyzwanie</h3>
+          <div class="challenge-content"></div>
+        </div>
+        
+        <div class="project-solution section-block">
+          <h3>Rozwiązanie</h3>
+          <div class="solution-content"></div>
+        </div>
+        
+        <div class="project-tags section-block">
+          <h3>Tagi</h3>
+          <div class="tags-container"></div>
+        </div>
+        
+        <div class="project-meta">
+          <span class="project-category"></span>
+          <span class="project-date"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  /* Lightbox overlay */
+  .lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+
+  .lightbox-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Lightbox content */
+  .lightbox-content {
+    background: var(--color-bg-secondary);
+    border-radius: 12px;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lightbox-overlay.active .lightbox-content {
+    transform: scale(1);
+  }
+
+  /* Close button */
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+
+  .lightbox-close:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  /* Lightbox body */
+  .lightbox-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 85vh;
+    max-height: 700px;
+    min-height: 500px;
+    flex: 1;
+  }
+
+  /* Gallery section */
+  .project-gallery {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+  }
+
+  .gallery-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    min-height: 0; /* Important for flexbox shrinking */
+    position: relative;
+  }
+
+  .gallery-main img {
+    max-width: calc(100% - 2rem);
+    max-height: calc(100% - 2rem);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-main.loaded img {
+    opacity: 1;
+  }
+
+  .gallery-main::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .gallery-main.loaded::before {
+    display: none;
+  }
+
+  @keyframes spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  .gallery-thumbs {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem;
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+  }
+
+  .thumb {
+    width: 50px;
+    height: 35px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 2px solid transparent;
+  }
+
+  .thumb.active {
+    opacity: 1;
+    border-color: var(--color-primary);
+  }
+
+  .thumb:hover {
+    opacity: 0.8;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Gallery navigation arrows */
+  .gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    font-weight: bold;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .gallery-nav:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .gallery-nav:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .gallery-nav:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  .gallery-prev {
+    left: 1rem;
+  }
+
+  .gallery-next {
+    right: 1rem;
+  }
+
+  .gallery-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  /* Details section */
+  .project-details {
+    padding: 2rem;
+    overflow-y: auto;
+    background: var(--color-bg-main);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-title {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+  }
+
+  .project-client {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    margin: 0 0 1.5rem 0;
+    font-weight: 500;
+  }
+
+  .project-description {
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    flex: 1;
+    font-size: 0.95rem;
+  }
+
+  .project-description p {
+    margin: 0 0 1.2rem 0;
+    text-align: justify;
+  }
+
+  .project-description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .project-description h1,
+  .project-description h2,
+  .project-description h3,
+  .project-description h4 {
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    margin: 1.5rem 0 1rem 0;
+    font-weight: 600;
+  }
+
+  .project-description h4 {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+  }
+
+  .project-description ul {
+    margin: 1rem 0;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .project-description li {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .project-description li::before {
+    content: '•';
+    color: var(--color-primary);
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    font-weight: bold;
+  }
+
+  .project-description strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .project-description em {
+    font-style: italic;
+    color: var(--color-primary);
+  }
+
+  .project-description a {
+    color: var(--color-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .project-description a:hover {
+    border-bottom-color: var(--color-primary);
+  }
+
+  /* Additional sections */
+  .section-block {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(0, 169, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--color-primary);
+  }
+
+  .section-block h3 {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+  }
+
+  .section-block .challenge-content,
+  .section-block .solution-content {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Tags styling */
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag-item {
+    background: var(--color-primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+    margin-top: auto;
+  }
+
+  .project-category {
+    background: rgba(0, 169, 255, 0.1);
+    color: var(--color-primary);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: fit-content;
+  }
+
+  .project-date {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .lightbox-content {
+      max-width: 95vw;
+      max-height: 95vh;
+    }
+
+    .lightbox-body {
+      grid-template-columns: 1fr;
+      height: auto;
+      max-height: 90vh;
+      min-height: auto;
+    }
+
+    .project-gallery {
+      height: 50vh;
+      min-height: 300px;
+    }
+
+    .gallery-main {
+      padding: 0.5rem;
+    }
+
+    .gallery-main img {
+      max-height: calc(50vh - 100px); /* Account for thumbnails and padding */
+      max-width: calc(100% - 1rem);
+    }
+
+    .project-details {
+      padding: 1.5rem;
+      max-height: 40vh;
+    }
+
+    .project-title {
+      font-size: 1.5rem;
+    }
+
+    .gallery-thumbs {
+      gap: 0.25rem;
+      padding: 0.25rem;
+    }
+
+    .thumb {
+      width: 40px;
+      height: 28px;
+    }
+
+    .gallery-nav {
+      width: 40px;
+      height: 40px;
+      font-size: 1.4rem;
+    }
+
+    .gallery-prev {
+      left: 0.5rem;
+    }
+
+    .gallery-next {
+      right: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lightbox-body {
+      height: auto;
+      max-height: 95vh;
+    }
+
+    .project-gallery {
+      height: 45vh;
+      min-height: 250px;
+    }
+
+    .project-details {
+      padding: 1rem;
+      max-height: 45vh;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+    }
+
+    .project-description {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const lightbox = document.getElementById('project-lightbox') as HTMLElement | null;
+  const closeBtn = lightbox?.querySelector('.lightbox-close') as HTMLElement | null;
+
+  // Project data (will be populated from main component)
+  let projectsData: any[] = [];
+
+  // Open lightbox
+  document.addEventListener('openLightbox', function(event: Event) {
+    const customEvent = event as CustomEvent;
+    const { slug } = customEvent.detail;
+    const project = projectsData.find((p: any) => p.slug === slug);
+    
+    if (project && lightbox) {
+      populateLightbox(project);
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  // Close lightbox
+  function closeLightbox() {
+    if (lightbox) {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeLightbox);
+  }
+
+  // Close on overlay click
+  if (lightbox) {
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+
+  // Close on escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && lightbox?.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+
+  // Populate lightbox with project data
+  function populateLightbox(project: any) {
+    if (!lightbox) return;
+    
+    const gallery = lightbox.querySelector('.project-gallery') as HTMLElement;
+    const title = lightbox.querySelector('.project-title') as HTMLElement;
+    const client = lightbox.querySelector('.project-client') as HTMLElement;
+    const description = lightbox.querySelector('.project-description') as HTMLElement;
+    const category = lightbox.querySelector('.project-category') as HTMLElement;
+    const date = lightbox.querySelector('.project-date') as HTMLElement;
+    
+    // Additional sections
+    const challengeBlock = lightbox.querySelector('.project-challenge') as HTMLElement;
+    const challengeContent = lightbox.querySelector('.challenge-content') as HTMLElement;
+    const solutionBlock = lightbox.querySelector('.project-solution') as HTMLElement;
+    const solutionContent = lightbox.querySelector('.solution-content') as HTMLElement;
+    const tagsBlock = lightbox.querySelector('.project-tags') as HTMLElement;
+    const tagsContainer = lightbox.querySelector('.tags-container') as HTMLElement;
+
+    // Set basic content
+    if (title) title.textContent = project.title || project.data?.title || '';
+    if (client) client.textContent = project.client || project.data?.client || '';
+    
+    // Convert description to HTML
+    if (description) {
+      const desc = project.description || project.data?.description || '';
+      description.innerHTML = convertMarkdownToHTML(desc);
+    }
+    
+    // Handle challenge section
+    const challenge = project.challenge || project.data?.challenge;
+    if (challenge && challengeContent) {
+      challengeContent.innerHTML = convertMarkdownToHTML(challenge);
+      challengeBlock.style.display = 'block';
+    } else if (challengeBlock) {
+      challengeBlock.style.display = 'none';
+    }
+    
+    // Handle solution section
+    const solution = project.solution || project.data?.solution;
+    if (solution && solutionContent) {
+      solutionContent.innerHTML = convertMarkdownToHTML(solution);
+      solutionBlock.style.display = 'block';
+    } else if (solutionBlock) {
+      solutionBlock.style.display = 'none';
+    }
+    
+    // Handle tags
+    const tags = project.tags || project.data?.tags || [];
+    if (tags.length > 0 && tagsContainer) {
+      tagsContainer.innerHTML = tags.map((tag: string) => 
+        `<span class="tag-item">${tag}</span>`
+      ).join('');
+      tagsBlock.style.display = 'block';
+    } else if (tagsBlock) {
+      tagsBlock.style.display = 'none';
+    }
+    
+    if (category) category.textContent = project.category || project.data?.category || '';
+    
+    // Format date
+    const projectDate = project.date || project.data?.date;
+    if (projectDate && date) {
+      const formattedDate = new Date(projectDate).toLocaleDateString('pl-PL', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      date.textContent = formattedDate;
+    }
+
+    // Setup gallery
+    setupGallery(project, gallery);
+  }
+
+  // Helper function for markdown conversion
+  function convertMarkdownToHTML(desc: string): string {
+    if (!desc) return '';
+    
+    let htmlDesc = desc;
+    
+    // Handle line breaks
+    htmlDesc = htmlDesc.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    
+    // Convert headers first
+    htmlDesc = htmlDesc.replace(/####\s*(.*?)$/gm, '<h4>$1</h4>');
+    htmlDesc = htmlDesc.replace(/###\s*(.*?)$/gm, '<h3>$1</h3>');
+    htmlDesc = htmlDesc.replace(/##\s*(.*?)$/gm, '<h2>$1</h2>');
+    htmlDesc = htmlDesc.replace(/#\s*(.*?)$/gm, '<h1>$1</h1>');
+    
+    // Convert lists
+    htmlDesc = htmlDesc.replace(/^\*\s+(.*?)$/gm, '<li>$1</li>');
+    htmlDesc = htmlDesc.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    
+    // Handle markdown formatting
+    htmlDesc = htmlDesc
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    
+    // Split into paragraphs and process
+    const parts = htmlDesc.split('\n\n');
+    htmlDesc = parts.map(part => {
+      part = part.trim();
+      if (!part) return '';
+      
+      // Skip if it's already a formatted element
+      if (part.match(/^<(h[1-6]|ul|ol|li)/)) {
+        return part;
+      }
+      
+      // Wrap regular text in paragraphs
+      return `<p>${part}</p>`;
+    }).join('');
+    
+    // Clean up multiple consecutive tags
+    htmlDesc = htmlDesc
+      .replace(/<\/ul>\s*<ul>/g, '')
+      .replace(/<\/li>\s*<\/ul>\s*<ul>\s*<li>/g, '</li><li>')
+      .replace(/\n+/g, ' ')
+      .replace(/\s+/g, ' ');
+    
+    return htmlDesc;
+  }
+
+  // Setup image gallery
+  function setupGallery(project: any, gallery: HTMLElement) {
+    if (!gallery) return;
+    
+    const rawGallery = project.gallery || project.data?.gallery || [];
+    const featuredImage = project.featured_image || project.data?.featured_image;
+    
+    // Process gallery - handle both string format and object format
+    const images = rawGallery.map((item: any) => {
+      if (typeof item === 'string') {
+        return item;
+      } else if (item && item.image) {
+        return item.image;
+      }
+      return null;
+    }).filter(Boolean);
+    
+    // Add featured image to gallery if not already included
+    const allImages = featuredImage && !images.includes(featuredImage) 
+      ? [featuredImage, ...images] 
+      : (images.length > 0 ? images : [featuredImage]).filter(Boolean);
+
+    if (allImages.length === 0) return;
+
+    let currentImageIndex = 0;
+
+    // Create main image container
+    const mainContainer = document.createElement('div');
+    mainContainer.className = 'gallery-main';
+    
+    const mainImg = document.createElement('img');
+    const imgSrc = allImages[0];
+    
+    // Add loading handler
+    mainImg.onload = function() {
+      mainContainer.classList.add('loaded');
+    };
+    
+    mainImg.onerror = function() {
+      mainImg.src = '/images/placeholder-project.jpg';
+      mainImg.alt = 'Zdjęcie niedostępne';
+    };
+    
+    mainImg.src = imgSrc;
+    mainImg.alt = project.title || '';
+    mainContainer.appendChild(mainImg);
+
+    // Add navigation arrows if multiple images
+    if (allImages.length > 1) {
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'gallery-nav gallery-prev';
+      prevBtn.innerHTML = '‹';
+      prevBtn.setAttribute('aria-label', 'Poprzednie zdjęcie');
+      
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'gallery-nav gallery-next';
+      nextBtn.innerHTML = '›';
+      nextBtn.setAttribute('aria-label', 'Następne zdjęcie');
+
+      // Navigation function
+      function updateImage(newIndex: number) {
+        currentImageIndex = newIndex;
+        mainImg.src = allImages[currentImageIndex];
+        mainImg.alt = `${project.title} - obraz ${currentImageIndex + 1}`;
+        
+        // Update thumbnails
+        const thumbs = gallery.querySelectorAll('.thumb');
+        thumbs.forEach((thumb, index) => {
+          thumb.classList.toggle('active', index === currentImageIndex);
+        });
+        
+        // Update navigation buttons
+        prevBtn.style.display = currentImageIndex === 0 ? 'none' : 'flex';
+        nextBtn.style.display = currentImageIndex === allImages.length - 1 ? 'none' : 'flex';
+      }
+
+      prevBtn.addEventListener('click', () => {
+        if (currentImageIndex > 0) {
+          updateImage(currentImageIndex - 1);
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (currentImageIndex < allImages.length - 1) {
+          updateImage(currentImageIndex + 1);
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (lightbox?.classList.contains('active')) {
+          if (e.key === 'ArrowLeft' && currentImageIndex > 0) {
+            updateImage(currentImageIndex - 1);
+          } else if (e.key === 'ArrowRight' && currentImageIndex < allImages.length - 1) {
+            updateImage(currentImageIndex + 1);
+          }
+        }
+      });
+
+      mainContainer.appendChild(prevBtn);
+      mainContainer.appendChild(nextBtn);
+      
+      // Initialize navigation buttons
+      updateImage(0);
+    }
+
+    gallery.innerHTML = '';
+    gallery.appendChild(mainContainer);
+
+    // Create thumbnails if multiple images
+    if (allImages.length > 1) {
+      const thumbsContainer = document.createElement('div');
+      thumbsContainer.className = 'gallery-thumbs';
+
+      allImages.forEach((img: any, index: number) => {
+        const thumb = document.createElement('div');
+        thumb.className = `thumb ${index === 0 ? 'active' : ''}`;
+        
+        const thumbImg = document.createElement('img');
+        thumbImg.src = img;
+        thumbImg.alt = `${project.title} - obraz ${index + 1}`;
+        
+        thumb.appendChild(thumbImg);
+        thumb.addEventListener('click', () => {
+          currentImageIndex = index;
+          mainImg.src = thumbImg.src;
+          thumbsContainer.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+          
+          // Update navigation buttons
+          const prevBtn = gallery.querySelector('.gallery-prev') as HTMLElement;
+          const nextBtn = gallery.querySelector('.gallery-next') as HTMLElement;
+          if (prevBtn) prevBtn.style.display = currentImageIndex === 0 ? 'none' : 'flex';
+          if (nextBtn) nextBtn.style.display = currentImageIndex === allImages.length - 1 ? 'none' : 'flex';
+        });
+
+        thumbsContainer.appendChild(thumb);
+      });
+
+      gallery.appendChild(thumbsContainer);
+    }
+  }
+
+  // Initialize with projects data
+  function initLightbox(data: any[]) {
+    projectsData = data;
+  }
+
+  // Expose init function globally
+  (window as any).initProjectLightbox = initLightbox;
+});
+</script>

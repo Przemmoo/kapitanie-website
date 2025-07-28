@@ -62,12 +62,18 @@ const clientsData = {
 
     <!-- Statystyki klientów -->
     <div class="client-stats">
-      {clientsData.stats.map((stat) => (
-        <div class="stat-item">
-          <div class="stat-number" data-count={stat.number.replace(/\D/g, '')}>{stat.number}</div>
-          <div class="stat-label">{stat.label}</div>
-        </div>
-      ))}
+      {clientsData.stats.map((stat) => {
+        // Wyodrębnij sufix (np. +, %, itp.)
+        const match = stat.number.match(/^(\d+)(\D*)$/);
+        const value = match ? match[1] : stat.number;
+        const suffix = match ? match[2] : '';
+        return (
+          <div class="stat-item">
+            <div class="stat-number" data-count={value} data-suffix={suffix}>{stat.number}</div>
+            <div class="stat-label">{stat.label}</div>
+          </div>
+        );
+      })}
     </div>
 
     <!-- Karuzela logotypów -->
@@ -598,8 +604,8 @@ const clientsData = {
   /* Responsive */
   @media (max-width: 1024px) {
     .client-logo {
-      width: 150px;
-      height: 70px;
+      width: 180px;
+      height: 80px;
       padding: 0;
     }
 
@@ -616,8 +622,8 @@ const clientsData = {
     }
 
     .client-logo {
-      width: 120px;
-      height: 60px;
+      width: 150px;
+      height: 66px;
       padding: 0;
     }
 
@@ -719,44 +725,16 @@ const clientsData = {
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Counter animation
-    const animateCounters = () => {
-      const counters = document.querySelectorAll('.client-stats .stat-number');
-      counters.forEach(counter => {
-        const element = counter as HTMLElement;
-        // Odczytaj oryginalny tekst (np. "200+", "98%")
-        const original = element.textContent || '';
-        // Wyciągnij liczbę (ciąg cyfr)
-        const match = original.match(/^(\d+)/);
-        const target = match ? parseInt(match[1], 10) : 0;
-        // Wyciągnij suffix (wszystko po liczbie)
-        const suffix = original.replace(/^\d+/, '');
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
-
-        const updateCounter = () => {
-          current += step;
-          if (current >= target) {
-            counter.textContent = target + suffix;
-          } else {
-            counter.textContent = Math.floor(current) + (current > target * 0.8 ? suffix : '');
-            requestAnimationFrame(updateCounter);
-          }
-        };
-
-        updateCounter();
-      });
-    };
+<script is:inline>
+// Lazy initialization dla pozostałej funkcjonalności sekcji
+const initKlienciSection = () => {
 
     // Testimonial rotation
     const testimonials = document.querySelectorAll('.testimonial');
     const testimonialDots = document.querySelectorAll('.testimonial-dot');
     let currentTestimonial = 0;
 
-    const showTestimonial = (index: number) => {
+    const showTestimonial = (index) => {
       testimonials.forEach((testimonial, i) => {
         testimonial.classList.toggle('active', i === index);
       });
@@ -796,7 +774,7 @@ const clientsData = {
       testimonialInterval = setInterval(nextTestimonial, 5000);
     });
 
-    // Intersection Observer for animations
+    // Intersection Observer for fade-in animations (bez liczników)
     const observerOptions = {
       threshold: 0.2,
       rootMargin: '0px 0px -50px 0px'
@@ -806,29 +784,24 @@ const clientsData = {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('fade-in-up');
-          
-          // Trigger counter animation when stats are visible
-          if (entry.target.classList.contains('client-stats')) {
-            animateCounters();
-          }
         }
       });
     }, observerOptions);
 
-    // Observe elements for animation
-    document.querySelectorAll('.section-header, .client-stats, .clients-carousel-container, .testimonials').forEach(el => {
+    // Observe elements for animation (bez client-stats - to ma osobny observer)
+    document.querySelectorAll('.section-header, .clients-carousel-container, .testimonials').forEach(el => {
       observer.observe(el);
     });
 
     // Handle logo loading errors
     const clientLogos = document.querySelectorAll('.client-logo img');
     clientLogos.forEach(img => {
-      const imgElement = img as HTMLImageElement;
+      const imgElement = img;
       imgElement.addEventListener('error', () => {
         // Replace with placeholder or hide
         imgElement.style.display = 'none';
         if (imgElement.parentElement) {
-          (imgElement.parentElement as HTMLElement).style.background = 'rgba(255, 255, 255, 0.1)';
+          imgElement.parentElement.style.background = 'rgba(255, 255, 255, 0.1)';
           imgElement.parentElement.innerHTML += '<span style="color: var(--text-secondary); font-size: 0.8rem;">Logo</span>';
         }
       });
@@ -849,15 +822,62 @@ const clientsData = {
       const carouselTracks = document.querySelectorAll('.carousel-track');
       if (document.hidden) {
         carouselTracks.forEach(track => {
-          (track as HTMLElement).style.animationPlayState = 'paused';
+          track.style.animationPlayState = 'paused';
         });
       } else {
         carouselTracks.forEach(track => {
-          (track as HTMLElement).style.animationPlayState = 'running';
+          track.style.animationPlayState = 'running';
         });
       }
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
+  };
+
+  // Lazy loading: Initialize only when section becomes visible
+  document.addEventListener('DOMContentLoaded', () => {
+    // Counter animation (identyczna jak w AboutSection.astro)
+    const animateCounters = () => {
+      const counters = document.querySelectorAll('.client-stats .stat-number');
+      counters.forEach(counter => {
+        const element = counter;
+        const target = parseInt(element.dataset.count || '0');
+        const suffix = element.dataset.suffix || '';
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        const updateCounter = () => {
+          current += step;
+          if (current >= target) {
+            counter.textContent = target + suffix;
+          } else {
+            counter.textContent = Math.floor(current) + (current > target * 0.8 ? suffix : '');
+            requestAnimationFrame(updateCounter);
+          }
+        };
+        updateCounter();
+      });
+    };
+
+    // Intersection Observer for stats animation
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target.classList.contains('client-stats')) {
+          animateCounters();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.client-stats').forEach(el => {
+      statsObserver.observe(el);
+    });
+
+    // Initialize other features
+    initKlienciSection();
   });
 </script>

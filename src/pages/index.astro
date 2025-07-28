@@ -20,9 +20,9 @@ const clientsData = await getEntry('sekcje', 'clients');
 const contactData = await getEntry('sekcje', 'contact');
 const siteData = await getEntry('ustawienia', 'site');
 
-const pageTitle = siteData?.data?.site_name ? `${siteData.data.site_name} - Organizacja Wydarzeń i Eventów` : "kapitanie - Organizacja Wydarzeń i Eventów";
-const pageDescription = siteData?.data?.site_description || "Profesjonalna organizacja wydarzeń biznesowych w Polsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z.";
-const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, imprezy biznesowe, event management, organizacja imprez, kapitanie";
+const pageTitle = siteData?.data?.site_name ? `${siteData.data.site_name} - Organizacja Wydarzeń i Eventów Kraków` : "kapitanie - Organizacja Wydarzeń i Eventów Kraków";
+const pageDescription = siteData?.data?.site_description || "Profesjonalna organizacja wydarzeń biznesowych w Krakowie i Małopolsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z.";
+const pageKeywords = "organizacja wydarzeń Kraków, eventy firmowe Małopolska, konferencje Kraków, gale firmowe, imprezy biznesowe, event management, organizacja imprez, kapitanie, multimedia Kraków";
 ---
 
 <Layout 
@@ -32,28 +32,25 @@ const pageKeywords = "organizacja wydarzeń, eventy firmowe, konferencje, gale, 
 >
   <Header />
 
-  <main>
+  <main id="main-content">
     <HeroSection data={heroData?.data} />
 
     <AboutSection data={aboutData?.data} />
 
     <RealizacjeSection realizacje={realizacje} />
 
-    <nav aria-label="Breadcrumb" class="breadcrumbs" style="display:none">
-      <ol>
-        <li><a href="/">Strona główna</a></li>
-        <li aria-current="page">Realizacje</li>
-      </ol>
-    </nav>
-
     <script type="application/ld+json" is:inline>
       {JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {"@type": "ListItem", "position": 1, "name": "Strona główna", "item": "https://kapitanie.com/"},
-          {"@type": "ListItem", "position": 2, "name": "Realizacje", "item": "https://kapitanie.com/#realizacje"}
-        ]
+        "@type": "WebSite",
+        "name": "kapitanie",
+        "url": "https://kapitanie.com",
+        "description": "Kompleksowa produkcja eventów, konferencji, kongresów, wydarzeń firmowych i multimedialnych.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://kapitanie.com/?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
       })}
     </script>
 

@@ -93,6 +93,10 @@ const heroData = {
     color: var(--text-main);
   }
 
+  .hero-content {
+    overflow: hidden;
+  }
+
   /* Video Background */
   .video-container {
     position: absolute;
@@ -214,18 +218,7 @@ const heroData = {
     width: 24px;
     height: 24px;
     animation: bounce 2s infinite;
-  }
-
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-10px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
+    overflow: hidden;
   }
 
   /* Parallax effect */
@@ -235,10 +228,27 @@ const heroData = {
   }
 
   /* Responsive */
+  @media (max-width: 1024px) {
+    .hero-video {
+      transform: scale(1.05);
+    }
+    .hero-title {
+      font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.3rem;
+    }
+  }
+
   @media (max-width: 768px) {
     .hero {
       min-height: 500px;
       padding-top: 70px;
+    }
+
+    .hero-video {
+      transform: none;
     }
 
     .hero-content {
@@ -344,7 +354,12 @@ const heroData = {
       const scrolled = window.pageYOffset;
       const rate = scrolled * -0.3;
       
-      heroVideo.style.transform = `scale(1.1) translate3d(0, ${rate}px, 0)`;
+      // Apply parallax only on desktop
+      if (window.innerWidth > 768) {
+        heroVideo.style.transform = `scale(1.1) translate3d(0, ${rate}px, 0)`;
+      } else {
+        heroVideo.style.transform = `translate3d(0, ${rate}px, 0)`;
+      }
     };
 
     // Scroll indicator click

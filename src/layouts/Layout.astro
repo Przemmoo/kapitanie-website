@@ -1,14 +1,19 @@
 ---
+// Import global animations
+import "../styles/animations.css";
+
 export interface Props {
 	title?: string;
 	description?: string;
 	keywords?: string;
+	noindex?: boolean;
 }
 
 const { 
-	title = "kapitanie - Twoje wydarzenie w najlepszym świetle", 
+	title = "kapitanie - Twój cel, nasza nawigacja. Perfekcyjne eventy.", 
 	description = "Jesteśmy kapitanami technicznej strony Twojego sukcesu. Zapewniamy kompleksową obsługę multimedialną eventów, koncertów i konferencji.",
-	keywords = "eventy, multimedia, oświetlenie, nagłośnienie, konferencje, koncerty, obsługa techniczna"
+	keywords = "eventy, multimedia, oświetlenie, nagłośnienie, konferencje, koncerty, obsługa techniczna",
+	noindex = false
 } = Astro.props;
 ---
 
@@ -22,12 +27,19 @@ const {
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="keywords" content={keywords} />
-		<meta name="robots" content="index, follow" />
+		<meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow"} />
 		
 		<!-- Google Fonts - Montserrat i Lato -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+		
+		<!-- Preload critical resources -->
+		<link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml">
+		
+		<!-- DNS prefetch for external resources -->
+		<link rel="dns-prefetch" href="//www.googletagmanager.com">
+		<link rel="dns-prefetch" href="//unpkg.com">
 		
 		<!-- SEO Meta Tags -->
 		<meta property="og:title" content={title} />
@@ -51,7 +63,7 @@ const {
 		  gtag('config', 'G-R4ML1FD38P');
 		</script>
 
-		<!-- Google Search Console weryfikacja -->
+		<!-- Google Search Console - zweryfikowane przez dostawcę domeny -->
 		
 		<!-- Schema.org JSON-LD -->
 		<script type="application/ld+json">
@@ -78,14 +90,24 @@ const {
 		<!-- Monitoring Core Web Vitals -->
 		<script src="https://unpkg.com/web-vitals@3/dist/web-vitals.iife.js"></script>
 		<script is:inline>
-		  webVitals.getCLS(console.log);
-		  webVitals.getFID(console.log);
-		  webVitals.getLCP(console.log);
-		  webVitals.getFCP(console.log);
-		  webVitals.getTTFB(console.log);
+		  // Only log in development mode
+		  if (import.meta.env.MODE === 'development') {
+		    webVitals.getCLS(console.log);
+		    webVitals.getFID(console.log);
+		    webVitals.getLCP(console.log);
+		    webVitals.getFCP(console.log);
+		    webVitals.getTTFB(console.log);
+		  }
 		</script>
 	</head>
 	<body>
+		<!-- Skip links for accessibility -->
+		<div class="skip-links">
+			<a href="#main-content" class="skip-link">Przejdź do głównej treści</a>
+			<a href="#main-navigation" class="skip-link">Przejdź do nawigacji</a>
+			<a href="#footer-content" class="skip-link">Przejdź do stopki</a>
+		</div>
+		
 		<slot />
 	</body>
 </html>
@@ -93,27 +115,70 @@ const {
 <style is:global>
 	/* CSS Reset i zmienne kolorów */
 	:root {
-		/* Paleta kolorów "scena w blasku reflektorów" */
-		--bg-main: #121212;
-		--bg-secondary: #1F1F1F;
-		--accent-blue: #00A9FF;
-		--text-main: #F5F5F5;
-		--text-secondary: #B3B3B3;
-		--error-color: #FF4444;
+		/* Colors - Consolidated naming convention */
+		--color-primary: #00A9FF;
+		--color-secondary: #FFD700;
+		--color-bg-main: #121212;
+		--color-bg-secondary: #1F1F1F;
+		--color-text-primary: #F5F5F5;
+		--color-text-secondary: #B3B3B3;
+		--color-error: #FF4444;
+		--color-success: #28A745;
+		--color-warning: #FFC107;
 		
-		/* Typografia */
+		/* Legacy support - gradually migrate away from these */
+		--bg-main: var(--color-bg-main);
+		--bg-secondary: var(--color-bg-secondary);
+		--accent-blue: var(--color-primary);
+		--text-main: var(--color-text-primary);
+		--text-secondary: var(--color-text-secondary);
+		--error-color: var(--color-error);
+		
+		/* Spacing System */
+		--space-xs: 0.5rem;
+		--space-sm: 1rem;
+		--space-md: 1.5rem;
+		--space-lg: 2rem;
+		--space-xl: 3rem;
+		--space-2xl: 4rem;
+		
+		/* Typography Scale */
+		--font-size-xs: 0.75rem;
+		--font-size-sm: 0.875rem;
+		--font-size-base: 1rem;
+		--font-size-lg: 1.125rem;
+		--font-size-xl: 1.25rem;
+		--font-size-2xl: 1.5rem;
+		--font-size-3xl: 2rem;
+		--font-size-4xl: 2.5rem;
+		
+		/* Font Families */
 		--font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
 		--font-body: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
 		
-		/* Spacing */
+		/* Animation System */
+		--duration-fast: 150ms;
+		--duration-normal: 300ms;
+		--duration-slow: 500ms;
+		--easing-ease: cubic-bezier(0.4, 0, 0.2, 1);
+		--easing-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+		
+		/* Layout */
 		--container-max-width: 1200px;
 		--section-padding: 80px 0;
-		--transition-fast: 0.3s ease;
+		--border-radius-sm: 8px;
+		--border-radius-md: 12px;
+		--border-radius-lg: 20px;
 		
-		/* Z-index */
+		/* Legacy support */
+		--transition-fast: var(--duration-normal) var(--easing-ease);
+		
+		/* Z-index Scale */
 		--z-header: 1000;
 		--z-lightbox: 2000;
 		--z-cookie-banner: 1500;
+		--z-modal: 1600;
+		--z-tooltip: 1700;
 	}
 
 	* {
@@ -126,15 +191,13 @@ const {
 		scroll-behavior: smooth;
 	}
 
-	body {
-		font-family: var(--font-body);
-		background-color: var(--bg-main);
-		color: var(--text-main);
-		line-height: 1.6;
-		overflow-x: hidden;
-	}
-
-	/* Typografia */
+  body {
+    font-family: var(--font-body);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scrollbar during animations */
+  }	/* Typografia */
 	h1, h2, h3, h4, h5, h6 {
 		font-family: var(--font-heading);
 		font-weight: 700;
@@ -170,6 +233,85 @@ const {
 
 	a:hover {
 		color: var(--text-main);
+	}
+
+	/* Skip links for accessibility */
+	.skip-links {
+		position: fixed;
+		top: -100px;
+		left: 0;
+		width: 100%;
+		z-index: 10000;
+		background: var(--bg-main);
+		padding: 1rem;
+		text-align: center;
+	}
+
+	.skip-link {
+		display: inline-block;
+		padding: 0.75rem 1.5rem;
+		margin: 0 0.5rem;
+		background: var(--accent-blue);
+		color: white;
+		text-decoration: none;
+		border-radius: 4px;
+		font-weight: 600;
+		transition: all var(--duration-fast) var(--easing-ease);
+	}
+
+	.skip-link:focus,
+	.skip-link:active {
+		position: relative;
+		top: 100px;
+		outline: 3px solid var(--text-main);
+		outline-offset: 2px;
+	}
+
+	.skip-link:hover {
+		background: color-mix(in srgb, var(--accent-blue) 85%, black);
+		transform: translateY(-2px);
+	}
+
+	/* Skip links responsive */
+	@media (max-width: 768px) {
+		.skip-links {
+			padding: 0.75rem;
+		}
+		
+		.skip-link {
+			padding: 0.5rem 1rem;
+			margin: 0 0.25rem;
+			font-size: 0.9rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.skip-links {
+			padding: 0.5rem;
+		}
+		
+		.skip-link {
+			display: block;
+			margin: 0.25rem auto;
+			width: 90%;
+			max-width: 280px;
+			text-align: center;
+		}
+	}
+
+	/* Focus management */
+	*:focus {
+		outline: 2px solid var(--accent-blue);
+		outline-offset: 2px;
+	}
+
+	*:focus:not(:focus-visible) {
+		outline: none;
+	}
+
+	*:focus-visible {
+		outline: 2px solid var(--accent-blue);
+		outline-offset: 2px;
 	}
 
 	/* Kontener */
@@ -295,16 +437,23 @@ const {
 		pointer-events: none;
 	}
 
-	/* Animations */
-	@keyframes fadeInUp {
-		from {
-			opacity: 0;
-			transform: translateY(30px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	/* Animations - Optimized for performance */
+	.animated-element {
+		will-change: transform;
+		transform: translateZ(0); /* Force hardware acceleration */
+	}
+	
+	.fade-in {
+		animation: fadeIn var(--duration-normal) var(--easing-ease);
+	}
+	
+	.slide-in {
+		animation: slideIn var(--duration-normal) var(--easing-ease);
+	}
+	
+	/* Remove will-change after animation completes */
+	.animated-element.animation-complete {
+		will-change: auto;
 	}
 
 	.fade-in-up {
@@ -340,5 +489,20 @@ const {
   }
   .breadcrumbs a:hover {
 	color: var(--text-main);
+  }
+
+  /* Mobile overflow fix for hero animations */
+  @media (max-width: 480px) {
+    html, body {
+      overflow-x: hidden !important;
+      width: 100%;
+      position: relative;
+    }
+    
+    .hero-section,
+    section {
+      overflow: hidden;
+      width: 100%;
+    }
   }
 

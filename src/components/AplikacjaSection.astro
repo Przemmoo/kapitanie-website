@@ -544,11 +544,6 @@ const appData = {
   .bar:nth-child(3) { height: 16px; }
   .bar:nth-child(4) { height: 10px; }
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
-
   /* App Info */
   .app-info {
     padding-right: 2rem;
@@ -764,7 +759,8 @@ const appData = {
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  // Lazy initialization - load script only when section becomes visible
+  const initAplikacjaSection = () => {
     // Intersection Observer for animations
     const observerOptions = {
       threshold: 0.2,
@@ -832,18 +828,26 @@ const appData = {
       setInterval(autoRotateMenu, 3000);
     };
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setTimeout(startAutoRotation, 2000);
-          sectionObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.5 });
+    setTimeout(startAutoRotation, 2000);
+  };
 
+  // Lazy loading: Initialize only when section becomes visible
+  document.addEventListener('DOMContentLoaded', () => {
     const aplikacjaSection = document.querySelector('.aplikacja-section');
     if (aplikacjaSection) {
-      sectionObserver.observe(aplikacjaSection);
+      const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            initAplikacjaSection();
+            lazyObserver.disconnect(); // Stop observing after initialization
+          }
+        });
+      }, { 
+        threshold: 0.1,
+        rootMargin: '100px 0px' // Start loading 100px before entering viewport
+      });
+      
+      lazyObserver.observe(aplikacjaSection);
     }
   });
 </script>

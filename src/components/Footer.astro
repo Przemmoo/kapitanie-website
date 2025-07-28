@@ -28,7 +28,9 @@ try {
   const settings = await getCollection('ustawienia');
   siteSettings = settings.find(item => item.id === 'site')?.data;
 } catch (error) {
-  console.warn('Nie udało się załadować ustawień strony:', error);
+  if (import.meta.env.DEV) {
+    console.warn('Nie udało się załadować ustawień strony:', error);
+  }
   siteSettings = null;
 }
 
@@ -53,7 +55,7 @@ const phoneFormatted = `+48 ${footerData.phone}`;
 const phoneLinkFormatted = `+48${footerData.phone}`;
 ---
 
-<footer class="footer">
+<footer class="footer" id="footer-content">
   <div class="container">
     <!-- Main footer content -->
     <div class="footer-content">
@@ -481,8 +483,8 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
     color: var(--text-secondary);
   }
 
-  .made-with {
-    margin-top: 0.5rem !important;
+  .footer-bottom .made-with {
+    margin-top: 0.5rem;
   }
 
   .made-with a {
@@ -798,7 +800,9 @@ const phoneLinkFormatted = `+48${footerData.phone}`;
     const socialMediaLinks = document.querySelectorAll('.social-links a');
     socialMediaLinks.forEach(link => {
       link.addEventListener('error', () => {
-        console.warn(`Social media link failed: ${(link as HTMLAnchorElement).href}`);
+        if (import.meta.env.DEV) {
+          console.warn(`Social media link failed: ${(link as HTMLAnchorElement).href}`);
+        }
       });
     });
   });
