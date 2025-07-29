@@ -8,7 +8,7 @@ nav:
   - label: Klienci
     link: /#klienci
   - label: Kontakt
-    link: /#kontakt
+    link: /#tel
 show_cta: true
 cta_text: Wyceń Projekt
 cta_link: /#kontakt
