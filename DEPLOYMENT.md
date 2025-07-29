@@ -111,6 +111,12 @@ CLOUDFLARE_ACCOUNT_ID = 51265bf8c7892eb3425d9aec26821bb0
 - ✅ Połączenie z GitHub repo: Przemmoo/kapitanie-website
 - ✅ **DEPLOYMENT AUTOMATYCZNY DZIAŁA!**
 - ✅ GitHub Secrets poprawnie skonfigurowane
+- ✅ **Błędy JSON-LD w Google Search Console NAPRAWIONE!**
+
+**📝 Historia rozwiązanych problemów:**
+- ❌ `import.meta outside module` → ✅ **NAPRAWIONE** (Layout.astro)
+- ❌ Błędy składni JSON-LD w GSC → ✅ **NAPRAWIONE** (index.astro, AboutSection.astro)
+- ❌ "Brak znaku } lub brak nazwy elementu obiektu" → ✅ **NAPRAWIONE** (Usunięto JSON.stringify)
 
 ### 5. **Publikacja zmian**
 

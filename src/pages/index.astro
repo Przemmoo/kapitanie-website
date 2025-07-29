@@ -22,7 +22,7 @@ const siteData = await getEntry('ustawienia', 'site');
 
 const pageTitle = siteData?.data?.site_name ? `${siteData.data.site_name} - Organizacja Wydarzeń i Eventów Kraków` : "kapitanie - Organizacja Wydarzeń i Eventów Kraków";
 const pageDescription = siteData?.data?.site_description || "Profesjonalna organizacja wydarzeń biznesowych w Krakowie i Małopolsce. Konferencje, gale, imprezy firmowe, eventy outdoor. Kompleksowa obsługa od A do Z.";
-const pageKeywords = "organizacja wydarzeń Kraków, eventy firmowe Małopolska, konferencje Kraków, gale firmowe, imprezy biznesowe, event management, organizacja imprez, kapitanie, multimedia Kraków";
+const pageKeywords = "organizacja wydarzeń Kraków, eventy firmowe Małopolska, konferencje Kraków, gale firmowe, imprezy biznesowe, event management, organizacja imprez, kapitanie, multimedia Kraków, stoiska targowe, targi Kraków, strefy produktowe, strefy vendingowe, multimedia eventy, obsługa multimedialna, realizacja multimedialna, produkcja multimedialna, technika eventowa, oświetlenie sceniczne, nagłośnienie eventów";
 ---
 
 <Layout 
@@ -55,34 +55,40 @@ const pageKeywords = "organizacja wydarzeń Kraków, eventy firmowe Małopolska,
     }
     </script>
 
-    <!-- Event Schema.org JSON-LD -->
+    <!-- LocalBusiness Schema.org JSON-LD -->
     <script type="application/ld+json" is:inline>
     {
       "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "Przykładowy event firmowy Kapitanie",
-      "startDate": "2025-09-01T18:00:00+02:00",
-      "endDate": "2025-09-01T23:00:00+02:00",
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      "location": {
-        "@type": "Place",
-        "name": "ICE Kraków",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "ul. Marii Konopnickiej 17",
-          "addressLocality": "Kraków",
-          "postalCode": "30-302",
-          "addressCountry": "PL"
-        }
+      "@type": "LocalBusiness",
+      "name": "kapitanie",
+      "description": "Kompleksowa produkcja eventów, konferencji, kongresów, wydarzeń firmowych i multimedialnych w Krakowie i Małopolsce.",
+      "url": "https://kapitanie.com",
+      "image": "https://kapitanie.com/images/og-default.jpg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kraków",
+        "addressRegion": "Małopolska",
+        "addressCountry": "PL"
       },
-      "image": ["https://kapitanie.com/images/og-default.jpg"],
-      "description": "Kompleksowa produkcja eventu firmowego przez Kapitanie. Multimedia, oświetlenie, nagłośnienie, obsługa techniczna.",
-      "organizer": {
-        "@type": "Organization",
-        "name": "kapitanie",
-        "url": "https://kapitanie.com"
-      }
+      "serviceArea": {
+        "@type": "AdministrativeArea",
+        "name": "Małopolska"
+      },
+      "knowsAbout": [
+        "organizacja wydarzeń",
+        "eventy firmowe",
+        "konferencje",
+        "gale firmowe",
+        "multimedia",
+        "nagłośnienie",
+        "oświetlenie",
+        "stoiska targowe",
+        "targi",
+        "strefy produktowe",
+        "strefy vendingowe",
+        "obsługa multimedialna",
+        "realizacja multimedialna"
+      ]
     }
     </script>
 
