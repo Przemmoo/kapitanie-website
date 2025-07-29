@@ -39,50 +39,52 @@ const pageKeywords = "organizacja wydarzeń Kraków, eventy firmowe Małopolska,
 
     <RealizacjeSection realizacje={realizacje} />
 
+    <!-- Website Schema.org JSON-LD -->
     <script type="application/ld+json" is:inline>
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "kapitanie",
-        "url": "https://kapitanie.com",
-        "description": "Kompleksowa produkcja eventów, konferencji, kongresów, wydarzeń firmowych i multimedialnych.",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://kapitanie.com/?search={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      })}
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite", 
+      "name": "kapitanie",
+      "url": "https://kapitanie.com",
+      "description": "Kompleksowa produkcja eventów, konferencji, kongresów, wydarzeń firmowych i multimedialnych.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://kapitanie.com/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
     </script>
 
-   <script type="application/ld+json" is:inline>
-     {JSON.stringify({
-       "@context": "https://schema.org",
-       "@type": "Event",
-       "name": "Przykładowy event firmowy Kapitanie",
-       "startDate": "2025-09-01T18:00:00+02:00",
-       "endDate": "2025-09-01T23:00:00+02:00",
-       "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-       "eventStatus": "https://schema.org/EventScheduled",
-       "location": {
-         "@type": "Place",
-         "name": "ICE Kraków",
-         "address": {
-           "@type": "PostalAddress",
-           "streetAddress": "ul. Marii Konopnickiej 17",
-           "addressLocality": "Kraków",
-           "postalCode": "30-302",
-           "addressCountry": "PL"
-         }
-       },
-       "image": ["https://kapitanie.com/images/og-default.jpg"],
-       "description": "Kompleksowa produkcja eventu firmowego przez Kapitanie. Multimedia, oświetlenie, nagłośnienie, obsługa techniczna.",
-       "organizer": {
-         "@type": "Organization",
-         "name": "kapitanie",
-         "url": "https://kapitanie.com"
-       }
-     })}
-   </script>
+    <!-- Event Schema.org JSON-LD -->
+    <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Przykładowy event firmowy Kapitanie",
+      "startDate": "2025-09-01T18:00:00+02:00",
+      "endDate": "2025-09-01T23:00:00+02:00",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": "ICE Kraków",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "ul. Marii Konopnickiej 17",
+          "addressLocality": "Kraków",
+          "postalCode": "30-302",
+          "addressCountry": "PL"
+        }
+      },
+      "image": ["https://kapitanie.com/images/og-default.jpg"],
+      "description": "Kompleksowa produkcja eventu firmowego przez Kapitanie. Multimedia, oświetlenie, nagłośnienie, obsługa techniczna.",
+      "organizer": {
+        "@type": "Organization",
+        "name": "kapitanie",
+        "url": "https://kapitanie.com"
+      }
+    }
+    </script>
 
     <AplikacjaSection data={appData?.data} />
 
